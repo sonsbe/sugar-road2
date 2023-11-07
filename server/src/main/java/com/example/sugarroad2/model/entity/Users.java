@@ -25,7 +25,6 @@ public class Users {
     private String userName;
     private String nickname;
     private String userEmail;
-    private String userImagePath;
     private String role;
     private String status;
     private String gender;
@@ -33,5 +32,5 @@ public class Users {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime birth;
 
-    //private MultipartFile image;
+    private String userImagePath;
 }
