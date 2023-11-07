@@ -7,12 +7,14 @@ import jakarta.persistence.Table;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Builder
 @ToString
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "users")
 public class Users {
@@ -29,7 +31,7 @@ public class Users {
     private String gender;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date birth;
+    private LocalDateTime birth;
 
     //private MultipartFile image;
 }

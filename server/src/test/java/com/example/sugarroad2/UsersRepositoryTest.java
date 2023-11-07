@@ -23,22 +23,8 @@ public class UsersRepositoryTest {
         System.out.println("=".repeat(80));
     }
 
-    @Test
-    @Order(1)
-    void select(){
-        List<Users> list = usersR.findAll();
-        for(Users u : list){
-            System.out.println(u.getUserId());
-            System.out.println(u.getUserPassword());
-            System.out.println(u.getNickname());
-            System.out.println(u.getUserName());
-            System.out.println(u.getUserEmail());
-            System.out.println(u.getUserImagePath() != null ? u.getUserImagePath() : "없음");
-        }
-    }
-
     @Test //테스트 어노테이션만 있으면 테스트!
-    @Order(2) //순서를 지정하는 어노테이션
+    @Order(1) //순서를 지정하는 어노테이션
     @Transactional
     void save() {
         Users UsersEntity = Users.builder()
@@ -47,7 +33,7 @@ public class UsersRepositoryTest {
                 .nickname("테스터별명")
                 .userName("테스터")
                 .userEmail("테스터@메일.com")
-                .gender("male")
+                .gender("m")
                 .role("user")
                 .status("생존")
                 .build();
@@ -62,7 +48,10 @@ public class UsersRepositoryTest {
             System.out.println(u.getUserName());
             System.out.println(u.getUserEmail());
             System.out.println(u.getUserImagePath() != null ? u.getUserImagePath() : "없음");
-
+            System.out.println(u.getGender());
+            System.out.println(u.getRole());
+            System.out.println(u.getStatus());
+            System.out.println(u.getBirth() != null ? u.getBirth() : "없음");
         }
     }
 }
