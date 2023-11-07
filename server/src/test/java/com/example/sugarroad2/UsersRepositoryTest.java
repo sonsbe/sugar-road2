@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) //H2를 사용하지 않고, 외부 DB를 사용할거야!
@@ -34,6 +35,7 @@ public class UsersRepositoryTest {
                 .userName("테스터")
                 .userEmail("테스터@메일.com")
                 .gender("m")
+                .birth(LocalDate.of(2023,12,19))
                 .role("user")
                 .status("생존")
                 .build();
