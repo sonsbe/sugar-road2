@@ -1,5 +1,6 @@
 package com.example.sugarroad2.model.dto;
 
+import com.example.sugarroad2.model.entity.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,6 +15,7 @@ import java.util.List;
 @Getter
 @Builder
 public class PostResponse {
+    private int id;
     private String content;
     private String title;
     private List<String> postImage;
@@ -22,4 +24,13 @@ public class PostResponse {
     private String postCategoryId;
     private int commentCount;
     private int recommendCount;
+    public PostResponse(Post post){
+        id = post.getId();
+        content = post.getContent();
+        title = post.getTitle();
+        postedDate = post.getPostedDate();
+        userId = post.getUser().getId();
+        postCategoryId = post.getPostCategory().getId();
+
+    }
 }

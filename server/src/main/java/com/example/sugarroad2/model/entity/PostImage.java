@@ -12,6 +12,7 @@ import lombok.*;
 public class PostImage {
     @Id
     @Column(name = "post_image_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "post_image_path")
     private String postImagePath;

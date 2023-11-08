@@ -54,8 +54,10 @@ public class PostTest {
         postImage.add("456");
         PostRequest postRequest = PostRequest.builder().postImage(postImage).build();
         Post post = postRepository.findById(6).get();
-        List<PostImage> postImageList = postRequest.toPostImage(post);
-        postImageRepository.saveAll(postImageList);
+        System.out.println(post);
+
+        postImageRepository.saveAll(postRequest.toPostImage(post));
+        postImageRepository.findAll().forEach(System.out::println);
 //        List<PostImage> pl = postImageRepository.findAll();
 //        pl.forEach(System.out :: println);
     }
