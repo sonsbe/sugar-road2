@@ -23,13 +23,15 @@ public class StoreDTO {
 //    private String userId;
     private List<MenuDTO> menuList;
 //    private int recommendCount;
-    public StoreDTO(Store entity){ // 사용자와 주고받을 때 사용
+
+    public StoreDTO(Store entity, List<MenuDTO> menuDTOList){ // 사용자와 주고받을 때 사용
         storeId=entity.getId();
         storeName=entity.getStoreName();
         address=entity.getAddress();
         phoneNumber=entity.getPhoneNumber();
         storeDesc=entity.getStoreDesc();
         storeImagePath=entity.getStoreImagePath();
+        menuList  = menuDTOList;
     }
     public Store toEntity(){ // 엔티티로
         Store store = Store.builder()
@@ -43,3 +45,8 @@ public class StoreDTO {
         return store;
     }
 }
+
+// class A {
+//   public A(int n)
+//}
+// A a = new A(3);
