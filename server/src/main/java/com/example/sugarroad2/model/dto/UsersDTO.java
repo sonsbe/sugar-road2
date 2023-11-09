@@ -24,30 +24,6 @@ public class UsersDTO {
     private String userImagePath;
     private MultipartFile image; //프로필 사진 선택 시 임의로 저장할 속성
 
-    public Users toEntity(){
-        Users users = Users.builder()
-                .userId(String.valueOf(id))
-                .userName(userName)
-                .nickname(nickname)
-                .userEmail(userEmail)
-                .role(role)
-                .status(status)
-                .gender(gender)
-                .birth(birth)
-                .userImagePath(userImagePath)
-                .build();
-
-        if(id != null){
-            users.setUserId(String.valueOf(id));
-        }
-
-//        if(!userImagePath.isEmpty()){
-//            users.setUserImagePath(imageUtil.writeImage(uploadImage));
-//        }
-
-        return users;
-    }
-
     public UsersDTO(Users entity){
         id = Integer.valueOf(entity.getUserId());
         userName = entity.getUserName();
@@ -58,5 +34,28 @@ public class UsersDTO {
         gender = entity.getGender();
         birth = entity.getBirth();
         userImagePath = entity.getUserImagePath();
+    }
+
+    public Users toEntity(String userImagePath){
+        Users users = Users.builder()
+                .userId(String.valueOf(id))
+                .userName(userName)
+                .nickname(nickname)
+                .userEmail(userEmail)
+                .role(role)
+                .status(status)
+                .gender(gender)
+                .birth(birth)
+                .build();
+
+        if(id != null){
+            users.setUserId(String.valueOf(id));
+        }
+
+        if(!userImagePath.isEmpty()){
+            users.setUserImagePath(userImagePath);
+        }
+
+        return users;
     }
 }
