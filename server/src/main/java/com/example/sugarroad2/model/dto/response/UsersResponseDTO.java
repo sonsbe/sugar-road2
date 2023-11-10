@@ -1,4 +1,4 @@
-package com.example.sugarroad2.model.dto;
+package com.example.sugarroad2.model.dto.response;
 
 import com.example.sugarroad2.model.entity.Users;
 import lombok.*;
@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class UsersDTO {
+public class UsersResponseDTO {
     private Integer id;
     private String userName;
     private String nickname;
@@ -24,7 +24,7 @@ public class UsersDTO {
     private String userImagePath;
     private MultipartFile image; //프로필 사진 선택 시 임의로 저장할 속성
 
-    public UsersDTO(Users entity){
+    public UsersResponseDTO(Users entity){
         id = Integer.valueOf(entity.getUserId());
         userName = entity.getUserName();
         nickname = entity.getNickname();
@@ -34,28 +34,5 @@ public class UsersDTO {
         gender = entity.getGender();
         birth = entity.getBirth();
         userImagePath = entity.getUserImagePath();
-    }
-
-    public Users toEntity(String userImagePath){
-        Users users = Users.builder()
-                .userId(String.valueOf(id))
-                .userName(userName)
-                .nickname(nickname)
-                .userEmail(userEmail)
-                .role(role)
-                .status(status)
-                .gender(gender)
-                .birth(birth)
-                .build();
-
-        if(id != null){
-            users.setUserId(String.valueOf(id));
-        }
-
-        if(!userImagePath.isEmpty()){
-            users.setUserImagePath(userImagePath);
-        }
-
-        return users;
     }
 }

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>delete</title>
+    <link rel="stylesheet" href="../css/ui.css">
+    <link rel="stylesheet" href="../css/mypage/edit.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+</head>
+<body>
+<div class="app-body">
+    <div class = "content">
+        <!--        <div id="mypageBack">-->
+        <br>
+        <h4 id="title">회원 탈퇴</h4>
+        <br>
+        <br>
+        <br>
+        <img th:src="${userInfo.userImagePath}? ${userInfo.userImagePath} : '../css/users/img/default_user.png'" id="userImage">
+        <form id="editForm" action="/users/delete" method="post">
+            <input type="hidden" name="userId" th:value="${userInfo.userId}">
+            <h5 class="editText">비밀번호를 입력하세요</h5>
+            <br>
+            <input class="editBox" type="password" name="userPassword" required><br>
+            <br>
+            <input id="editButtom" type="submit" value="탈퇴"/>
+        </form>
+        </th:block>
+        <h5 id="iframed" th:text="${msg}"></h5>
+        <!--        </div>-->
+    </div>
+
+    <div class = "nav">
+        <footer th:insert="ui/footer :: footer"></footer>
+    </div>
+</div>
+</body>
+</html>

@@ -1,6 +1,6 @@
 package com.example.sugarroad2.service;
 
-import com.example.sugarroad2.model.dto.UsersDTO;
+import com.example.sugarroad2.model.dto.request.UsersRequestDTO;
 import com.example.sugarroad2.model.entity.Users;
 import com.example.sugarroad2.repository.UsersRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -14,28 +14,31 @@ import java.util.Optional;
 public class MypageService {
 
     @Autowired
-    UsersDTO usersDTO;
-
-    @Autowired
-    Users usersE;
-
-    @Autowired
     UsersRepository usersRepository;
 
-    public void insert(UsersDTO newbieUser){ //Create
+    public boolean insert(UsersRequestDTO newbieUser){ //Create
         Users newbieUserEntity = newbieUser.toEntity(newbieUser.getUserImagePath());
 
-        usersRepository.save(newbieUserEntity);
+        try {
+            usersRepository.save(newbieUserEntity);
+        } catch (Exception e){
+            return  false;
+        }
+        return true;
     }
 
-    public Optional<Users> selectId(String selectId){ //Read
+    public Users selectId(String selectId){ //Read
 
         Optional<Users> selectUser = usersRepository.findById(selectId);
 
-        return selectUser;
+        if(selectUser.isPresent()){
+            return Users.builder().build();
+        } else {
+            return selectUser.get();
+        }
     }
 
-    public boolean save(UsersDTO editUser, String updateUserImagePath){ //Update
+    public boolean save(UsersRequestDTO editUser, String updateUserImagePath){ //Update
         Users editUserEntity = editUser.toEntity(updateUserImagePath);
 
         try {
@@ -46,9 +49,14 @@ public class MypageService {
         return true;
     }
 
-    public void delete(UsersDTO deleteUser){ //Delete
+    public boolean delete(UsersRequestDTO deleteUser){ //Delete
         Users deleteUserEntity = deleteUser.toEntity("");
 
-        usersRepository.delete(deleteUserEntity);
+        try {
+            usersRepository.delete(deleteUserEntity);
+        } catch (Exception e){
+            return false;
+        }
+        return true;
     }
 }
