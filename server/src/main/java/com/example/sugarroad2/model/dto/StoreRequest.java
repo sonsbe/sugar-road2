@@ -12,7 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 //@ToString
 public class StoreRequest {
-    private int storeId;
     private String storeName;
     private String address;
     private String phoneNumber;
@@ -25,7 +24,6 @@ public class StoreRequest {
 //    private int recommendCount;
     public Store toEntity() { // 엔티티로
         Store store = Store.builder()
-                .id(storeId)
                 .storeName(storeName)
                 .address(address)
                 .phoneNumber(phoneNumber)

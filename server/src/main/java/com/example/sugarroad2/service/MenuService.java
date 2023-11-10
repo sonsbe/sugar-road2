@@ -3,11 +3,12 @@ package com.example.sugarroad2.service;
 import com.example.sugarroad2.model.entity.Menu;
 import com.example.sugarroad2.model.entity.Store;
 import com.example.sugarroad2.repository.MenuRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Slf4j
 @Service
 public class MenuService {
     @Autowired
@@ -17,5 +18,14 @@ public class MenuService {
     }
     public List<Menu> read(){
         return menuRepository.findAll();
+    }
+    public  String create(Menu menu){
+        try{
+            menuRepository.save(menu);
+            return "success";
+        }catch (Exception e){
+            log.info(e.getMessage());
+            return "fail";
+        }
     }
 }

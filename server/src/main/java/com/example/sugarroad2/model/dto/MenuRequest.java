@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 //@ToString
 public class MenuRequest {
-    private int menuId;
     private String menuName;
     private int price;
     private String menuDesc;
@@ -22,7 +21,6 @@ public class MenuRequest {
     private String menuImagePath;
     public Menu toEntity(Store store) {
         Menu menu = Menu.builder()
-                .id(menuId)
                 .menuName(menuName)
                 .price(price)
                 .menuDesc(menuDesc)
