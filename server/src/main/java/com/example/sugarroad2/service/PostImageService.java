@@ -23,8 +23,8 @@ public class PostImageService {
     public void saveAll(List<PostImage> postImageList){
         postImageRepository.saveAll(postImageList);
     }
-    public List<PostImage> findByPost(Post post){
-        return postImageRepository.findByPost(post);
+    public List<PostImage> findByPostId(int id){
+        return postImageRepository.findByPostId(id);
     }
     public void delete(int id){
         postImageRepository.deleteById(id);

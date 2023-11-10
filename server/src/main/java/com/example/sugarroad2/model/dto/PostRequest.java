@@ -15,12 +15,13 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Getter
+@Setter
 @ToString
 public class PostRequest {
 
     private String content;
     private String title;
-    //private List<String> postImage;
+    private List<String> postImage;
     private String userId;
     private String postCategoryId;
     private MultipartFile[] uploadImages;
@@ -32,14 +33,14 @@ public class PostRequest {
                 .postCategory(postCategory)
                 .build();
     }
-//    public List<PostImage> toPostImage(Post post){
-//        List<PostImage> postImageList = new ArrayList<>();
-//        postImage.forEach(image -> postImageList.add(PostImage
-//                .builder()
-//                .postImagePath(image)
-//                .post(post)
-//                .build()));
-//        return postImageList;
-//    }
+    public List<PostImage> toPostImage(Post post){
+        List<PostImage> postImageList = new ArrayList<>();
+        postImage.forEach(image -> postImageList.add(PostImage
+                .builder()
+                .postImagePath(image)
+                .post(post)
+                .build()));
+        return postImageList;
+    }
 
 }

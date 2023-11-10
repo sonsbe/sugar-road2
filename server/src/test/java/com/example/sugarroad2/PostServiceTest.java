@@ -61,7 +61,7 @@ public class PostServiceTest {
         postService.findAll().forEach(System.out :: println);
         PostResponse postResponse =PostResponse.builder().id(8).build();
         int id = postResponse.getId();
-        postService.deleteById(id);
+        postService.delete(id);
         postService.findAll().forEach(System.out :: println);
 
 

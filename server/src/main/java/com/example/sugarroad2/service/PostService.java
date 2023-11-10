@@ -25,8 +25,15 @@ public class PostService {
     private PostCategoryRepository postCategoryRepository;
     @Autowired
     private UsersRepository usersRepository;
-    public void save(Post post){
-        postRepository.save(post);
+    public boolean save(Post post){
+        try {
+            postRepository.save(post);
+            return true;
+        } catch (Exception e){
+            return false;
+        }
+
+
     }
     public List<Post> findAll(){
         return postRepository.findAll();
@@ -39,8 +46,14 @@ public class PostService {
         List<Post> postList = postRepository.findByUserId(id);
         return postList;
     }
-    public void deleteById(int id){
-        postRepository.deleteById(id);
+    public boolean delete(int id){
+        try {
+            postRepository.deleteById(id);
+            return true;
+        } catch (Exception e){
+            return false;
+        }
+
     }
     @Transactional
     public void update(int id, PostRequest postRequest){//이미지 관련 처리
@@ -50,4 +63,5 @@ public class PostService {
         post.setTitle(postRequest.getTitle());
         post.setPostCategory(postCategoryRepository.findById(postRequest.getPostCategoryId()).get());
     }
+
 }

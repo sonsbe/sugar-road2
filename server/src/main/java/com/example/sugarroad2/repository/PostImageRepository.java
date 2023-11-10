@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface PostImageRepository extends JpaRepository<PostImage, Integer> {
-    public List<PostImage> findByPost(Post post);
+    public List<PostImage> findByPostId(int id);
 }
