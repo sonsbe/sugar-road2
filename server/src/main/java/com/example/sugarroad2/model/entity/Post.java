@@ -1,5 +1,6 @@
 package com.example.sugarroad2.model.entity;
 
+import com.example.sugarroad2.model.dto.PostRequest;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 @Getter
+@Setter
 @Entity
 @Builder
 @NoArgsConstructor
@@ -36,4 +38,5 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "post_category_id")
     private  PostCategory postCategory;
+
 }

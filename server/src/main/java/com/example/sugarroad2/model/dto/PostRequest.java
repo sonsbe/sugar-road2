@@ -4,10 +4,7 @@ import com.example.sugarroad2.model.entity.Post;
 import com.example.sugarroad2.model.entity.PostCategory;
 import com.example.sugarroad2.model.entity.PostImage;
 import com.example.sugarroad2.model.entity.Users;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
@@ -18,11 +15,12 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Getter
+@ToString
 public class PostRequest {
 
     private String content;
     private String title;
-    private List<String> postImage;
+    //private List<String> postImage;
     private String userId;
     private String postCategoryId;
     private MultipartFile[] uploadImages;
@@ -34,14 +32,14 @@ public class PostRequest {
                 .postCategory(postCategory)
                 .build();
     }
-    public List<PostImage> toPostImage(Post post){
-        List<PostImage> postImageList = new ArrayList<>();
-        postImage.forEach(image -> postImageList.add(PostImage
-                .builder()
-                .postImagePath(image)
-                .post(post)
-                .build()));
-        return postImageList;
-    }
+//    public List<PostImage> toPostImage(Post post){
+//        List<PostImage> postImageList = new ArrayList<>();
+//        postImage.forEach(image -> postImageList.add(PostImage
+//                .builder()
+//                .postImagePath(image)
+//                .post(post)
+//                .build()));
+//        return postImageList;
+//    }
 
 }

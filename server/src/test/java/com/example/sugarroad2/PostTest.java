@@ -1,6 +1,7 @@
 package com.example.sugarroad2;
 
 import com.example.sugarroad2.model.dto.PostRequest;
+import com.example.sugarroad2.model.dto.PostResponse;
 import com.example.sugarroad2.model.entity.*;
 import com.example.sugarroad2.repository.PostCategoryRepository;
 import com.example.sugarroad2.repository.PostImageRepository;
@@ -32,33 +33,34 @@ public class PostTest {
 
     @Test
     @Rollback(value = false)
-    void findAll(){
-        PostRequest postRequest = PostRequest.builder().content("내용123").title("제목123").userId("abcd1234").postCategoryId("01").build();
+    void save(){
+        PostRequest postRequest = PostRequest.builder().content("내용23").title("제목23").userId("abcd1234").postCategoryId("01").build();
         Users users = usersRepository.findById(postRequest.getUserId()).get();
-        System.out.println(users);
         PostCategory postCategory = postCategoryRepository.findById("01").get();
-        System.out.println(postCategory);
         postRepository.save(postRequest.toEntity(users, postCategory));
         List<Post> list = postRepository.findAll();
-        List<PostImage> postImageList = postImageRepository.findByPostId(list.get(0).getId());
+        List<PostImage> postImageList = postImageRepository.findByPost(list.get(0));
         list.forEach(System.out :: println);
-        List<Post> postList = postRepository.findByUser(users);
+        List<Post> postList = postRepository.findByUserId(postRequest.getUserId());
         postList.forEach(System.out :: println);
     }
 
     @Test
     void insert(){
         List<String> postImage = new ArrayList<>();
-
         postImage.add("123");
         postImage.add("456");
         PostRequest postRequest = PostRequest.builder().postImage(postImage).build();
         Post post = postRepository.findById(6).get();
         System.out.println(post);
-
         postImageRepository.saveAll(postRequest.toPostImage(post));
         postImageRepository.findAll().forEach(System.out::println);
-//        List<PostImage> pl = postImageRepository.findAll();
-//        pl.forEach(System.out :: println);
+    }
+    @Test
+    void findAll(){
+//        List<Post> postList = postRepository.findAll();
+//        List<PostResponse> postResponseList = new ArrayList<>();
+//        postList.forEach(post -> {postResponseList.add(new PostResponse(post));});
+//        postResponseList.forEach(System.out :: println);
     }
 }
