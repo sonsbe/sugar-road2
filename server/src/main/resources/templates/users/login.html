@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/XSL/Transform">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="../css/ui.css">
+    <link rel="stylesheet" href="../css/users/login.css">
+    <link rel="stylesheet" href="/css/loader.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+</head>
+<body>
+<div class="app-body">
+    <div class = "content">
+            <img id="loginTitle" src="../css/users/img/Sugar-Road Logo.png">
+        <div id="loginBox">
+            <form action="/users/login" method="post" name="loginForm">
+                <h4 id="please">Please Login</h4>
+                <input id="loginText1" type="text" name="userId" placeholder="Id" autocomplete='off' required><br>
+                <br>
+                <input id="loginText2" type="password" name="userPassword" placeholder="Password" required><br>
+                <br>
+                <input type="submit" id="signIn" value="Login">
+             </form>
+                <h6 id="iframed" th:text="${msg}"></h6>
+                <br>
+                <button id="signUp" onclick="location.href = '/users/signup'">Go to Sign Up</button>
+        </div>
+    </div>
+    <div class = "nav">
+        <footer th:insert="ui/footer :: footer"></footer>
+    </div>
+</div>
+</body>
+</html>

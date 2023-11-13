@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/ui.css">
+    <link rel="stylesheet" href="/css/post.css">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+</head>
+<style>
+    #title{
+font-size: 20px;
+}
+    .v-table-third > img{
+    width: 120px;
+    object-fit: cover;
+    height: 120px;
+    margin-right: 15px;
+    }
+    #backBtn{
+    text-decoration: none;
+}
+</style>
+<body>
+<div class="app-body">
+    <div class="content">
+        <a href="javascript:history.back();" id="backBtn">◀</a>
+        <br/><br/>
+        <div id = "title"><b>작성한 게시글 목록</b></div>
+        <hr>
+        <div class="post-list" th:if="${postList}">
+            <div th:each="post : ${postList}" class="thumbnail">
+                <a th:href=@{/post/detail(id=${post.postId})}>
+                    <table class="v-table">
+                        <th:block th:if="${post.postImage.length} gt 0">
+                            <tr>
+                                <td class="v-table-third" rowspan="2">
+                                    <img th:src="${post.postImage.length} gt 0 ?${post.postImage[0]} :'/images/icons/sugarroad.png'" alt=""></td>
+                                <td class="bold" th:text="${post.title}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="${post.content}"></td>
+                            </tr>
+                        </th:block>
+                        <th:block th:unless="${post.postImage.length} gt 0">
+                            <tr>
+                                <td class="bold" th:text="${post.title}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="${post.content}"></td>
+                            </tr>
+                        </th:block>
+                    </table>
+                </a>
+                <hr>
+            </div>
+
+        </div>
+
+    </div>
+    <footer th:insert="ui/footer :: footer"></footer>
+</div>
+</body>
+</html>

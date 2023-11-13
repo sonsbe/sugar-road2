@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <link rel="stylesheet" href="../css/ui.css">
+    <link rel="stylesheet" href="../css/users/signup.css">
+    <link rel="stylesheet" href="/css/loader.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+</head>
+<body>
+<div class="app-body">
+    <div class = "content">
+        <div class="top">
+            <img id="loginTitle" src="../css/users/img/Sugar-Road Logo.png">
+            <h5 id="iframed" th:text="${msg}"> </h5>
+        </div>
+            <div class="middle">
+                <form id="signForm" action="/users/signup" method="post" enctype="multipart/form-data">
+                    <div class="formTop">
+                        <h3 id="please">Please Sign Up</h3>
+                        <label class="photo" for="input-image">
+                            <img src="../css/users/img/photo.png" id = "userImage">
+                        </label>
+                    </div>
+                    <div class="formMiddle">
+                    <input class="inputText" type="text" name="userId" placeholder="User Id" required><br>
+                    <input class="inputText" type="password" name="userPassword" placeholder="Password" required><br>
+                    <input class="inputText" type="text" name="userName" placeholder="User Name" required><br>
+                    <input class="inputText" type="text" name="nickname" placeholder="User NickName" required><br>
+                    <input class="inputText" type="text" name="userEmail" placeholder="User Email" required><br>
+                    <input type="file" name="image" style="display:none" id="input-image" onchange="changeProfile(this)"><br>
+                    </div>
+                    <div class="formBottom">
+                    <input id="submitForm" type="submit" value="Sign Up"/>
+                    </div>
+                </form>
+            </div>
+    </div>
+    <div class = "nav">
+        <footer th:insert="ui/footer :: footer"></footer>
+        <div th:replace="ui/loader :: pageLoader"></div>
+    </div>
+</div>
+</body>
+<script src="/js/loader.js"></script>
+<script>
+function changeProfile(inputElement){ 	
+    document.querySelector("#userImage").src=URL.createObjectURL(inputElement.files[0]);
+    document.querySelector("#userImage").addEventListener("load", function(){
+        URL.revokeObjectURL(this.src);
+        this.style.width = "62px";
+        this.style.height = "62px";
+        this.style.borderRadius= "50%";
+    });
+} 
+</script>
+</html>
