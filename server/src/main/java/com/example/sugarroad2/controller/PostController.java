@@ -80,14 +80,20 @@ public class PostController {
         System.out.println("form:"+postRequest);
         Users users = usersRepository.findById(postRequest.getUserId()).get();
         PostCategory postCategory = postCategoryRepository.findById(postRequest.getPostCategoryId()).get();
-        postService.save(postRequest.toEntity(users, postCategory));
+        Post post = postRequest.toEntity(users, postCategory);
+        postService.save(post);
         //이미지 처리
-//        List<String> imageList = postRequest.getPostImage();
-//        for (MultipartFile mfile : postRequest.getUploadImages()) {
-//            String postImagePath = imageUtil.writeImage(mfile);
-//            PostImage postImage = PostImage.builder().postImagePath(postImagePath).build();
-//            imageList.add(postImage);
-//        }
+        List<String> postImage = new ArrayList<>();
+        if(postRequest.getUploadImages() != null) {
+            for (MultipartFile mfile : postRequest.getUploadImages()) {
+                String postImagePath = imageUtil.writeImage(mfile);
+                postImage.add(postImagePath);
+            }
+        }
+        System.out.println("post info:"+post);
+        postRequest.setPostImage(postImage);
+        List<PostImage> postImageList = postRequest.toPostImage(post);
+        postImageService.saveAll(postImageList);
         ResponseEntity<String> entity = new ResponseEntity<>(postRequest.getTitle(), HttpStatus.OK);
         return entity;
     }

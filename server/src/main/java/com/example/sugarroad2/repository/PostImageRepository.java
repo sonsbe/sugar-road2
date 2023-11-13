@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface PostImageRepository extends JpaRepository<PostImage, Integer> {
     public List<PostImage> findByPostId(int id);
+
 }
