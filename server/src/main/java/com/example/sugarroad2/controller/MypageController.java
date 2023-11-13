@@ -2,7 +2,7 @@ package com.example.sugarroad2.controller;
 
 import com.example.sugarroad2.model.dto.request.UsersRequestDTO;
 import com.example.sugarroad2.model.entity.Users;
-import com.example.sugarroad2.service.MypageService;
+import com.example.sugarroad2.service.UsersService;
 import com.example.sugarroad2.util.ImageUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -15,13 +15,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Optional;
-
 @Controller
 public class MypageController {
 
     @Autowired
-    MypageService mypageService;
+    UsersService usersService;
 
 //    @Autowired
 //    PostDAO postDAO;
@@ -54,7 +52,7 @@ public class MypageController {
         System.out.println("현재 로그인 중인 ID : " + nowLoginId); //현재 로그인 중인 ID
         //List<UsersDTO> nowUserSelect = usersDTO.readUserBy("user_id", nowLoginId);
 
-        Users nowUserSelect = mypageService.selectId(nowLoginId);
+        Users nowUserSelect = usersService.selectId(nowLoginId);
 
         if (nowUserSelect.getUserId().isEmpty()) {
             mav.addObject("msg", "유저 정보를 불러오지 못했습니다");
@@ -75,7 +73,7 @@ public class MypageController {
             editUser.setUserImagePath(userImagePath);
         }
 
-        if (mypageService.save(editUser, editUser.getUserImagePath())) {
+        if (usersService.save(editUser, editUser.getUserImagePath())) {
             System.out.println("회원의 정보가 수정되었습니다");
             model.addAttribute("msg", editUser.getId() + "회원의 정보가 수정되었습니다");
             return "redirect:/mypage";

@@ -30,7 +30,7 @@ public class UsersRepositoryTest {
     @Order(1) //순서를 지정하는 어노테이션
     @Rollback(value = false)
     @Transactional
-    void save() {
+    void save() { //save() 메서드 테스트
         Users UsersEntity = Users.builder()
                 .userId("테스터ID")
                 .userPassword("q1w2e3")
@@ -62,7 +62,7 @@ public class UsersRepositoryTest {
 
     @Test
     @Order(2)
-    void select() {
+    void select() { //findById 테스트
         Optional<Users> selectUser = usersR.findById("테스터ID");
 
         if(selectUser.isPresent()){
@@ -83,7 +83,7 @@ public class UsersRepositoryTest {
     @Order(3)
     @Rollback(value = false)
     @Transactional
-    void delete() {
+    void delete() { //delete() 테스트
         Optional<Users> deleteUser = usersR.findById("테스터ID");
 
         usersR.delete(deleteUser.get());
