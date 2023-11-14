@@ -13,7 +13,8 @@ import java.util.Optional;
 @Slf4j
 @Service
 public class UsersService {
-    // 아이디 닉네임 이메일 중복 처리 repo, service 추가하고 중복될 경우 throw DuplicateException하고 스태이터스 Forbidden 로 반환
+    // 아이디 닉네임 이메일 중복 처리 repository, service에 추가하고
+    // 중복될 경우 throw DuplicateException하고 스태이터스 Forbidden 로 반환
 
     @Autowired
     UsersRepository usersRepository;

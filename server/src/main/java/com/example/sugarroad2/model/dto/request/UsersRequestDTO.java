@@ -26,7 +26,7 @@ public class UsersRequestDTO {
 
     public Users toEntity(String userImagePath){
         Users users = Users.builder()
-                .userId(userId)
+                .id(userId)
                 .userPassword(userPassword)
                 .userName(userName)
                 .nickname(nickname)

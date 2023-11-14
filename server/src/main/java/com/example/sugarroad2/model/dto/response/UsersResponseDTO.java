@@ -23,7 +23,7 @@ public class UsersResponseDTO {
     private String userImagePath;
 
     public UsersResponseDTO(Users entity){
-        userId = entity.getUserId();
+        userId = entity.getId();
         userName = entity.getUserName();
         nickname = entity.getNickname();
         userEmail = entity.getUserEmail();
