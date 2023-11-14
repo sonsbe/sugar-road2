@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UsersRequestDTO {
-    private String id;
+    private String userId;
     private String userName;
     private String userPassword;
     private String nickname;
@@ -27,7 +27,7 @@ public class UsersRequestDTO {
 
     public Users toEntity(String userImagePath){
         Users users = Users.builder()
-                .userId(String.valueOf(id))
+                .userId(userId)
                 .userPassword(userPassword)
                 .userName(userName)
                 .nickname(nickname)
@@ -38,8 +38,8 @@ public class UsersRequestDTO {
                 .birth(birth)
                 .build();
 
-        if(id != null){
-            users.setUserId(String.valueOf(id));
+        if(userId != null){
+            users.setUserId(userId);
         }
 
         if(!userImagePath.isEmpty()){
