@@ -1,6 +1,5 @@
 package com.example.sugarroad2.service;
 
-import com.example.sugarroad2.model.dto.request.UsersRequestDTO;
 import com.example.sugarroad2.model.entity.Users;
 import com.example.sugarroad2.repository.UsersRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +19,10 @@ public class UsersService {
     UsersRepository usersRepository;
 
     public void create(Users users){
+        if(users.getId() == readById(users.getId()).getId()){
+
+        }
+
         usersRepository.save(users);
     }
 
