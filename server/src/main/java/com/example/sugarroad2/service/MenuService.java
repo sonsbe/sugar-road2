@@ -14,29 +14,19 @@ import java.util.List;
 public class MenuService {
     @Autowired
     MenuRepository menuRepository;
+
     public List<Menu> findByStore(Store store) {
         return menuRepository.findByStore(store);
     }
+
     public List<Menu> read() {
         return menuRepository.findAll();
     }
-    public String create(Menu menu) {
-        try {
-            menuRepository.save(menu);
-            return "success";
-        } catch (Exception e) {
-            log.info(e.getMessage());
-            return "fail";
-        }
-    }
-    public String update(Menu menu){
-        try {
-            menuRepository.save(menu);
-            return "success";
-        } catch (Exception e) {
-            log.info(e.getMessage());
-            return "fail";
-        }
-    }
 
+    public Menu create(Menu menu) {
+        return menuRepository.save(menu);
+    }
+    public Menu update(Menu menu) {
+        return menuRepository.save(menu);
+    }
 }

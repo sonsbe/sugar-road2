@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 //@ToString
-public class StoreResponse {
+public class StoreResponseDTO {
     private int storeId;
     private String storeName;
     private String address;
@@ -22,11 +22,11 @@ public class StoreResponse {
     private float latitude;
     private float longitude;
     private String storeImagePath;
-    private List<MenuResponse> menuList;
+    private List<MenuResponseDTO> menuList;
     //    private String userId;
 //    private int recommendCount;
 
-    public StoreResponse(Store store, List<MenuResponse> menuResponseList){
+    public StoreResponseDTO(Store store, List<MenuResponseDTO> menuResponseList){
         storeId = store.getId();
         storeName = store.getStoreName();
         address = store.getAddress();

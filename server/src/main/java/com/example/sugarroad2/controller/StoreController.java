@@ -5,16 +5,18 @@ import com.example.sugarroad2.model.entity.Menu;
 import com.example.sugarroad2.model.entity.Store;
 import com.example.sugarroad2.service.MenuService;
 import com.example.sugarroad2.service.StoreService;
+import com.example.sugarroad2.util.ImageUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/store")
 @Slf4j
@@ -23,71 +25,90 @@ public class StoreController {
     StoreService storeService;
     @Autowired
     MenuService menuService;
+    @Autowired
+    ImageUtil imageUtil;
     //    전체 리스트 읽어오기
     @GetMapping
-    public ResponseEntity<List<StoreResponse>> read() {
+    public ResponseEntity<List<StoreResponseDTO>> read() {
         // 좋아요 카운트, 리뷰 수, 이미지 유틸 추가
         //  List<StoreDTO> dtoList = storeService.read().stream().map(StoreDTO::new).toList();
         List<Store> storeList = storeService.read();
-        List<MenuResponse> menuResponseList = menuService.read().stream().map(MenuResponse::new).toList();
-        List<StoreResponse> dtoList = new ArrayList<>();
+        List<MenuResponseDTO> menuResponseDTOList = menuService.read().stream().map(MenuResponseDTO::new).toList();
+        List<StoreResponseDTO> dtoList = new ArrayList<>();
         for (Store store : storeList) {
-            List<MenuResponse> storeMenus = menuResponseList.stream().filter(MenuResponse -> MenuResponse.getStoreId() == store.getId()).collect(Collectors.toList());
-            StoreResponse storeResponse = new StoreResponse(store, storeMenus);
-            dtoList.add(storeResponse);
+            List<MenuResponseDTO> storeMenus = menuResponseDTOList.stream().filter(MenuResponseDTO -> MenuResponseDTO.getStoreId() == store.getId()).collect(Collectors.toList());
+            StoreResponseDTO storeResponseDTO = new StoreResponseDTO(store, storeMenus);
+            dtoList.add(storeResponseDTO);
         }
         return ResponseEntity.status(HttpStatus.OK).body(dtoList);
     }
     // 가게 1개 읽어오기
     @GetMapping("/{storeId}")
-    public ResponseEntity<StoreResponse> readOne(@PathVariable int storeId) {
+    public ResponseEntity<StoreResponseDTO> readBy(@PathVariable int storeId) {
         Store store = storeService.readOne(storeId);
-        List<MenuResponse> menuResponseList = menuService.findByStore(store).stream().map(MenuResponse::new).toList();
-        StoreResponse storeResponse = new StoreResponse(store, menuResponseList);
-        return ResponseEntity.status(HttpStatus.OK).body(storeResponse);
+        List<MenuResponseDTO> menuResponseDTOList = menuService.findByStore(store).stream().map(MenuResponseDTO::new).toList();
+        StoreResponseDTO storeResponseDTO = new StoreResponseDTO(store, menuResponseDTOList);
+        return ResponseEntity.status(HttpStatus.OK).body(storeResponseDTO);
     }
     // 가게 생성
     @PostMapping
-    public ResponseEntity<String> create(@RequestBody StoreCreateRequest storeCreateRequest) {
-        StoreRequest storeRequest = storeCreateRequest.getStoreRequest();
-        List<MenuRequest> menuRequestList = storeCreateRequest.getMenuRequestList();
-        Store store = storeRequest.toEntity();
-        String result = storeService.create(store);
-        if (menuRequestList.size() == 0) {
-            log.info("등록하는 메뉴가 없습니다");
-        } else {
-            for (int i = 0; i < menuRequestList.size(); i++) {
-                Menu menu = menuRequestList.get(i).toEntity(store);
-                String result1 = menuService.create(menu);
-            }
-        }
-        if (result.equals("success")) return ResponseEntity.status(HttpStatus.CREATED).body("가게 저장완료");
-        else return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("가게 저장 실패");
+    public ResponseEntity<?> create(@RequestBody StoreCreateRequestDTO storeCreateRequestDTO) {
+        String menuImagePath = "";
+       try{
+           StoreRequestDTO storeRequestDTO = storeCreateRequestDTO.getStoreRequestDTO();
+           String storeImgPath = imageUtil.writeImage(storeRequestDTO.getStoreImagePath());
+           Store store = storeRequestDTO.toEntity(storeImgPath);
+          Store createStore = storeService.create(store);
+           List<MenuRequestDTO> menuRequestDTOList = storeCreateRequestDTO.getMenuRequestListDTO();
+           List<MenuResponseDTO> menuResponseDTOList = new ArrayList<>();
+           if (menuRequestDTOList.isEmpty()) {
+               log.info("등록하는 메뉴가 없습니다");
+           } else {
+               for(MenuRequestDTO menuRequestDTO : menuRequestDTOList){
+                   menuImagePath = imageUtil.writeImage(menuRequestDTO.getMenuImagePath());
+                   Menu menu = menuRequestDTO.toEntity(store, menuImagePath);
+                   menuResponseDTOList.add(new MenuResponseDTO(menuService.create(menu)));
+               }
+           }
+           StoreResponseDTO storeResponse = new StoreResponseDTO(createStore, menuResponseDTOList);
+           return ResponseEntity.status(HttpStatus.CREATED).body("가게 저장완료");
+       }catch(Exception exception){
+           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+       }
     }
     // 가게 수정
     @PutMapping
-    public ResponseEntity<String> update(@RequestBody StoreCreateRequest storeCreateRequest) {
-        StoreRequest storeRequest = storeCreateRequest.getStoreRequest();
-        Store store = storeRequest.toEntity();
-        String result = storeService.update(store);
-//        String result = storeService.update(storeCreateRequest.getStoreRequest().toEntity());
-        List<MenuRequest> menuRequestList = storeCreateRequest.getMenuRequestList();
-        if (menuRequestList.size() == 0) {
-            log.info("수정하는 메뉴가 없습니다");
-        } else {
-            for (int i = 0; i < menuRequestList.size(); i++) {
-                Menu menu = menuRequestList.get(i).toEntity(store);
-                String result1 = menuService.update(menu);
+    public ResponseEntity<?> update(@RequestBody StoreCreateRequestDTO storeCreateRequestDTO) {
+        String menuImagePath = "";
+        List<MenuResponseDTO> menuResponseDTOList = new ArrayList<>();
+        try{
+            StoreRequestDTO storeRequestDTO = storeCreateRequestDTO.getStoreRequestDTO();
+            String storeImgPath = imageUtil.writeImage(storeRequestDTO.getStoreImagePath());
+            Store store = storeRequestDTO.toEntity(storeImgPath);
+            Store updateStore = storeService.update(store);
+            List<MenuRequestDTO> menuRequestDTOList = storeCreateRequestDTO.getMenuRequestListDTO();
+            if (menuRequestDTOList.size() == 0) {
+                log.info("수정하는 메뉴가 없습니다");
+            } else {
+                for(MenuRequestDTO menuRequestDTO: menuRequestDTOList) {
+                    menuImagePath = imageUtil.writeImage(menuRequestDTO.getMenuImagePath());
+                    Menu menu = menuRequestDTO.toEntity(store, menuImagePath);
+                    menuResponseDTOList.add(new MenuResponseDTO(menuService.update(menu)));
+                }
             }
+            return ResponseEntity.status(HttpStatus.CREATED).body(new StoreResponseDTO(updateStore, menuResponseDTOList));
+        }catch (Exception exception){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        if (result.equals("success")) return ResponseEntity.status(HttpStatus.CREATED).body("가게 수정완료");
-        else return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("가게 수정 실패");
     }
     // 가게 삭제
     @DeleteMapping("/{storeId}")
-    public ResponseEntity<String> delete(@PathVariable("storeId") int storeId) {
-        String result = storeService.delete(storeId);
-        if (result.equals("success")) return ResponseEntity.status(HttpStatus.OK).body("가게 삭제완료");
-        else return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("가게 삭제 실패");
+    public ResponseEntity<?> delete(@PathVariable("storeId") int storeId) {
+       try{
+           storeService.delete(storeId);
+           return ResponseEntity.status(HttpStatus.OK).build();
+       }catch (Exception exception){
+           return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+       }
     }
 }

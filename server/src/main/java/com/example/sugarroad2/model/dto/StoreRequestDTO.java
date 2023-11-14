@@ -1,29 +1,27 @@
 package com.example.sugarroad2.model.dto;
 
-import com.example.sugarroad2.model.entity.Menu;
 import com.example.sugarroad2.model.entity.Store;
 import lombok.*;
-
-import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
-//@Setter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 //@ToString
-public class StoreRequest {
+public class StoreRequestDTO {
     private String storeName;
     private String address;
     private String phoneNumber;
     private String storeDesc;
     private float latitude;
     private float longitude;
-    private String storeImagePath;
+    private MultipartFile storeImagePath;
 //    private List<MenuRequest> menuList;
 //    private String userId;
 //    private int recommendCount;
-    public Store toEntity() { // 엔티티로
+    public Store toEntity(String storeImagePath) { // 엔티티로
         Store store = Store.builder()
                 .storeName(storeName)
                 .address(address)
