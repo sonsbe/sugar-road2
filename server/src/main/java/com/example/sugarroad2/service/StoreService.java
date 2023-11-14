@@ -1,7 +1,6 @@
 package com.example.sugarroad2.service;
 
 
-import com.example.sugarroad2.model.dto.StoreDTO;
 import com.example.sugarroad2.model.entity.Store;
 import com.example.sugarroad2.repository.StoreRepository;
 import lombok.extern.slf4j.Slf4j;
