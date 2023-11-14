@@ -24,7 +24,6 @@ public class Store {
     private float latitude;
     private float longitude;
     private String storeImagePath;
-//  private List<MenuDTO> menuList;
 //  private int recommendCount;
 
     /* 유저용

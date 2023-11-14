@@ -23,7 +23,6 @@ public class StoreController {
     StoreService storeService;
     @Autowired
     MenuService menuService;
-
     //    전체 리스트 읽어오기
     @GetMapping
     public ResponseEntity<List<StoreResponse>> read() {
@@ -47,19 +46,42 @@ public class StoreController {
         StoreResponse storeResponse = new StoreResponse(store, menuResponseList);
         return ResponseEntity.status(HttpStatus.OK).body(storeResponse);
     }
-    // 가게 등록
+    // 가게 생성
     @PostMapping
-    public ResponseEntity<String> create(StoreRequest storeRequest, List<MenuRequest> menuRequestList) {
-        System.out.println("storeRequest:"+storeRequest);
-        System.out.println("menuRequestList"+menuRequestList);
+    public ResponseEntity<String> create(@RequestBody StoreCreateRequest storeCreateRequest) {
+        StoreRequest storeRequest = storeCreateRequest.getStoreRequest();
+        List<MenuRequest> menuRequestList = storeCreateRequest.getMenuRequestList();
         Store store = storeRequest.toEntity();
         String result = storeService.create(store);
-        for (int i =0; i<menuRequestList.size(); i++){
-            Menu menu = menuRequestList.get(i).toEntity(store);
-            String result1 = menuService.create(menu);
+        if (menuRequestList.size() == 0) {
+            log.info("등록하는 메뉴가 없습니다");
+        } else {
+            for (int i = 0; i < menuRequestList.size(); i++) {
+                Menu menu = menuRequestList.get(i).toEntity(store);
+                String result1 = menuService.create(menu);
+            }
         }
         if (result.equals("success")) return ResponseEntity.status(HttpStatus.CREATED).body("가게 저장완료");
         else return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("가게 저장 실패");
+    }
+    // 가게 수정
+    @PutMapping
+    public ResponseEntity<String> update(@RequestBody StoreCreateRequest storeCreateRequest) {
+        StoreRequest storeRequest = storeCreateRequest.getStoreRequest();
+        Store store = storeRequest.toEntity();
+        String result = storeService.update(store);
+//        String result = storeService.update(storeCreateRequest.getStoreRequest().toEntity());
+        List<MenuRequest> menuRequestList = storeCreateRequest.getMenuRequestList();
+        if (menuRequestList.size() == 0) {
+            log.info("수정하는 메뉴가 없습니다");
+        } else {
+            for (int i = 0; i < menuRequestList.size(); i++) {
+                Menu menu = menuRequestList.get(i).toEntity(store);
+                String result1 = menuService.update(menu);
+            }
+        }
+        if (result.equals("success")) return ResponseEntity.status(HttpStatus.CREATED).body("가게 수정완료");
+        else return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("가게 수정 실패");
     }
     // 가게 삭제
     @DeleteMapping("/{storeId}")

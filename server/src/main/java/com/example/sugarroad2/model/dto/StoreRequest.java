@@ -1,5 +1,6 @@
 package com.example.sugarroad2.model.dto;
 
+import com.example.sugarroad2.model.entity.Menu;
 import com.example.sugarroad2.model.entity.Store;
 import lombok.*;
 
@@ -19,7 +20,7 @@ public class StoreRequest {
     private float latitude;
     private float longitude;
     private String storeImagePath;
-    //    private List<MenuDTO> menuList;
+//    private List<MenuRequest> menuList;
 //    private String userId;
 //    private int recommendCount;
     public Store toEntity() { // 엔티티로
@@ -32,4 +33,5 @@ public class StoreRequest {
                 .build();
         return store;
     }
+
 }

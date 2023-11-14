@@ -45,8 +45,3 @@ public class StoreDTO {
         return store;
     }
 }
-
-// class A {
-//   public A(int n)
-//}
-// A a = new A(3);

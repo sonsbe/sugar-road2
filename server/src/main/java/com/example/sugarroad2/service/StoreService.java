@@ -16,17 +16,23 @@ import java.util.Optional;
 public class StoreService {
     @Autowired
     StoreRepository storeRepository;
-
-        public List<Store> read(){
+    public List<Store> read() {
         List<Store> storeList = storeRepository.findAll();
         return storeList;
     }
-
     public Store readOne(int storeId) {
         Optional<Store> optional = storeRepository.findById(storeId);
         return optional.get();
     }
     public String create(Store store) {
+        try {
+            storeRepository.save(store);
+            return "success";
+        } catch (Exception e) {
+            return "fail";
+        }
+    }
+    public String update(Store store) {
         try {
             storeRepository.save(store);
             return "success";

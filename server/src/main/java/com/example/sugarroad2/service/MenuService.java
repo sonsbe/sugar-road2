@@ -8,24 +8,35 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Slf4j
 @Service
 public class MenuService {
     @Autowired
     MenuRepository menuRepository;
-    public List<Menu> findByStore(Store store){
+    public List<Menu> findByStore(Store store) {
         return menuRepository.findByStore(store);
     }
-    public List<Menu> read(){
+    public List<Menu> read() {
         return menuRepository.findAll();
     }
-    public  String create(Menu menu){
-        try{
+    public String create(Menu menu) {
+        try {
             menuRepository.save(menu);
             return "success";
-        }catch (Exception e){
+        } catch (Exception e) {
             log.info(e.getMessage());
             return "fail";
         }
     }
+    public String update(Menu menu){
+        try {
+            menuRepository.save(menu);
+            return "success";
+        } catch (Exception e) {
+            log.info(e.getMessage());
+            return "fail";
+        }
+    }
+
 }
