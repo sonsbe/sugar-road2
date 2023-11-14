@@ -34,9 +34,12 @@ public class UsersService {
         //각종 서비스에서 유저 ID를 통해 DB조회를 합니다
         Optional<Users> selectUser = usersRepository.findById(selectId);
 
-        if(selectUser.isPresent()){ //조회 결과가 없으면 텅 빈 엔티티를 리턴합니다
+        System.out.println("조회 수행");
+
+        if(selectUser.isEmpty()){ //조회 결과가 없으면 텅 빈 엔티티를 리턴합니다
             return Users.builder().userId("").build();
         } else {
+            System.out.println("조회 성공");
             return selectUser.get();
         }
     }

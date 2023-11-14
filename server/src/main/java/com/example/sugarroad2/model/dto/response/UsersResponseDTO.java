@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UsersResponseDTO {
-    private Integer id;
+    private String id;
     private String userName;
     private String nickname;
     private String userEmail;
@@ -25,7 +25,7 @@ public class UsersResponseDTO {
     private MultipartFile image; //프로필 사진 선택 시 임의로 저장할 속성
 
     public UsersResponseDTO(Users entity){
-        id = Integer.valueOf(entity.getUserId());
+        id = entity.getUserId();
         userName = entity.getUserName();
         nickname = entity.getNickname();
         userEmail = entity.getUserEmail();
