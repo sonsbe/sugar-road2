@@ -1,6 +1,7 @@
 package com.example.sugarroad2.controller;
 
 import com.example.sugarroad2.model.dto.request.UsersRequestDTO;
+import com.example.sugarroad2.model.dto.response.UsersResponseDTO;
 import com.example.sugarroad2.model.entity.Users;
 import com.example.sugarroad2.service.UsersService;
 import com.example.sugarroad2.util.ImageUtil;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -48,16 +50,16 @@ public class MypageController {
         }
 
         //현재 유저 정보를 DB조회하는 코드
-        String nowLoginId = (String) session.getAttribute("nowLogin");
+        //String nowLoginId = (String) session.getAttribute("nowLogin");
+        String nowLoginId = "테스터ID";
         System.out.println("현재 로그인 중인 ID : " + nowLoginId); //현재 로그인 중인 ID
-        //List<UsersDTO> nowUserSelect = usersDTO.readUserBy("user_id", nowLoginId);
 
         Users nowUserSelect = usersService.selectId(nowLoginId);
 
         if (nowUserSelect.getUserId().isEmpty()) {
             mav.addObject("msg", "유저 정보를 불러오지 못했습니다");
         } else {
-            mav.addObject("userInfo", nowUserSelect);
+            mav.addObject("userInfo", new UsersResponseDTO(nowUserSelect));
         }
         return mav;
     }
@@ -105,30 +107,32 @@ public class MypageController {
         HttpSession session = request.getSession(false);
 
         //현재 유저 정보를 DB조회하는 코드
-        String nowLoginId = (String) session.getAttribute("nowLogin");
+        //String nowLoginId = (String) session.getAttribute("nowLogin");
+        String nowLoginId = "테스터ID";
 
-        //List<UsersRequestDTO> selectDeleteId = usersDAO.readUserBy("user_id", nowLoginId);
+        Users selectDeleteId = usersService.selectId(nowLoginId);
         //삭제하려는 회원정보 조회
 
-//        if(!(selectDeleteId.get(0).getUserPassword().equals(deleteUser.getUserPassword()))){
-//            //입력한 패스워드와 일치하지 않으면
-//            System.out.println("패스워드를 다시 입력해주세요");
-//            model.addAttribute("msg", "패스워드를 다시 입력해주세요");
-//            return "redirect:/mypage/delete";
-//        } else {
-//            if(usersDAO.deleteUser(selectDeleteId.get(0).getUserId())){ //삭제하려는 유저의 정보를 삭제
-//
-//                if(session != null){ //세션이 존재하면
-//                    session.invalidate(); //세션 초기화
-//                }
-//
-//                System.out.println("탈퇴되었습니다");
-//                return "redirect:/users/login.html"; //로그인 화면으로 이동
-//            }
-//        }
-//        System.out.println("오류가 발생했습니다");
-//        return "redirect:/users/login.html";
-//    }
+        if(!(selectDeleteId.getUserPassword().equals(deleteUser.getUserPassword()))){
+            //입력한 패스워드와 일치하지 않으면
+            System.out.println("패스워드를 다시 입력해주세요");
+            model.addAttribute("msg", "패스워드를 다시 입력해주세요");
+            return "redirect:/mypage/delete";
+        } else {
+            if(usersService.delete(deleteUser)){ //삭제하려는 유저의 정보를 삭제
+
+                if(session != null){ //세션이 존재하면
+                    session.invalidate(); //세션 초기화
+                }
+
+                System.out.println("탈퇴되었습니다");
+                return "redirect:/users/login.html"; //로그인 화면으로 이동
+            }
+        }
+        System.out.println("오류가 발생했습니다");
+        return "redirect:/users/login.html";
+    }
+
 //    @GetMapping("/mypage/mypost")
 //    public ModelAndView readMyPost(HttpSession session){
 //        ModelAndView mav = new ModelAndView();
@@ -152,6 +156,7 @@ public class MypageController {
 //
 //        return mav;
 //    }
+
 //    @GetMapping("/mypage/mylike")
 //    public ModelAndView readMyRecommendation(HttpSession session){
 //        ModelAndView mav = new ModelAndView();
@@ -175,7 +180,6 @@ public class MypageController {
 //
 //        return mav;
 //    }
-        return nowLoginId;
-    }
+
 }
 
