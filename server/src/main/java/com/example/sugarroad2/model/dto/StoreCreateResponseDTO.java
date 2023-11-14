@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @Builder
-public class StoreCreateRequestDTO {
-    private StoreRequestDTO storeRequestDTO;
-    private List<MenuRequestDTO> menuRequestListDTO;
+public class StoreCreateResponseDTO {
+    private StoreResponseDTO storeResponse;
+    private List<MenuResponseDTO> menuResponseList;
 }
