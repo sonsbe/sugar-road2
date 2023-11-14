@@ -22,7 +22,6 @@ public class UsersRequestDTO {
     private String status;
     private String gender;
     private LocalDate birth;
-    private String userImagePath;
     private MultipartFile image; //프로필 사진 선택 시 임의로 저장할 속성
 
     public Users toEntity(String userImagePath){
@@ -37,10 +36,6 @@ public class UsersRequestDTO {
                 .gender(gender)
                 .birth(birth)
                 .build();
-
-        if(userId != null){
-            users.setUserId(userId);
-        }
 
         if(!userImagePath.isEmpty()){
             users.setUserImagePath(userImagePath);

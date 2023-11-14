@@ -11,7 +11,6 @@ import java.time.LocalDate;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 public class UsersResponseDTO {
     private String userId;
     private String userName;
@@ -22,7 +21,6 @@ public class UsersResponseDTO {
     private String gender;
     private LocalDate birth;
     private String userImagePath;
-    private MultipartFile image; //프로필 사진 선택 시 임의로 저장할 속성
 
     public UsersResponseDTO(Users entity){
         userId = entity.getUserId();
