@@ -15,14 +15,23 @@ import com.example.sugarroad2.service.ViewsService;
 import com.example.sugarroad2.util.ImageUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.swing.text.html.parser.Entity;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
@@ -44,7 +53,7 @@ public class PostController {
     @Autowired
     private PostCategoryRepository postCategoryRepository;
     //entity->response
-    private PostResponse toResponse(Post post){
+    private PostResponse convertToPostResponse(Post post){
         List<String> postImage = new ArrayList<>();
         List<PostImage> postImageList = postImageService.readByPostId(post.getId());
         //postImage
@@ -73,7 +82,7 @@ public class PostController {
             List<Post> postList = postService.read(col);
             List<PostResponse> postResponseList = new ArrayList<>();
             for (Post post : postList) {
-                postResponseList.add(toResponse(post));
+                postResponseList.add(convertToPostResponse(post));
             }
             return ResponseEntity.ok().body(postResponseList);
         } catch (Exception e){
@@ -81,66 +90,79 @@ public class PostController {
             return ResponseEntity.badRequest().body(error);
         }
     }
-
     @GetMapping("/{id}")
-    public ResponseEntity<PostResponse> readById(@PathVariable int id){
-        Post post = postService.readById(id);
-        PostResponse postResponse = toResponse(post);
-        ResponseEntity<PostResponse> entity = new ResponseEntity<>(postResponse, HttpStatus.OK);
-
-        return entity;
+    public ResponseEntity<Object> readById(@PathVariable int id){
+        try {
+            Post post = postService.readById(id);
+            PostResponse postResponse = convertToPostResponse(post);
+            ResponseEntity<PostResponse> entity = new ResponseEntity<>(postResponse, HttpStatus.OK);
+            return ResponseEntity.ok().body(postResponse);
+        } catch (Exception e){
+            String error = e.getMessage();
+            return ResponseEntity.badRequest().body(error);
+        }
     }
     @GetMapping({"/user/{id}"})
-    public ResponseEntity<List<PostResponse>> readByUser(@PathVariable String id) {
-        List<Post> postList = postService.readByUser(id);
-        List<PostResponse> postResponseList = new ArrayList<>();
-        for (Post post : postList)
-            postResponseList.add(toResponse(post));
-        ResponseEntity<List<PostResponse>> entity = new ResponseEntity<>(postResponseList, HttpStatus.OK);
+    public ResponseEntity<Object> readByUser(@PathVariable String id) {
+        try {
+            List<Post> postList = postService.readByUser(id);
+            List<PostResponse> postResponseList = new ArrayList<>();
+            for (Post post : postList)
+                postResponseList.add(convertToPostResponse(post));
+            return ResponseEntity.ok().body(postResponseList);
+        } catch (Exception e){
+            String error = e.getMessage();
+            return ResponseEntity.badRequest().body(error);
+        }
 
-        return entity;
     }
     @PostMapping
     public ResponseEntity<String> create(PostRequest postRequest){
-        System.out.println("form:"+postRequest);
-        Users users = usersRepository.findById(postRequest.getUserId()).get();
-        PostCategory postCategory = postCategoryRepository.findById(postRequest.getPostCategoryId()).get();
-        Post post = postRequest.toEntity(users, postCategory);
-        postService.create(post);
-
-        //이미지 저장
-        if(postRequest.getUploadImages() != null) {
-            saveImage(postRequest, post);
+        try {
+            System.out.println("form:" + postRequest);
+            Users users = usersRepository.findById(postRequest.getUserId()).get();
+            PostCategory postCategory = postCategoryRepository.findById(postRequest.getPostCategoryId()).get();
+            Post post = postRequest.toEntity(users, postCategory);
+            postService.create(post);
+            //이미지 저장
+            if (postRequest.getUploadImages() != null) {
+                saveImage(postRequest, post);
+            }
+            return ResponseEntity.created(URI.create("/posts/" + post.getId())).body("작성 완료");
+        } catch (Exception e){
+            String error = e.getMessage();
+            return ResponseEntity.badRequest().body(error);
         }
-
-        //ResponseEntity<String> entity = new ResponseEntity<>(postRequest.getTitle(), HttpStatus.CREATED);
-        return ResponseEntity.created(URI.create("/posts/"+post.getId())).body("작성 완료");
     }
     @PutMapping("/{id}")
     public ResponseEntity<String> update(@PathVariable int id, PostRequest postRequest){
-        Post post = postService.readById(id);
-        //제목, 내용 수정
-        post.setTitle(postRequest.getTitle());
-        post.setContent(postRequest.getContent());
-        //이미지 삭제
-        if(postRequest.getPostImage() != null){
-            for(String postImagePath: postRequest.getPostImage()){
-                PostImage postImage = postImageService.readByPostImagePath(postImagePath);
-                postImageService.delete(postImage);
+        try {
+            Post post = postService.readById(id);
+            //제목, 내용 수정
+            post.setTitle(postRequest.getTitle());
+            post.setContent(postRequest.getContent());
+            //이미지 삭제
+            if (postRequest.getPostImage() != null) {
+                for (String postImagePath : postRequest.getPostImage()) {
+                    PostImage postImage = postImageService.readByPostImagePath(postImagePath);
+                    postImageService.delete(postImage);
+                }
             }
+            //이미지 저장
+            if (postRequest.getUploadImages() != null) {
+                saveImage(postRequest, post);
+            }
+            System.out.println("포스트:" + post);
+            postService.update(post);
+            //ResponseEntity<String> entity = new ResponseEntity<>("수정 완료", HttpStatus.CREATED);
+            return ResponseEntity.created(URI.create("/posts/" + id)).body("수정 완료");
+        } catch (Exception e){
+            String error = e.getMessage();
+            return ResponseEntity.badRequest().body(error);
         }
-        //이미지 저장
-        if(postRequest.getUploadImages() != null) {
-            saveImage(postRequest, post);
-        }
-
-        System.out.println("포스트:"+post);
-        postService.update(post);
-        //ResponseEntity<String> entity = new ResponseEntity<>("수정 완료", HttpStatus.CREATED);
-        return ResponseEntity.created(URI.create("/posts/"+id)).body("수정 완료");
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable int id){
+    public ResponseEntity<String> delete(@PathVariable int id){
         try {
             Post post = postService.readById(id);
             postService.delete(post);

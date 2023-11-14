@@ -26,14 +26,8 @@ public class PostService {
     private PostCategoryRepository postCategoryRepository;
     @Autowired
     private UsersRepository usersRepository;
-    public boolean create(Post post){
-        try {
+    public void create(Post post){
             postRepository.save(post);
-            return true;
-        } catch (Exception e){
-            return false;
-        }
-
 
     }
     public List<Post> read(String col){
@@ -52,13 +46,8 @@ public class PostService {
         return postList;
     }
 
-    public boolean delete(Post post){
-        try{
+    public void delete(Post post){
             postRepository.delete(post);
-            return true;
-        }catch (Exception e){
-            return false;
-        }
     }
 //    @Transactional
 //    public void update(int id, PostRequest postRequest){//이미지 관련 처리
@@ -69,11 +58,7 @@ public class PostService {
 //        post.setPostCategory(postCategoryRepository.findById(postRequest.getPostCategoryId()).get());
 //    }
     public void update(Post post){
-        try{
             postRepository.save(post);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
     }
 
 }
