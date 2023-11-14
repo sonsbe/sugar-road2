@@ -12,6 +12,7 @@ import java.util.List;
 @Getter
 @Builder
 @ToString
+@EqualsAndHashCode
 public class PostResponse {
     private int id;
     private String content;
@@ -20,15 +21,17 @@ public class PostResponse {
     private LocalDateTime postedDate;
     private String userId;
     private String postCategoryId;
-    private int commentCount;
-    private int recommendCount;
-    public PostResponse(Post post, List<String> postImage){
+    private long commentCount;
+    private long recommendCount;
+    private long viewsCount;
+    public PostResponse(Post post, List<String> postImage, long viewsCount){
         id = post.getId();
         content = post.getContent();
         title = post.getTitle();
         postedDate = post.getPostedDate();
         userId = post.getUser().getId();
         this.postImage = postImage;
+        this.viewsCount = viewsCount;
         postCategoryId = post.getPostCategory().getId();
 
     }

@@ -39,13 +39,14 @@ public class PostServiceTest {
                 .userId("abcd1234").postCategoryId("01").build();
         Users users = usersRepository.findById("abcd1234").get();
         PostCategory postCategory = postCategoryRepository.findById("01").get();
-        postService.save(postRequest.toEntity(users, postCategory));
-        postService.findAll().forEach(System.out :: println);
+        postService.create(postRequest.toEntity(users, postCategory));
+        postService.read("userId").forEach(System.out :: println);
     }
 
     @Test
     void findAll() {
-        List<Post> postList = postService.findAll();
+        List<Post> postList = postService.read("postedDate");
+        postList.forEach(System.out :: println);
         List<PostResponse> postResponseList = new ArrayList<>();
 //        postList.forEach(post -> {postResponseList.add(new PostResponse(post));});
 //        postResponseList.forEach(System.out :: println);
@@ -53,16 +54,16 @@ public class PostServiceTest {
 
     @Test
     void findById() {
-        System.out.println(postService.findById(6));
+        System.out.println(postService.readById(6));
     }
 
     @Test
     void delete() {
-        postService.findAll().forEach(System.out :: println);
-        PostResponse postResponse =PostResponse.builder().id(8).build();
-        int id = postResponse.getId();
-        postService.delete(id);
-        postService.findAll().forEach(System.out :: println);
+//        postService.read().forEach(System.out :: println);
+//        PostResponse postResponse =PostResponse.builder().id(8).build();
+//        int id = postResponse.getId();
+//        postService.delete(id);
+//        postService.findAll().forEach(System.out :: println);
 
 
     }
@@ -71,8 +72,8 @@ public class PostServiceTest {
     void update() {
         PostRequest postRequest = PostRequest.builder().content("내용_수정").title("제목_수정").postCategoryId("01").build();
 
-        postService.update(6, postRequest);
+//        postService.update(6, postRequest);
 
-        System.out.println(postService.findById(6));
+//        System.out.println(postService.readById(6));
     }
 }

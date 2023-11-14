@@ -11,6 +11,7 @@ import com.example.sugarroad2.repository.UsersRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class PostService {
     private PostCategoryRepository postCategoryRepository;
     @Autowired
     private UsersRepository usersRepository;
-    public boolean save(Post post){
+    public boolean create(Post post){
         try {
             postRepository.save(post);
             return true;
@@ -35,33 +36,44 @@ public class PostService {
 
 
     }
-    public List<Post> findAll(){
-        return postRepository.findAll();
+    public List<Post> read(String col){
+        if(col != null)
+            return  postRepository.findAll(Sort.by(Sort.Direction.DESC, col));
+        else
+            return postRepository.findAll();
+
     }
-    public Post findById(int id){
+    public Post readById(int id){
         return postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
     }
-    public List<Post> findByUser(String id){
+    public List<Post> readByUser(String id){
         List<Post> postList = postRepository.findByUserId(id);
         return postList;
     }
-    public boolean delete(int id){
-        try {
-            postRepository.deleteById(id);
+
+    public boolean delete(Post post){
+        try{
+            postRepository.delete(post);
             return true;
-        } catch (Exception e){
+        }catch (Exception e){
             return false;
         }
-
     }
-    @Transactional
-    public void update(int id, PostRequest postRequest){//이미지 관련 처리
-        Post post = postRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
-        post.setContent(postRequest.getContent());
-        post.setTitle(postRequest.getTitle());
-        post.setPostCategory(postCategoryRepository.findById(postRequest.getPostCategoryId()).get());
+//    @Transactional
+//    public void update(int id, PostRequest postRequest){//이미지 관련 처리
+//        Post post = postRepository.findById(id)
+//                .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
+//        post.setContent(postRequest.getContent());
+//        post.setTitle(postRequest.getTitle());
+//        post.setPostCategory(postCategoryRepository.findById(postRequest.getPostCategoryId()).get());
+//    }
+    public void update(Post post){
+        try{
+            postRepository.save(post);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 }

@@ -13,6 +13,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class PostTest {
         PostCategory postCategory = postCategoryRepository.findById("01").get();
         postRepository.save(postRequest.toEntity(users, postCategory));
         List<Post> list = postRepository.findAll();
-        List<PostImage> postImageList = postImageRepository.findByPost(list.get(0));
+        //List<PostImage> postImageList = postImageRepository.readByPostId(list.get(0));
         list.forEach(System.out :: println);
         List<Post> postList = postRepository.findByUserId(postRequest.getUserId());
         postList.forEach(System.out :: println);
@@ -62,5 +63,13 @@ public class PostTest {
 //        List<PostResponse> postResponseList = new ArrayList<>();
 //        postList.forEach(post -> {postResponseList.add(new PostResponse(post));});
 //        postResponseList.forEach(System.out :: println);
+        List<Post> postList = postRepository.findAll(Sort.by(Sort.Direction.ASC, "title"));
+        postList.forEach(System.out :: println);
+    }
+    @Test
+    void search(){
+        List<Post> postList = postRepository.findByContentContainsOrTitleContains("0955", "0955");
+        System.out.println(postList.size());
+        postList.forEach(System.out::println);
     }
 }

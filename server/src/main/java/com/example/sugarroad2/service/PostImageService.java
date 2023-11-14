@@ -17,16 +17,19 @@ public class PostImageService {
     @Autowired
     private PostImageRepository postImageRepository;
 
-    public void save(PostImage postImage){
+    public void create(PostImage postImage){
         postImageRepository.save(postImage);
     }
     public void saveAll(List<PostImage> postImageList){
         postImageRepository.saveAll(postImageList);
     }
-    public List<PostImage> findByPostId(int id){
+    public List<PostImage> readByPostId(int id){
         return postImageRepository.findByPostId(id);
     }
-    public void delete(int id){
-        postImageRepository.deleteById(id);
+    public PostImage readByPostImagePath(String postImagePath){
+        return postImageRepository.findByPostImagePath(postImagePath);
+    }
+    public void delete(PostImage postImage){
+        postImageRepository.delete(postImage);
     }
 }

@@ -11,6 +11,7 @@ import com.example.sugarroad2.repository.UsersRepository;
 import com.example.sugarroad2.service.PostImageService;
 //import com.example.sugarroad2.service.PostService;
 import com.example.sugarroad2.service.PostService;
+import com.example.sugarroad2.service.ViewsService;
 import com.example.sugarroad2.util.ImageUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -35,31 +37,54 @@ public class PostController {
     @Autowired
     private UsersRepository usersRepository;
     @Autowired
+    private ViewsService viewsService;
+    @Autowired
     ImageUtil imageUtil;
+
     @Autowired
     private PostCategoryRepository postCategoryRepository;
+    //entity->response
     private PostResponse toResponse(Post post){
         List<String> postImage = new ArrayList<>();
-        List<PostImage> postImageList = postImageService.findByPostId(post.getId());
+        List<PostImage> postImageList = postImageService.readByPostId(post.getId());
+        //postImage
         if(postImageList != null)
             postImageList.forEach(image->{postImage.add(image.getPostImagePath());});
-        return new PostResponse(post, postImage);
-}
+        long viewsCount = viewsService.count("p", post.getId());
+        PostResponse postResponse = new PostResponse(post, postImage, viewsCount);
+        //조회수
+        return postResponse;
+    }
+    private void saveImage(PostRequest postRequest, Post post){
+        List<String> postImage = new ArrayList<>();
+        for (MultipartFile mfile : postRequest.getUploadImages()) {
+            String postImagePath = imageUtil.writeImage(mfile);
+            postImage.add(postImagePath);
+        }
+        postRequest.setPostImage(postImage);
+        List<PostImage> postImageList = postRequest.toPostImage(post);
+        postImageService.saveAll(postImageList);
+        log.info("이미지 저장 완료");
+    }
 
     @GetMapping
-    public ResponseEntity<List<PostResponse>> read(){
-        List<Post> postList = postService.findAll();
-        List<PostResponse> postResponseList = new ArrayList<>();
-        for(Post post : postList){
-            postResponseList.add(toResponse(post));
+    public ResponseEntity<?> read(String col){
+        try {
+            List<Post> postList = postService.read(col);
+            List<PostResponse> postResponseList = new ArrayList<>();
+            for (Post post : postList) {
+                postResponseList.add(toResponse(post));
+            }
+            return ResponseEntity.ok().body(postResponseList);
+        } catch (Exception e){
+            String error = e.getMessage();
+            return ResponseEntity.badRequest().body(error);
         }
-        ResponseEntity<List<PostResponse>> entity = new ResponseEntity<>(postResponseList, HttpStatus.OK);
-
-        return entity;
     }
+
     @GetMapping("/{id}")
-    public ResponseEntity<PostResponse> read(@PathVariable int id){
-        Post post = postService.findById(id);
+    public ResponseEntity<PostResponse> readById(@PathVariable int id){
+        Post post = postService.readById(id);
         PostResponse postResponse = toResponse(post);
         ResponseEntity<PostResponse> entity = new ResponseEntity<>(postResponse, HttpStatus.OK);
 
@@ -67,7 +92,7 @@ public class PostController {
     }
     @GetMapping({"/user/{id}"})
     public ResponseEntity<List<PostResponse>> readByUser(@PathVariable String id) {
-        List<Post> postList = postService.findByUser(id);
+        List<Post> postList = postService.readByUser(id);
         List<PostResponse> postResponseList = new ArrayList<>();
         for (Post post : postList)
             postResponseList.add(toResponse(post));
@@ -76,39 +101,54 @@ public class PostController {
         return entity;
     }
     @PostMapping
-    public ResponseEntity<String> register(PostRequest postRequest){
+    public ResponseEntity<String> create(PostRequest postRequest){
         System.out.println("form:"+postRequest);
         Users users = usersRepository.findById(postRequest.getUserId()).get();
         PostCategory postCategory = postCategoryRepository.findById(postRequest.getPostCategoryId()).get();
         Post post = postRequest.toEntity(users, postCategory);
-        postService.save(post);
-        //이미지 처리
-        List<String> postImage = new ArrayList<>();
+        postService.create(post);
+
+        //이미지 저장
         if(postRequest.getUploadImages() != null) {
-            for (MultipartFile mfile : postRequest.getUploadImages()) {
-                String postImagePath = imageUtil.writeImage(mfile);
-                postImage.add(postImagePath);
-            }
+            saveImage(postRequest, post);
         }
-        System.out.println("post info:"+post);
-        postRequest.setPostImage(postImage);
-        List<PostImage> postImageList = postRequest.toPostImage(post);
-        postImageService.saveAll(postImageList);
-        ResponseEntity<String> entity = new ResponseEntity<>(postRequest.getTitle(), HttpStatus.OK);
-        return entity;
+
+        //ResponseEntity<String> entity = new ResponseEntity<>(postRequest.getTitle(), HttpStatus.CREATED);
+        return ResponseEntity.created(URI.create("/posts/"+post.getId())).body("작성 완료");
     }
     @PutMapping("/{id}")
     public ResponseEntity<String> update(@PathVariable int id, PostRequest postRequest){
-        System.out.println(postRequest);
-        postService.update(id, postRequest);
-        ResponseEntity<String> entity = new ResponseEntity<>("수정 완료", HttpStatus.OK);
-        return entity;
+        Post post = postService.readById(id);
+        //제목, 내용 수정
+        post.setTitle(postRequest.getTitle());
+        post.setContent(postRequest.getContent());
+        //이미지 삭제
+        if(postRequest.getPostImage() != null){
+            for(String postImagePath: postRequest.getPostImage()){
+                PostImage postImage = postImageService.readByPostImagePath(postImagePath);
+                postImageService.delete(postImage);
+            }
+        }
+        //이미지 저장
+        if(postRequest.getUploadImages() != null) {
+            saveImage(postRequest, post);
+        }
+
+        System.out.println("포스트:"+post);
+        postService.update(post);
+        //ResponseEntity<String> entity = new ResponseEntity<>("수정 완료", HttpStatus.CREATED);
+        return ResponseEntity.created(URI.create("/posts/"+id)).body("수정 완료");
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable int id){
-       postService.delete(id);
-       ResponseEntity<String> entity = new ResponseEntity<>("삭제 완료", HttpStatus.OK);
-       return entity;
+    public ResponseEntity<?> delete(@PathVariable int id){
+        try {
+            Post post = postService.readById(id);
+            postService.delete(post);
+            return ResponseEntity.ok().body("삭제 완료");
+        } catch (Exception e){
+            String error = e.getMessage();
+            return ResponseEntity.badRequest().body(error);
+        }
 
     }
 
