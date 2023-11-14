@@ -48,30 +48,39 @@ public class StoreController {
     }
     // 가게 생성
     @PostMapping
-    public ResponseEntity<String> create(@RequestBody StoreCreateRequest storeCreateRequest) {
-        StoreRequest storeRequest = storeCreateRequest.getStoreRequest();
-        List<MenuRequest> menuRequestList = storeCreateRequest.getMenuRequestList();
-        Store store = storeRequest.toEntity();
-        String result = storeService.create(store);
-        if (menuRequestList.size() == 0) {
-            log.info("등록하는 메뉴가 없습니다");
-        } else {
-            for (int i = 0; i < menuRequestList.size(); i++) {
-                Menu menu = menuRequestList.get(i).toEntity(store);
-                String result1 = menuService.create(menu);
+    public ResponseEntity<?> create(@RequestBody StoreCreateRequestDTO storeCreateRequestDTO) {
+        try {
+            StoreRequest storeRequest = storeCreateRequestDTO.getStoreRequest();
+            List<MenuRequest> menuRequestList = storeCreateRequestDTO.getMenuRequestList();
+            Store store = storeRequest.toEntity();
+            store = storeService.create(store);
+
+            List<MenuResponse> menuResponseList = new ArrayList<>();
+            if (menuRequestList.isEmpty()) {
+                log.info("등록하는 메뉴가 없습니다");
+            } else {
+                for (MenuRequest menuRequest : menuRequestList) {
+                    Menu menu = menuRequest.toEntity(store);
+                    menuResponseList.add(new MenuResponse(menuService.create(menu)));
+                }
             }
+            StoreResponse storeResponse = new StoreResponse(store, menuResponseList);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(storeResponse);
+        } catch (Exception exception){
+            return ResponseEntity.badRequest().body(exception.getMessage());
         }
-        if (result.equals("success")) return ResponseEntity.status(HttpStatus.CREATED).body("가게 저장완료");
-        else return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("가게 저장 실패");
     }
     // 가게 수정
     @PutMapping
-    public ResponseEntity<String> update(@RequestBody StoreCreateRequest storeCreateRequest) {
-        StoreRequest storeRequest = storeCreateRequest.getStoreRequest();
+    public ResponseEntity<String> update(@RequestBody StoreCreateRequestDTO storeCreateRequestDTO) {
+        // 서비스에서 예외처리 하는 거 지우고, 컨트롤러에서 예외 처리 하도록 하는 걸로 하고
+        // 수정된 엔티티 responseDTO로 바꿔서 반환하고, 이후 URI 까지 붙여서 Hateoas까지 적용
+        StoreRequest storeRequest = storeCreateRequestDTO.getStoreRequest();
         Store store = storeRequest.toEntity();
         String result = storeService.update(store);
 //        String result = storeService.update(storeCreateRequest.getStoreRequest().toEntity());
-        List<MenuRequest> menuRequestList = storeCreateRequest.getMenuRequestList();
+        List<MenuRequest> menuRequestList = storeCreateRequestDTO.getMenuRequestList();
         if (menuRequestList.size() == 0) {
             log.info("수정하는 메뉴가 없습니다");
         } else {

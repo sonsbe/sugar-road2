@@ -20,13 +20,12 @@ public class MenuRequest {
     private int storeId;
     private String menuImagePath;
     public Menu toEntity(Store store) {
-        Menu menu = Menu.builder()
+        return Menu.builder()
                 .menuName(menuName)
                 .price(price)
                 .menuDesc(menuDesc)
                 .store(store)
                 .menuImagePath(menuImagePath)
                 .build();
-        return menu;
     }
 }

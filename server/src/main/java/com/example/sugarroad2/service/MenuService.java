@@ -20,14 +20,8 @@ public class MenuService {
     public List<Menu> read() {
         return menuRepository.findAll();
     }
-    public String create(Menu menu) {
-        try {
-            menuRepository.save(menu);
-            return "success";
-        } catch (Exception e) {
-            log.info(e.getMessage());
-            return "fail";
-        }
+    public Menu create(Menu menu) {
+        return menuRepository.save(menu);
     }
     public String update(Menu menu){
         try {

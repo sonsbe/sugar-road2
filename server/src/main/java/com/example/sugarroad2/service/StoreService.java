@@ -24,14 +24,10 @@ public class StoreService {
         Optional<Store> optional = storeRepository.findById(storeId);
         return optional.get();
     }
-    public String create(Store store) {
-        try {
-            storeRepository.save(store);
-            return "success";
-        } catch (Exception e) {
-            return "fail";
-        }
+    public Store create(Store store) {
+        return storeRepository.save(store);
     }
+
     public String update(Store store) {
         try {
             storeRepository.save(store);
