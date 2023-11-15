@@ -1,0 +1,17 @@
+{
+  "frontendFolder": "C:/sugar-road2/sugar-road2/server/./frontend",
+  "themeFolder": "themes",
+  "themeResourceFolder": "C:/sugar-road2/sugar-road2/server/./frontend/generated/jar-resources",
+  "staticOutput": "C:/sugar-road2/sugar-road2/server/target/classes/META-INF/VAADIN/webapp/VAADIN/static",
+  "generatedFolder": "generated",
+  "statsOutput": "C:\\sugar-road2\\sugar-road2\\server\\target\\classes\\META-INF\\VAADIN\\config",
+  "frontendBundleOutput": "C:\\sugar-road2\\sugar-road2\\server\\target\\classes\\META-INF\\VAADIN\\webapp",
+  "devBundleOutput": "C:/sugar-road2/sugar-road2/server/src/main/dev-bundle/webapp",
+  "devBundleStatsOutput": "C:/sugar-road2/sugar-road2/server/src/main/dev-bundle/config",
+  "jarResourcesFolder": "C:/sugar-road2/sugar-road2/server/./frontend/generated/jar-resources",
+  "themeName": "",
+  "clientServiceWorkerSource": "C:\\sugar-road2\\sugar-road2\\server\\target\\sw.ts",
+  "pwaEnabled": false,
+  "offlineEnabled": false,
+  "offlinePath": "'offline.html'"
+}
