@@ -1,6 +1,6 @@
 <template>
   <div>
-테스트용
+스토어 정보
   </div>
 </template>
 

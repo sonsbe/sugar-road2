@@ -9,6 +9,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString
 public class StoreCreateRequestDTO {
     private StoreRequestDTO storeRequestDTO;
     private List<MenuRequestDTO> menuRequestListDTO;
