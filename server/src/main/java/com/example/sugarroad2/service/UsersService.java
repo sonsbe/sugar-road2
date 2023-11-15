@@ -2,6 +2,7 @@ package com.example.sugarroad2.service;
 
 import com.example.sugarroad2.model.entity.Users;
 import com.example.sugarroad2.repository.UsersRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -12,6 +13,7 @@ import java.util.Optional;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class UsersService {
     // 아이디 닉네임 이메일 중복 처리 repository, service에 추가하고
     // 중복될 경우 throw DuplicateException하고 스태이터스 Forbidden 로 반환
@@ -32,7 +34,7 @@ public class UsersService {
     }
 
     public boolean duplicationNick(Users users){ //닉네임 중복 확인
-        Optional<Users> optionalUsers = usersRepository.findByNickName(users.getNickname());
+        Optional<Users> optionalUsers = usersRepository.findByNickname(users.getNickname());
         optionalUsers.orElseThrow(() -> new DuplicateKeyException("DuplicateKey nickname : " + users.getNickname()));
         return true;
 
