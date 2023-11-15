@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-//@ToString
+@ToString
 public class MenuRequestDTO {
     private String menuName;
     private int price;

@@ -22,17 +22,17 @@ public class StoreResponseDTO {
     private float latitude;
     private float longitude;
     private String storeImagePath;
-    private List<MenuResponseDTO> menuList;
+    private List<MenuResponseDTO> menuDTOList;
     //    private String userId;
 //    private int recommendCount;
 
-    public StoreResponseDTO(Store store, List<MenuResponseDTO> menuResponseList){
+    public StoreResponseDTO(Store store, List<MenuResponseDTO> menuResponseDTOList){
         storeId = store.getId();
         storeName = store.getStoreName();
         address = store.getAddress();
         phoneNumber = store.getPhoneNumber();
         storeDesc = store.getStoreDesc();
         storeImagePath = store.getStoreImagePath();
-        menuList = menuResponseList;
+        menuDTOList = menuResponseDTOList;
     }
 }

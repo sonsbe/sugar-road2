@@ -22,14 +22,12 @@ public class StoreRequestDTO {
 //    private String userId;
 //    private int recommendCount;
     public Store toEntity(String storeImagePath) { // 엔티티로
-        Store store = Store.builder()
+        return Store.builder()
                 .storeName(storeName)
                 .address(address)
                 .phoneNumber(phoneNumber)
                 .storeDesc(storeDesc)
                 .storeImagePath(storeImagePath)
                 .build();
-        return store;
     }
-
 }
