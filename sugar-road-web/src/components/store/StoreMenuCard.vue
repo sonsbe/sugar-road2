@@ -1,6 +1,6 @@
 <template>
   <div>
-테스트용
+스토어 메뉴 카드
   </div>
 </template>
 
