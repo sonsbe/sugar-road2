@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UsersRequestDTO {
-    private String id;
+    private String userId;
     private String userName;
     private String userPassword;
     private String nickname;
@@ -22,12 +22,11 @@ public class UsersRequestDTO {
     private String status;
     private String gender;
     private LocalDate birth;
-    private String userImagePath;
     private MultipartFile image; //프로필 사진 선택 시 임의로 저장할 속성
 
     public Users toEntity(String userImagePath){
         Users users = Users.builder()
-                .userId(String.valueOf(id))
+                .id(userId)
                 .userPassword(userPassword)
                 .userName(userName)
                 .nickname(nickname)
@@ -37,10 +36,6 @@ public class UsersRequestDTO {
                 .gender(gender)
                 .birth(birth)
                 .build();
-
-        if(id != null){
-            users.setUserId(String.valueOf(id));
-        }
 
         if(!userImagePath.isEmpty()){
             users.setUserImagePath(userImagePath);
