@@ -4,6 +4,7 @@ import com.example.sugarroad2.model.entity.Users;
 import com.example.sugarroad2.repository.UsersRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +20,33 @@ public class UsersService {
     UsersRepository usersRepository;
 
     public void create(Users users){
-        if(users.getId() == readById(users.getId()).getId()){
+        usersRepository.save(users);
+    }
 
+    public boolean duplicationId(Users users){ //아이디 중복 확인
+        //유저 ID를 통해 DB조회를 합니다
+        Optional<Users> optionalUsers = usersRepository.findById(users.getId());
+        optionalUsers.orElseThrow(() -> new DuplicateKeyException("DuplicateKey id : " + users.getId()));
+        return true;
+
+    }
+
+    public boolean duplicationNick(Users users){ //닉네임 중복 확인
+        Optional<Users> optionalUsers = usersRepository.findByNickName(users.getNickname());
+        optionalUsers.orElseThrow(() -> new DuplicateKeyException("DuplicateKey nickname : " + users.getNickname()));
+        return true;
+
+    }
+
+    public boolean duplicationEmail(Users users){ //이메일 중복 확인
+        Users selectUsers = usersRepository.findById(users.getId()).get();
+
+        if (users.getUserEmail() == selectUsers.getUserEmail()) { //이메일이 같으면
+            return true;
+        } else { //해당되지 않으면
+            return false;
         }
 
-        usersRepository.save(users);
     }
 
     public Users readById(String id){ //Read

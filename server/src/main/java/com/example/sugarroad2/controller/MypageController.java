@@ -25,7 +25,15 @@ public class MypageController {
 
     @PostMapping //받은 유저 정보 생성 (테스트용도, 로그인 구현되면 해당 컨트롤러로 옮길 예정)
     public ResponseEntity<String> userSignUp(@RequestBody Users users) {
-        usersService.create(users);
+        if (usersService.duplicationId(users)) {
+            return new ResponseEntity<>("아이디가 중복됩니다", HttpStatus.FORBIDDEN);
+        } else if (usersService.duplicationNick(users)) {
+            return new ResponseEntity<>("닉네임이 중복됩니다", HttpStatus.FORBIDDEN);
+        } else if (usersService.duplicationEmail(users)) {
+            return new ResponseEntity<>("이메일이 중복됩니다", HttpStatus.FORBIDDEN);
+        } else {
+            usersService.create(users);
+        }
 
         return new ResponseEntity<>("성공적으로 생성", HttpStatus.OK);
     }
