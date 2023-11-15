@@ -49,6 +49,10 @@ public class PostService {
     public void delete(Post post){
             postRepository.delete(post);
     }
+    public List<Post> readByTitleOrContent(String query){
+        return postRepository.findByContentContainsOrTitleContains(query, query);
+
+    }
 //    @Transactional
 //    public void update(int id, PostRequest postRequest){//이미지 관련 처리
 //        Post post = postRepository.findById(id)
