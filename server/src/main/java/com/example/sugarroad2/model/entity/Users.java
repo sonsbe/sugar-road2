@@ -3,20 +3,47 @@ package com.example.sugarroad2.model.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
-@Entity
+import java.time.LocalDate;
+
 @Getter
-@ToString
-@Table(name = "users")
+@Setter
 @Builder
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 public class Users {
     @Id
-    @Column(name = "user_id")
+    @Column(name="user_id")
     private String id;
-    private String email;
-    private String password;
+
+    @Column(nullable = false)
+    private String userPassword;
+
+    @Column(nullable = false)
+    private String userName;
+
+    @Column(nullable = false)
+    private String nickname;
+
+    @Column(nullable = false)
+    private String userEmail;
+
+    @Column(nullable = false)
+    private String role;
+
+    @Column(nullable = false)
+    private String status;
+
+    @Column(nullable = false)
+    private String gender;
+
+    @Column(nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate birth;
+
+    private String userImagePath;
 }
