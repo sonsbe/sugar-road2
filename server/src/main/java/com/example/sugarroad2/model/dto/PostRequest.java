@@ -25,7 +25,7 @@ public class PostRequest {
     private List<String> postImage;
     private String userId;
     private String postCategoryId;
-    private MultipartFile[] uploadImages;
+    //private MultipartFile[] uploadImages;
     public Post toEntity(Users user, PostCategory postCategory){
         return Post.builder().
                 content(content).
