@@ -32,7 +32,7 @@ public class UsersService {
     }
 
     public boolean duplicationNick(Users users){ //닉네임 중복 확인
-        Optional<Users> optionalUsers = usersRepository.findByNickName(users.getNickname());
+        Optional<Users> optionalUsers = usersRepository.findByNickname(users.getNickname());
         optionalUsers.orElseThrow(() -> new DuplicateKeyException("DuplicateKey nickname : " + users.getNickname()));
         return true;
 
