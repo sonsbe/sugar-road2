@@ -1,0 +1,23 @@
+.bottom_menu {
+            position: sticky;
+            bottom: 0;
+            left : 0;
+            margin : 0;
+            height : 8vh;
+            line-height: 8vh;
+            width: 100%;
+            z-index: 10;
+            border-top: 2px solid #a9a9a9;
+            background-color: var(--white);
+            border-radius: 20px 20px 0 0;
+        }
+        .bottom_menu > div {
+          float: left;
+          width: 20%;
+          height: 100%;
+          text-align: center;
+          /* line-height: 100%; */
+        }
+        .bottom_menu > div:hover {
+          background-color: rgb(240, 240, 240);
+        }
