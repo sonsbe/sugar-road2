@@ -19,7 +19,7 @@ public class UsersService {
     // 중복될 경우 throw DuplicateException하고 스태이터스 Forbidden 로 반환
 
     @Autowired
-    UsersRepository usersRepository;
+    private UsersRepository usersRepository;
 
     public void create(Users users){
         usersRepository.save(users);

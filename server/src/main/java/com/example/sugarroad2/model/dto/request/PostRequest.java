@@ -1,4 +1,4 @@
-package com.example.sugarroad2.model.dto;
+package com.example.sugarroad2.model.dto.request;
 
 import com.example.sugarroad2.model.entity.Post;
 import com.example.sugarroad2.model.entity.PostCategory;
