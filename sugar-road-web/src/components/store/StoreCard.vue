@@ -1,21 +1,24 @@
 <template>
   <div class="storeBox">
-    <a href="#">
-      <div class="storeBoxTop">
-        <h2>가게명: {{ storeData.storeName }}</h2>
-        <div><span>추천수</span>, <span>리뷰수</span></div>
-      </div>
-      <img class="storeImg" v-bind:src="storeData.storeImagePath" />
-      <div class="store-desc">가게 설명:{{ storeData.storeDesc }}</div>
-    </a>
+    <router-link :to="'/store/'+ storedId">
+      <a href="#">
+        <div class="storeBoxTop">
+          <p>storeId: {{ storeData.storeId }}</p>
+          <h3>가게명: {{ storeData.storeName }}</h3>
+          <div><span>추천수</span>, <span>리뷰수</span></div>
+        </div>
+        <img class="storeImg" v-bind:src="storeData.storeImagePath" />
+        <div class="store-desc">가게 설명:{{ storeData.storeDesc }}</div>
+      </a>
+    </router-link>
   </div>
 </template>
-
 <script setup>
 import { defineProps } from "vue";
+import { ref } from "vue";
 const { storeData } = defineProps(["storeData"]);
+let storedId = ref(storeData.storeId);
 </script>
-
 <style scoped>
 a {
   text-decoration: none;
