@@ -32,7 +32,7 @@ public class UsersRepositoryTest {
     @Transactional
     void save() { //save() 메서드 테스트
         Users UsersEntity = Users.builder()
-                .userId("테스터ID")
+                .id("테스터ID")
                 .userPassword("q1w2e3")
                 .nickname("테스터별명")
                 .userName("테스터")
@@ -47,7 +47,7 @@ public class UsersRepositoryTest {
 
         List<Users> list = usersR.findAll();
         for(Users u : list){
-            System.out.println(u.getUserId());
+            System.out.println(u.getId());
             System.out.println(u.getUserPassword());
             System.out.println(u.getNickname());
             System.out.println(u.getUserName());
@@ -66,7 +66,7 @@ public class UsersRepositoryTest {
         Optional<Users> selectUser = usersR.findById("테스터ID");
 
         if(selectUser.isPresent()){
-            System.out.println(selectUser.get().getUserId());
+            System.out.println(selectUser.get().getId());
             System.out.println(selectUser.get().getUserPassword());
             System.out.println(selectUser.get().getNickname());
             System.out.println(selectUser.get().getUserName());
@@ -90,7 +90,7 @@ public class UsersRepositoryTest {
 
         List<Users> list = usersR.findAll();
         for(Users u : list){
-            System.out.println(u.getUserId());
+            System.out.println(u.getId());
             System.out.println(u.getUserPassword());
             System.out.println(u.getNickname());
             System.out.println(u.getUserName());
