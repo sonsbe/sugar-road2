@@ -1,0 +1,319 @@
+/* 컬러 변수 선언 */
+/* var(--pink1) -> 이런 식으로 색깔 대신 값 넣으면 됨 */
+:root {
+  --pink1:#F7E9ED;
+  --pink2:#F2D6E7;
+  --pink3:#F1ABCC;
+  --pink4:#FF3594;
+  --skyblue:#C3DCF1;
+  --purple:#AF96C7;
+  --lightlightgray:#eeeeee;
+  --lightgray:#d3d3d3;
+  --fontcolor:#333333;
+  --white:#fefefe;
+  --gray:#a9a9a9;
+}
+
+.pink1 {
+    background-color : var(--pink1);
+}
+
+.pink2 {
+    background-color : var(--pink2);
+}
+
+.pink3 {
+    background-color : var(--pink3);
+}
+
+.skyblue {
+    background-color : var(--skyblue);
+}
+
+.purple {
+    background-color : var(--purple);
+}
+
+  .lightlightgray {
+      background-color : var(--lightlightgray);
+  }
+.lightgray {
+    background-color : var(--lightgray);
+}
+.white {
+    background-color : var(--white);
+}
+
+.t-pink1 {
+    color : var(--pink1);
+}
+
+.t-pink2 {
+    color : var(--pink2);
+}
+
+.t-pink3 {
+    color : var(--pink3);
+}
+
+.t-skyblue {
+    color : var(--skyblue);
+}
+
+.t-purple {
+    color : var(--purple);
+}
+
+.t-lightgray {
+    color : var(--lightgray);
+}
+
+.t-gray {
+    color : var(--gray);
+}
+
+.gray {
+    background-color : var(--gray);
+}
+
+@font-face {
+ font-family: 'NanumBarunGothic';
+ font-style: normal;
+ font-weight: 400;
+ src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot');
+ src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.ttf') format('truetype');
+}
+
+body {
+  margin : 0px;
+  padding : 0px;
+  background-color : #d3d3d3;
+}
+
+* {
+   color : var(--fontcolor);
+   font-family : 'NanumBarunGothic';
+}
+
+body > * {
+   color : var(--fontcolor);
+}
+
+body > * {
+   color : var(--fontcolor);
+}
+body > * {
+   color : var(--fontcolor);
+}
+
+.app-body {
+  width : 100%;
+  height : 100vh;
+  margin-top : 0px;
+  margin-bottom : 0px;
+  padding-top : 0.1%;
+  display: block;
+  background-color : var(--white);
+  overflow-y: hidden;
+  position: relative;
+}
+
+.content {
+  width : 93.5%;
+  height : 92vh;
+  margin-top : 1%;
+  margin-left : auto;
+  margin-right : auto;
+  /*border : 2px dotted #d3d3d3;*/
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.content, .content > * {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.bold {
+  font-weight : bold;
+}
+
+.content::-webkit-scrollbar {
+  display: none;
+}
+
+.t6 {
+  font-size : 2.5vw;
+  margin : 0;
+}
+
+.t5 {
+  font-size : 3.5vw;
+  margin : 0;
+}
+
+.t4 {
+  font-size : 4.5vw;
+  margin : 0;
+}
+
+h1 {
+  font-size : 10vw;
+  margin : 0;
+}
+
+h2 {
+  font-size : 8vw;
+  margin : 0;
+}
+
+h3 {
+  font-size : 6vw;
+  margin : 0;
+}
+
+h4 {
+  font-size : 4.5vw;
+  margin : 0;
+}
+
+h5 {
+  font-size : 3.5vw;
+  margin : 0;
+}
+
+h6 {
+  font-size : 2.5vw;
+  margin : 0;
+}
+
+.v-container {
+    width : 100%;
+    padding : 1.5%;
+}
+
+.v-item {
+    margin : 1%;
+    padding :2%;
+    width : 91%;
+}
+
+.v-table {
+    width:95%;
+    margin : 2%;
+}
+
+.v-table > tr {
+    padding : 1%;
+}
+
+.v-table-half {
+    width : 50%;
+}
+
+.v-table-third {
+    width : 33.3%;
+}
+
+.v-table-quater {
+    width : 25%;
+}
+
+.right {
+    text-align : right;
+}  
+
+.center {
+    text-align : center;
+}
+
+@media screen and (min-width: 600px) {
+  .app-body {
+    max-width : 600px;
+    margin-left : auto;
+    margin-right : auto;
+  }
+  
+  h1 {
+    font-size : 60px;
+  }
+  
+  h2 {
+    font-size : 48px;
+  }
+  
+  h3 {
+    font-size : 36px;
+  }
+
+  h4 {
+    font-size : 27px;
+  }
+
+  h5 {
+    font-size : 21px;
+  }
+
+  h6 {
+    font-size : 15px;
+  }
+
+  .t6 {
+    font-size : 15px;
+  }
+
+  .t5 {
+    font-size : 21px;
+  }
+
+  .t4 {
+    font-size : 27px;
+  }
+}
+
+/* input[type=file]::file-selector-button {
+  width: 40%;
+  padding : 3%;
+  background: var(--pink1);
+  border : none;
+} */
+
+.no-border {
+    border : none;
+}
+
+
+.bottom_menu {
+  position: sticky;
+  bottom: 0;
+  left : 0;
+  margin : 0;
+  height : 8vh;
+  line-height: 8vh;
+
+  /* position: fixed; */
+  /* bottom: 0px; */
+  /* left: 0px; */
+  width: 100%;
+  /* height: 70px; */
+  z-index: 10;
+  border-top: 1px solid black;
+  background-color: var(--white);
+  border-radius: 20px 20px;
+}
+
+.bottom_menu > div {
+  float: left;
+  width: 20%;
+  height: 100%;
+  text-align: center;
+/* line-height: 100%; */
+}
+
+.bottom_menu > div:hover {
+  background-color: rgb(240, 240, 240);
+}
+
+div {
+  border : 2px dotted #d3d3d3;
+}

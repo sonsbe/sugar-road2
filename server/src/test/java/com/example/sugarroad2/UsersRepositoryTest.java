@@ -29,7 +29,6 @@ public class UsersRepositoryTest {
     @Test //테스트 어노테이션만 있으면 테스트!
     @Order(1) //순서를 지정하는 어노테이션
     @Rollback(value = false)
-    @Transactional
     void save() { //save() 메서드 테스트
         Users UsersEntity = Users.builder()
                 .id("테스터ID")
@@ -58,6 +57,7 @@ public class UsersRepositoryTest {
             System.out.println(u.getStatus());
             System.out.println(u.getBirth());
         }
+
     }
 
     @Test
