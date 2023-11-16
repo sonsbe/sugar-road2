@@ -1,5 +1,7 @@
 <template>
   <div>가게 등록 페이지</div>
+  <button @click="goBack">◀</button>
+  <br />
   가게명
   <input
     type="text"
@@ -22,19 +24,34 @@
     v-model="storeCreateRequestDTO.storeRequestDTO.storeDesc"
   />
   <h3>메뉴</h3>
-  메뉴이름
-  <input
-    type="text"
-    v-model="storeCreateRequestDTO.menuRequestListDTO.menuName"
-  />
+  <div class="menuBox">
+    <div
+      class="menu"
+      v-for="(menu, index) in storeCreateRequestDTO.menuRequestListDTO"
+      :key="index"
+    >
+      메뉴이름
+      <input type="text" v-model="menu.menuName" />
+      <br />
+      메뉴이미지
+      <input type="file" name="menuImages" />
+    </div>
+  </div>
   <br />
-  메뉴이미지<input type="file" name="menuImages" />
+  <div class="store-menu-btnBox">
+    <button type="button" @click="addMenu">메뉴➕</button>
+    <button type="button" @click="deleteMenu">메뉴➖</button>
+  </div>
+  <br />
   <button @click="createStore">저장</button>
   <input type="reset" value="취소" />
 </template>
+
 <script setup>
 import axios from "axios";
 import { ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
+const router = useRouter();
 let storeCreateRequestDTO = ref({
   storeRequestDTO: {
     storeName: "",
@@ -48,6 +65,7 @@ let storeCreateRequestDTO = ref({
     },
   ],
 });
+
 function createStore() {
   // console.log(storeCreateRequestDTO.value);
   axios
@@ -55,9 +73,23 @@ function createStore() {
     .then((response) => console.log(response))
     .catch((err) => console.log(err));
 }
-</script>
-<style scoped></style>
 
+function addMenu() {
+  storeCreateRequestDTO.value.menuRequestListDTO.push({ menuName: "" });
+}
+
+function deleteMenu() {
+  let menuCount = storeCreateRequestDTO.value.menuRequestListDTO.length;
+  if (menuCount > 1) {
+    storeCreateRequestDTO.value.menuRequestListDTO.pop();
+  }
+}
+function goBack() {
+  router.go(-1);
+}
+</script>
+
+<style scoped></style>
 
 <!-- <template>
   <div>가게 등록 페이지</div>
