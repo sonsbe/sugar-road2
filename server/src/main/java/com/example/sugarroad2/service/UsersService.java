@@ -17,7 +17,7 @@ public class UsersService {
     // 중복될 경우 throw DuplicateException하고 스태이터스 Forbidden 로 반환
 
     @Autowired
-    UsersRepository usersRepository;
+    private UsersRepository usersRepository;
 
     public void create(Users users){
         usersRepository.save(users);
@@ -32,7 +32,7 @@ public class UsersService {
     }
 
     public boolean duplicationNick(Users users){ //닉네임 중복 확인
-        Optional<Users> optionalUsers = usersRepository.findByNickName(users.getNickname());
+        Optional<Users> optionalUsers = usersRepository.findByNickname(users.getNickname());
         optionalUsers.orElseThrow(() -> new DuplicateKeyException("DuplicateKey nickname : " + users.getNickname()));
         return true;
 

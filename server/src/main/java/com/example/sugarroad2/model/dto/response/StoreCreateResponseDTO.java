@@ -1,4 +1,4 @@
-package com.example.sugarroad2.model.dto;
+package com.example.sugarroad2.model.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
