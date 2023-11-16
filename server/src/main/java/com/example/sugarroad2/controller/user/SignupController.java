@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping("/signup")
-public class signupController {
+public class SignupController {
 
     private final UsersService usersService;
 
-    public signupController(UsersService usersService){
+    public SignupController(UsersService usersService){
         this.usersService = usersService;
     }
 

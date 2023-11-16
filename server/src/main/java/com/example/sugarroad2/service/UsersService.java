@@ -58,13 +58,19 @@ public class UsersService {
         return optionalUsers.get();
     }
 
+    public Optional<Users> findUser(String id){
+        //Spring Security의 UserDetailsService를 위해 추가했습니다
+        //리턴한 곳에서 회원 인증 절차를 수행합니다
+        return usersRepository.findById(id);
+    }
+
     public void update(Users users){
         Users origin = usersRepository.findById(users.getId()).get(); //수정하려는 유저 조회
 
         origin.setUserPassword(passwordEncoder.encode(users.getUserPassword())); //암호화하여 저장
         origin.setUserName(users.getUserName()); //유저 이름
         origin.setBirth(users.getBirth()); //생일
-        //origin.setRole(users.getRole()); 유저권한 수정 필요 시 사용
+        //origin.setRole(users.getRole()); //유저권한 수정 필요 시 사용
         origin.setStatus(users.getStatus()); //유저 허용 상태
         origin.setUserEmail(users.getUserEmail()); //이메일
         origin.setUserImagePath(users.getUserImagePath()); //유저 프로필 이미지 경로

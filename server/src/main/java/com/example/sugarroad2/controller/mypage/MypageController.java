@@ -6,7 +6,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 @Slf4j
 @RestController
@@ -15,6 +20,18 @@ public class MypageController {
 
     @Autowired
     UsersService usersService;
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @GetMapping("/adminrolepage")
+    public String adminSettingPage() {
+        return "admin_role";
+    }
+
+    @PreAuthorize("hasAnyRole('USER')")
+    @GetMapping("/userrolepage")
+    public String userSettingPage() {
+        return "user_role";
+    }
 
     @GetMapping("/{id}") //해당 유저 정보 출력
     public ResponseEntity<Users> userInfo(@PathVariable("id") String userId) {
