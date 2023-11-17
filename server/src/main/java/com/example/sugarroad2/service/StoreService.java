@@ -22,6 +22,9 @@ public class StoreService {
         Optional<Store> optional = storeRepository.findById(storeId);
         return optional.get();
     }
+    public List<Store> readByStoreName(String storeName){
+        return storeRepository.findByStoreNameContains(storeName);
+    }
     public Store create(Store store) {
         return storeRepository.save(store);
     }
@@ -31,6 +34,10 @@ public class StoreService {
     }
     public void delete(int storeId) {
         storeRepository.deleteById(storeId);
+    }
+
+    public Store readById(int id){
+        return storeRepository.findById(id).get();
     }
 
 }

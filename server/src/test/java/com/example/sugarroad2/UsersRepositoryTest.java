@@ -29,10 +29,9 @@ public class UsersRepositoryTest {
     @Test //테스트 어노테이션만 있으면 테스트!
     @Order(1) //순서를 지정하는 어노테이션
     @Rollback(value = false)
-    @Transactional
     void save() { //save() 메서드 테스트
         Users UsersEntity = Users.builder()
-                .userId("테스터ID")
+                .id("abcd1234")
                 .userPassword("q1w2e3")
                 .nickname("테스터별명")
                 .userName("테스터")
@@ -45,19 +44,19 @@ public class UsersRepositoryTest {
 
         usersR.save(UsersEntity);
 
-        List<Users> list = usersR.findAll();
-        for(Users u : list){
-            System.out.println(u.getUserId());
-            System.out.println(u.getUserPassword());
-            System.out.println(u.getNickname());
-            System.out.println(u.getUserName());
-            System.out.println(u.getUserEmail());
-            System.out.println(u.getUserImagePath() != null ? u.getUserImagePath() : "없음");
-            System.out.println(u.getGender());
-            System.out.println(u.getRole());
-            System.out.println(u.getStatus());
-            System.out.println(u.getBirth());
-        }
+//        List<Users> list = usersR.findAll();
+//        for(Users u : list){
+//            System.out.println(u.getId());
+//            System.out.println(u.getUserPassword());
+//            System.out.println(u.getNickname());
+//            System.out.println(u.getUserName());
+//            System.out.println(u.getUserEmail());
+//            System.out.println(u.getUserImagePath() != null ? u.getUserImagePath() : "없음");
+//            System.out.println(u.getGender());
+//            System.out.println(u.getRole());
+//            System.out.println(u.getStatus());
+//            System.out.println(u.getBirth());
+//        }
     }
 
     @Test
@@ -66,7 +65,7 @@ public class UsersRepositoryTest {
         Optional<Users> selectUser = usersR.findById("테스터ID");
 
         if(selectUser.isPresent()){
-            System.out.println(selectUser.get().getUserId());
+            System.out.println(selectUser.get().getId());
             System.out.println(selectUser.get().getUserPassword());
             System.out.println(selectUser.get().getNickname());
             System.out.println(selectUser.get().getUserName());
@@ -90,7 +89,7 @@ public class UsersRepositoryTest {
 
         List<Users> list = usersR.findAll();
         for(Users u : list){
-            System.out.println(u.getUserId());
+            System.out.println(u.getId());
             System.out.println(u.getUserPassword());
             System.out.println(u.getNickname());
             System.out.println(u.getUserName());

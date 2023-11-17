@@ -1,0 +1,38 @@
+.commentInput {
+    position: sticky;
+    bottom: 0;
+    left : 0;
+    margin : 0;
+    padding : 0;
+    padding-left : 5%;
+    padding-right : 5%;
+    height : 5vh;
+    width : 80%;
+    border : 1.5px solid var(--fontcolor);
+    outline-color : var(--pink2);
+    z-index : 10;
+}
+
+#commentBtn {
+    width : 8%;
+    height : 5%;
+    margin : 0px;
+    padding : 0px;
+}
+
+.comment {
+    width : 95%;
+}
+
+.child-comment {
+    width : 85%;
+    margin-left : 12%;
+}
+
+.child-comment-icon {
+    width : 10%;
+}
+
+.comment-content {
+    height : 85vh;
+}
