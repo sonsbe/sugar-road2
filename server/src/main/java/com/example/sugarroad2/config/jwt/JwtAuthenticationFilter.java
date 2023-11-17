@@ -15,24 +15,30 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.io.IOException;
 import java.util.Date;
 
+@CrossOrigin(origins="http://localhost:5173", allowedHeaders = "*",
+		exposedHeaders="Authorization", allowCredentials = "true")
 public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFilter {//UsernamePasswordAuthenticationFilter{
 
 	private final AuthenticationManager authenticationManager;
 	private static final AntPathRequestMatcher DEFAULT_ANT_PATH_REQUEST_MATCHER =
 			new AntPathRequestMatcher("/login", "POST");
+									// 인증 요청시에 실행되는 함수 => /login
 
 	public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
+
 		super(DEFAULT_ANT_PATH_REQUEST_MATCHER, authenticationManager);
-		System.out.println("객체 생성");
+
+		System.out.println("JwtAuthenticationFilter 초기화, AuthenticationManager 객체 생성");
+
 		this.authenticationManager = authenticationManager;
+		// Authentication 객체 만들어서 리턴 => 의존 : AuthenticationManager
 	}
-	
-	// Authentication 객체 만들어서 리턴 => 의존 : AuthenticationManager
-	// 인증 요청시에 실행되는 함수 => /login
+
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException {
@@ -42,6 +48,7 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
 		// request에 있는 username과 password를 파싱해서 자바 Object로 받기
 		ObjectMapper om = new ObjectMapper();
 		LoginRequestDto loginRequestDto = null;
+		
 		try {
 			loginRequestDto = om.readValue(request.getInputStream(), LoginRequestDto.class);
 		} catch (Exception e) {
@@ -50,13 +57,13 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
 		
 		System.out.println("JwtAuthenticationFilter : " + loginRequestDto);
 		
-		// 유저네임패스워드 토큰 생성
+		// 유저네임, 패스워드 토큰 생성
 		UsernamePasswordAuthenticationToken authenticationToken = 
 				new UsernamePasswordAuthenticationToken(
-						loginRequestDto.getId(),
+						loginRequestDto.getId(), //http에서 입력 받는 속성을 id로 변경함 - undercover0072
 						loginRequestDto.getPassword());
 		
-		System.out.println("JwtAuthenticationFilter : 토큰생성완료");
+		System.out.println("JwtAuthenticationFilter : 토큰 생성 완료");
 		
 		// authenticate() 함수가 호출 되면 AuthenticationProvider가 UserDetailsService 객체의
 		// loadUserByUsername(토큰의 첫 번째 파라미터 값) 를 호출하고
@@ -71,27 +78,31 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
 				authenticationManager.authenticate(authenticationToken);
 		
 		NowUserDetails principalDetailis = (NowUserDetails) authentication.getPrincipal();
+
 		System.out.println("Authentication : " + principalDetailis.getUser().getId());
+
 		return authentication;
 	}
 
-	// JWT Token 생성해서 response에 담아주기
 	// attemptAuthentication()의 호출 결과로 Authentication 객체 리턴시 successfulAuthentication() 의 호출 결과를 리턴함
+
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
-		System.out.println("successfulAuthentication ");
+
+		System.out.println("successful Authentication");
 		
 		NowUserDetails principalDetailis = (NowUserDetails) authResult.getPrincipal();
-		
+
+		// JWT Token 생성해서 response에 담아주기
 		String jwtToken = JWT.create()
 				.withSubject(principalDetailis.getUsername())
-				.withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.EXPIRATION_TIME))
-				.withClaim("id", principalDetailis.getUser().getId())
-				.withClaim("UserName", principalDetailis.getUser().getUserName())
-				.sign(Algorithm.HMAC512(JwtProperties.SECRET));
+				.withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.EXPIRATION_TIME)) //토큰 유효시간
+				.withClaim("id", principalDetailis.getUser().getId()) //id값
+				.withClaim("UserName", principalDetailis.getUser().getUserName()) //UserName값
+				.sign(Algorithm.HMAC512(JwtProperties.SECRET)); //시크릿 키 이용하여 HMAC512 알고리즘 적용
 		
-		response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX+jwtToken);
+		response.addHeader("Authorization", JwtProperties.TOKEN_PREFIX + jwtToken);
 	}
 	
 }
