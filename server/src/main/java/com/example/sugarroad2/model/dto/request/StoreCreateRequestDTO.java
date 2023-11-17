@@ -1,4 +1,4 @@
-package com.example.sugarroad2.model.dto;
+package com.example.sugarroad2.model.dto.request;
 
 import lombok.*;
 

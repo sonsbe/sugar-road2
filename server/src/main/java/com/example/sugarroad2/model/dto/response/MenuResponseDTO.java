@@ -1,4 +1,4 @@
-package com.example.sugarroad2.model.dto;
+package com.example.sugarroad2.model.dto.response;
 
 import com.example.sugarroad2.model.entity.Menu;
 import lombok.AllArgsConstructor;

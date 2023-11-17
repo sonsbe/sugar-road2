@@ -1,13 +1,23 @@
 <template>
-  <nav>
-    <router-link to="/">Test</router-link> |
-    <router-link to="/search">Search</router-link> |
-    <router-link to="/post">Post</router-link> |
-    <router-link to="/store">store</router-link> |
-    <router-link to="/mypage">MyPage</router-link> |
-  </nav>
-  <br />
-  <router-view />
+  <div class="app-body">
+    <div class="content">
+      <router-view />
+    </div>
+    <Nav></Nav>
+  </div>
 </template>
 
-<style scoped></style>
+<script setup>
+  import Nav from '@/components/ui/Nav.vue'
+</script>
+<style>
+  #app {
+    margin : 0;
+    padding : 0;
+  }
+</style>
+<style>
+  @import "@/assets/ui.css";
+</style>
+
+

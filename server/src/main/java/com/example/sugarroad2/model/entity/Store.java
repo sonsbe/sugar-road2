@@ -24,10 +24,8 @@ public class Store {
     private float latitude;
     private float longitude;
     private String storeImagePath;
-//  private int recommendCount;
 
-    /* 유저용
     @ManyToOne
     @JoinColumn(name="user_id")
-    private String userId;*/
+    private Users users;
 }

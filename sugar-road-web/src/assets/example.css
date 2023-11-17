@@ -1,0 +1,54 @@
+body {
+  text-align:center;
+}
+
+.app-body {
+  width : 207px;
+  height : 467px;
+  margin-left : auto;
+  margin-right : auto;
+  border : 2px solid #212121;
+  padding : 0px;
+}
+
+.content {
+  width : 207px;
+  height : 427px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.content::-webkit-scrollbar {
+  display: none;
+}
+
+.nav {
+  width : 200px;
+  height : 36px;
+  margin : 0px;
+}
+
+.nav-button{
+  width : 20%;
+  color : #212121;
+  background-color:white;
+  border : none;
+  font-size : 1em;
+  font-weight : bold;
+}
+
+.screen {
+  width : 195px;
+  margin : 0px;
+  max-height : 424px;
+  margin-left : auto;
+  margin-right : auto;
+}
+
+.infinite-scroll {
+    display: flex;
+    flex-wrap: wrap;
+}
+
