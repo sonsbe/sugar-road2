@@ -20,15 +20,15 @@
         <div class="addressBox">
           <i class="fa-solid fa-map-location-dot" style="color: #999999"></i
           >&nbsp
-          <div>🏠 Store Address: {{ storeInfo.address }}</div>
+          <div>🏠 address: {{ storeInfo.address }}</div>
         </div>
         <div class="phoneBox">
           <i class="fa-solid fa-phone" style="color: #878787"></i> &nbsp
-          <div>📞Store Number: {{ storeInfo.phoneNumber }}</div>
+          <div>📞number: {{ storeInfo.phoneNumber }}</div>
         </div>
         <div class="descBox">
           <i class="fa-solid fa-store" style="color: #878787"></i>&nbsp
-          <div>📃Stroe Description: {{ storeInfo.storeDesc }}</div>
+          <div>📃description: {{ storeInfo.storeDesc }}</div>
         </div>
       </div>
       <!--메뉴 이름/이미지 없을 경우에 뜨지 않도록-->
