@@ -8,6 +8,7 @@ import com.example.sugarroad2.model.entity.Store;
 import com.example.sugarroad2.service.MenuService;
 import com.example.sugarroad2.service.PostService;
 import com.example.sugarroad2.service.StoreService;
+import com.example.sugarroad2.util.ConvertionUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -29,18 +32,20 @@ public class SearchController {
     private StoreService storeService;
     @Autowired
     private MenuService menuService;
+    @Autowired
+    private ConvertionUtil convertionUtil;
     @GetMapping
-    public ResponseEntity<Object> read(String query){
+    public ResponseEntity<Map<String, List<?>>> read(String query){
         List<PostResponse> postResponseList = postService.readByTitleOrContent(query)
-                .stream().map( post -> {return new PostResponse(post, null, 0);})
+                .stream().map( post -> { return convertionUtil.convertToPostResponse(post);})
                 .toList();
         List<StoreResponseDTO> storeResponseDTOList = storeService.readByStoreName(query)
                 .stream().map( store -> {return new StoreResponseDTO(store, null);})
                 .toList();
-        List<Object> objectList = new ArrayList<>();
-        objectList.add(postResponseList);
-        objectList.add(storeResponseDTOList);
-        return ResponseEntity.ok(objectList);
+        Map<String, List<?>> listMap = new HashMap<>();
+        listMap.put("postList", postResponseList);
+        listMap.put("storeList", storeResponseDTOList);
+        return ResponseEntity.ok(listMap);
         //List<Store> storeList = storeService.search(query);
 
     }

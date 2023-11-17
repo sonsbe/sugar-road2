@@ -1,7 +1,7 @@
 package com.example.sugarroad2.controller;
 
-import com.example.sugarroad2.model.dto.request.PostRequest;
-import com.example.sugarroad2.model.dto.response.PostResponse;
+import com.example.sugarroad2.model.dto.PostRequest;
+import com.example.sugarroad2.model.dto.PostResponse;
 import com.example.sugarroad2.model.entity.*;
 import com.example.sugarroad2.repository.PostCategoryRepository;
 import com.example.sugarroad2.repository.UsersRepository;
@@ -9,6 +9,7 @@ import com.example.sugarroad2.service.PostImageService;
 //import com.example.sugarroad2.service.PostService;
 import com.example.sugarroad2.service.PostService;
 import com.example.sugarroad2.service.ViewsService;
+import com.example.sugarroad2.util.ConvertionUtil;
 import com.example.sugarroad2.util.ImageUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +19,21 @@ import org.springframework.hateoas.EntityModel;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.swing.text.html.parser.Entity;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
+@CrossOrigin("*")
 @Slf4j
 @RestController
 @RequestMapping("/posts")
@@ -45,22 +51,25 @@ public class PostController {
     ImageUtil imageUtil;
 
     @Autowired
+    ConvertionUtil convertionUtil;
+
+    @Autowired
     private PostCategoryRepository postCategoryRepository;
 
     //entity->response
-    private PostResponse convertToPostResponse(Post post) {
-        List<String> postImage = new ArrayList<>();
-        List<PostImage> postImageList = postImageService.readByPostId(post.getId());
-        //postImage
-        if (postImageList != null)
-            postImageList.forEach(image -> {
-                postImage.add(image.getPostImagePath());
-            });
-        long viewsCount = viewsService.count("p", post.getId());
-        PostResponse postResponse = new PostResponse(post, postImage, viewsCount);
-        //조회수
-        return postResponse;
-    }
+//    private PostResponse convertToPostResponse(Post post) {
+//        List<String> postImage = new ArrayList<>();
+//        List<PostImage> postImageList = postImageService.readByPostId(post.getId());
+//        //postImage
+//        if (postImageList != null)
+//            postImageList.forEach(image -> {
+//                postImage.add(image.getPostImagePath());
+//            });
+//        long viewsCount = viewsService.count("p", post.getId());
+//        PostResponse postResponse = new PostResponse(post, postImage, viewsCount);
+//        //조회수
+//        return postResponse;
+//    }
 
     private void saveImage(PostRequest postRequest, MultipartFile[] uploadImages, Post post) {
         List<String> postImage = new ArrayList<>();
@@ -74,52 +83,57 @@ public class PostController {
         log.info("이미지 저장 완료");
     }
 
-    //    @GetMapping
-//    public ResponseEntity<?> read(String col){
-//        try {
-//            List<Post> postList = postService.read(col);
-//            List<PostResponse> postResponseList = new ArrayList<>();
-//            for (Post post : postList) {
-//                postResponseList.add(convertToPostResponse(post));
-//            }
-//            return ResponseEntity.ok().body(postResponseList);
-//        } catch (Exception e){
-//            String error = e.getMessage();
-//            return ResponseEntity.badRequest().body(error);
-//        }
-//    }
-    @GetMapping
-    public ResponseEntity<CollectionModel<EntityModel<PostResponse>>> read(String col) {
-        List<Post> postList = postService.read(col);
-        List<PostResponse> postResponseList = new ArrayList<>();
-        List<EntityModel<PostResponse>> postResponseEntityModel = new ArrayList<>();
-        for (Post post : postList) {
-            //postResponseList.add(convertToPostResponse(post));
-            postResponseEntityModel.
-                    add(EntityModel.of(convertToPostResponse(post),
-                            linkTo(methodOn(PostController.class).readById(post.getId()))
-                                    .withSelfRel())
-                            .add(linkTo(methodOn(PostController.class).delete(post.getId()))
-                                    .withRel("delete"))
-                            .add(linkTo(methodOn(PostController.class).update(post.getId(), null, null))
-                                    .withRel("update"))
-                    );
+        @GetMapping
+    public ResponseEntity<?> read(@RequestParam(required = false) String col, @RequestParam(required = false) String query){
+        try {
+            List<Post> postList = new ArrayList<>();
+            if(query != null){
+                 postList = postService.readByTitleOrContent(query);
+            }else {
+                postList = postService.read(col);
+            }
+            List<PostResponse> postResponseList = new ArrayList<>();
+            for (Post post : postList) {
+                postResponseList.add(convertionUtil.convertToPostResponse(post));
+            }
+            return ResponseEntity.ok().body(postResponseList);
+        } catch (Exception e){
+            String error = e.getMessage();
+            return ResponseEntity.badRequest().body(error);
         }
-
-        CollectionModel<EntityModel<PostResponse>> postResponseCollectionModel =
-                CollectionModel.of(postResponseEntityModel)
-                        .add(linkTo(methodOn(PostController.class).read(col))
-                                .withSelfRel());
-
-        return ResponseEntity.ok().body(postResponseCollectionModel);
-
     }
+//    @GetMapping
+//    public ResponseEntity<CollectionModel<EntityModel<PostResponse>>> read(String col) {
+//        List<Post> postList = postService.read(col);
+//        List<PostResponse> postResponseList = new ArrayList<>();
+//        List<EntityModel<PostResponse>> postResponseEntityModel = new ArrayList<>();
+//        for (Post post : postList) {
+//            //postResponseList.add(convertToPostResponse(post));
+//            postResponseEntityModel.
+//                    add(EntityModel.of(convertToPostResponse(post),
+//                            linkTo(methodOn(PostController.class).readById(post.getId()))
+//                                    .withSelfRel())
+//                            .add(linkTo(methodOn(PostController.class).delete(post.getId()))
+//                                    .withRel("delete"))
+//                            .add(linkTo(methodOn(PostController.class).update(post.getId(), null, null))
+//                                    .withRel("update"))
+//                    );
+//        }
+//
+//        CollectionModel<EntityModel<PostResponse>> postResponseCollectionModel =
+//                CollectionModel.of(postResponseEntityModel)
+//                        .add(linkTo(methodOn(PostController.class).read(col))
+//                                .withSelfRel());
+//
+//        return ResponseEntity.ok().body(postResponseCollectionModel);
+//
+//    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> readById(@PathVariable int id) {
         try {
             Post post = postService.readById(id);
-            PostResponse postResponse = convertToPostResponse(post);
+            PostResponse postResponse = convertionUtil.convertToPostResponse(post);
             viewsService.create(Views.builder().referenceType("p").referenceId(id).build());
             ResponseEntity<PostResponse> entity = new ResponseEntity<>(postResponse, HttpStatus.OK);
             return ResponseEntity.ok().body(postResponse);
@@ -135,7 +149,7 @@ public class PostController {
             List<Post> postList = postService.readByUser(id);
             List<PostResponse> postResponseList = new ArrayList<>();
             for (Post post : postList)
-                postResponseList.add(convertToPostResponse(post));
+                postResponseList.add(convertionUtil.convertToPostResponse(post));
             return ResponseEntity.ok().body(postResponseList);
         } catch (Exception e) {
             String error = e.getMessage();
@@ -145,7 +159,7 @@ public class PostController {
     }
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<String> create(@RequestPart PostRequest postRequest, @RequestPart MultipartFile[]
+    public ResponseEntity<String> create(@RequestPart PostRequest postRequest, @RequestPart(required = false) MultipartFile[]
             uploadImages) {
         try {
             System.out.println("form:" + postRequest);
@@ -166,7 +180,7 @@ public class PostController {
 
     @PutMapping(value = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<String> update(@PathVariable int id, @RequestPart PostRequest postRequest,
-                                         @RequestPart MultipartFile[] uploadImages) {
+                                         @RequestPart(required = false) MultipartFile[] uploadImages) {
         try {
             Post post = postService.readById(id);
             //제목, 내용 수정

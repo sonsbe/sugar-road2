@@ -1,10 +1,6 @@
 package com.example.sugarroad2.controller;
 
-import com.example.sugarroad2.model.dto.request.MenuRequestDTO;
-import com.example.sugarroad2.model.dto.request.StoreCreateRequestDTO;
-import com.example.sugarroad2.model.dto.request.StoreRequestDTO;
-import com.example.sugarroad2.model.dto.response.MenuResponseDTO;
-import com.example.sugarroad2.model.dto.response.StoreResponseDTO;
+import com.example.sugarroad2.model.dto.*;
 import com.example.sugarroad2.model.entity.Menu;
 import com.example.sugarroad2.model.entity.Store;
 import com.example.sugarroad2.service.MenuService;

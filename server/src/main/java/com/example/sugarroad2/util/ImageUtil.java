@@ -1,6 +1,5 @@
 package com.example.sugarroad2.util;
 
-
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
@@ -38,6 +37,7 @@ public class ImageUtil {
             imageFile.transferTo(f);
             return "/images/" + fileName;
         } catch (IOException e) {
+            e.printStackTrace();
             return "";
         }
     }

@@ -54,7 +54,7 @@ public class ReviewController {
 		@PageableDefault(value = 2) Pageable pageable) {
 
 		try {
-			Page<Review> reviewPage = reviewService.readPage(storeService.readById(storeId), pageable);
+			Page<Review> reviewPage = reviewService.readPage(storeService.readBy(storeId), pageable);
 			Page<ReviewResponseVO> reviewResponseVOPage = reviewPage.map(ReviewResponseVO::new);
 			PagedModel<EntityModel<ReviewResponseVO>> reviewResponseVOPagedModel =
 				hateoasUtil.constrainHATEOASReviewPage(reviewResponseVOPage, pagedResourcesAssembler);
@@ -93,7 +93,7 @@ public class ReviewController {
 		@RequestBody ReviewRequestDTO reviewRequestDTO) {
 		try {
 			Users users = usersService.readById(reviewRequestDTO.getUserId());
-			Store store = storeService.readById(reviewRequestDTO.getStoreId());
+			Store store = storeService.readBy(reviewRequestDTO.getStoreId());
 //			String reviewImagePath = imageUtil.writeImage(reviewRequestDTO.getUploadImage());
 			String reviewImagePath = "";
 			Review review = reviewService.create(
@@ -117,7 +117,7 @@ public class ReviewController {
 		@PathVariable("id") int id) {
 		try {
 			Users users = usersService.readById(reviewRequestDTO.getUserId());
-			Store store = storeService.readById(reviewRequestDTO.getStoreId());
+			Store store = storeService.readBy(reviewRequestDTO.getStoreId());
 //			String reviewImagePath = imageUtil.writeImage(reviewRequestDTO.getUploadImage());
 			String reviewImagePath = "";
 			reviewRequestDTO.setId(id);
