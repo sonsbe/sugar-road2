@@ -5,6 +5,7 @@ import com.example.sugarroad2.model.dto.PostResponse;
 import com.example.sugarroad2.model.entity.*;
 import com.example.sugarroad2.repository.PostCategoryRepository;
 import com.example.sugarroad2.repository.UsersRepository;
+import com.example.sugarroad2.service.PostCategoryService;
 import com.example.sugarroad2.service.PostImageService;
 //import com.example.sugarroad2.service.PostService;
 import com.example.sugarroad2.service.PostService;
@@ -54,7 +55,7 @@ public class PostController {
     ConvertionUtil convertionUtil;
 
     @Autowired
-    private PostCategoryRepository postCategoryRepository;
+    private PostCategoryService postCategoryService;
 
     //entity->response
 //    private PostResponse convertToPostResponse(Post post) {
@@ -83,13 +84,18 @@ public class PostController {
         log.info("이미지 저장 완료");
     }
 
-        @GetMapping
-    public ResponseEntity<?> read(@RequestParam(required = false) String col, @RequestParam(required = false) String query){
+    @GetMapping
+    public ResponseEntity<?> read(@RequestParam(required = false) String col,
+                                  @RequestParam(required = false) String query,
+                                  @RequestParam(required = false) String category) {
         try {
             List<Post> postList = new ArrayList<>();
-            if(query != null){
-                 postList = postService.readByTitleOrContent(query);
-            }else {
+            if(category != null){
+                postList = postService.readByPostCategoryId(category);
+            }
+            else if (query != null) {
+                postList = postService.readByTitleOrContent(query);
+            } else {
                 postList = postService.read(col);
             }
             List<PostResponse> postResponseList = new ArrayList<>();
@@ -97,7 +103,7 @@ public class PostController {
                 postResponseList.add(convertionUtil.convertToPostResponse(post));
             }
             return ResponseEntity.ok().body(postResponseList);
-        } catch (Exception e){
+        } catch (Exception e) {
             String error = e.getMessage();
             return ResponseEntity.badRequest().body(error);
         }
@@ -164,7 +170,7 @@ public class PostController {
         try {
             System.out.println("form:" + postRequest);
             Users users = usersRepository.findById(postRequest.getUserId()).get();
-            PostCategory postCategory = postCategoryRepository.findById(postRequest.getPostCategoryId()).get();
+            PostCategory postCategory = postCategoryService.readById(postRequest.getPostCategoryId());
             Post post = postRequest.toEntity(users, postCategory);
             postService.create(post);
             //이미지 저장
@@ -186,6 +192,7 @@ public class PostController {
             //제목, 내용 수정
             post.setTitle(postRequest.getTitle());
             post.setContent(postRequest.getContent());
+            post.setPostCategory(postCategoryService.readById(postRequest.getPostCategoryId()));
             //이미지 삭제
             if (postRequest.getPostImage() != null) {
                 for (String postImagePath : postRequest.getPostImage()) {

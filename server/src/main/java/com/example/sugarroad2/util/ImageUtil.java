@@ -13,7 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class ImageUtil {
-    private static final String BASEDIR = "C:/sugar-road/database/images";
+    //private static final String BASEDIR = "C:/sugar-road/database/images";
+    private static final String BASEDIR = "C:/git/sugar-road2/sugar-road-web/public/images";
 
     public ImageUtil() {
         File dir = new File(BASEDIR);

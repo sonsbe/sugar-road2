@@ -1,5 +1,4 @@
 <template>
-  <body>
     <div class="app-body">
       <div class="content">
         <div class="header" style="text-align: center">
@@ -28,12 +27,24 @@
             <hr />
             <input type="hidden" name="userId" :value="post.userId" /><br />
 
-            카테고리:<input
+            <!--<input
               type="text"
               name="postCategoryId"
               v-model="postRequest.postCategoryId"
-            /><br />
-
+            /><br /> -->
+            카테고리:
+            <select v-model="postRequest.postCategoryId">
+              <option value="01">
+                빵리뷰
+              </option>
+              <option  value="02">
+                일상
+              </option>
+              <option  value="03">
+                정보
+              </option>
+            </select>
+            <br>
             <input
               type="file"
               class="form-control"
@@ -63,9 +74,7 @@
           </div>
         </div>
       </div>
-      <footer th:insert="ui/footer :: footer"></footer>
     </div>
-  </body>
 </template>
 <script setup>
 import { useRoute, useRouter } from "vue-router";

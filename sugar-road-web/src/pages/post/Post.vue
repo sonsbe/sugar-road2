@@ -5,13 +5,16 @@
       <div class="content">
           <h3>Open Forum</h3>
   <div class="category">
-      <span><a href="/post?category=01">🍩빵리뷰</a></span>
+    <button @click="filtCategory('01')">🍩빵리뷰</button>
+    <button @click="filtCategory('02')">🚲일상</button>
+    <button @click="filtCategory('03')">📝정보</button>
+      <!-- <span><a href="/post?category=01">🍩빵리뷰</a></span>
       <span> <a href="/post?category=02">🚲일상</a></span>
-      <span><a href="/post?category=03">📝정보</a></span>
+      <span><a href="/post?category=03">📝정보</a></span> -->
   </div>
           <div class="search">
           <form @submit.prevent="search">
-              <i class="fa-solid fa-magnifying-glass" style="color: #d2d7e0;"></i>
+            <font-awesome-icon icon="fa-solid fa-magnifying-glass" style="color: #8b929c;" />
               <input type="text" v-model="query" placeholder="검색">
           </form>
           </div>
@@ -33,7 +36,9 @@
      <button onclick="location.href='/post/write'"><span class="t6">작성</span></button>
     
   </div> -->
-          <a class="post-button-index bold h5" href="/post/write">글 작성</a>
+  <div class="post-button-index bold h5">
+          <a href="/post/write">글 작성</a>
+        </div>
       </div>
   </div>
   </div>
@@ -47,7 +52,9 @@
     
     const postList = ref([]);
     const query = ref("");
-    const col = ref("")
+    const col = ref("");
+    const category = ref("");
+
     function search(){
       console.log(query.value)
       api("http://localhost:1023/posts?query="+query.value, "GET", {})
@@ -57,6 +64,16 @@
         console.log(postList)
       })
     }
+
+    function filtCategory(id){
+      category.value=id;
+      console.log(category.value)
+      api("http://localhost:1023/posts?category="+category.value, "GET", {})
+      .then(response => {
+        postList.value = response;
+      })
+    }
+
     function sort(){
       console.log("col", col.value)
       api("http://localhost:1023/posts?col="+col.value, "GET", {})
@@ -77,6 +94,6 @@
     })
   </script>
   
-  <style lang="scss" scoped>
+  <style lang="scss">
   @import "../../../src/assets/post.css"
   </style>
