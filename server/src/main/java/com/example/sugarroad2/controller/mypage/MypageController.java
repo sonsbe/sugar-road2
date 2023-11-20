@@ -21,17 +21,17 @@ public class MypageController {
     @Autowired
     UsersService usersService;
 
-    @PreAuthorize("hasAnyRole('ADMIN')")
-    @GetMapping("/adminrolepage")
-    public String adminSettingPage() {
-        return "admin_role";
-    }
-
-    @PreAuthorize("hasAnyRole('USER')")
-    @GetMapping("/userrolepage")
-    public String userSettingPage() {
-        return "user_role";
-    }
+//    @PreAuthorize("hasAnyRole('ADMIN')")
+//    @GetMapping("/adminrolepage")
+//    public String adminSettingPage() {
+//        return "admin_role";
+//    }
+//
+//    @PreAuthorize("hasAnyRole('USER')")
+//    @GetMapping("/userrolepage")
+//    public String userSettingPage() {
+//        return "user_role";
+//    }
 
     @GetMapping("/{id}") //해당 유저 정보 출력
     public ResponseEntity<Users> userInfo(@PathVariable("id") String userId) {

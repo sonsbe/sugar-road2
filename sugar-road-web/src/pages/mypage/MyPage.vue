@@ -1,107 +1,210 @@
 <template>
-  <div class="form-signin w-100 m-auto">
-    <h1 class="h3 mb-3 fw-normal">JWT 로그인 테스트</h1>
-    <div class="form-floating">
-      <input type="text" class="form-control" id="floatingInput" placeholder="사용자 ID"
-            @keyup.enter="submit()" v-model="state.form.id">
-      <label for="floatingInput">계정(id)</label>
+<div class="app-body">
+    <div class = "content">
+        <div class="top">
+            <h4 id="title">MyPage</h4>
+
+                <div class="profileBox">
+                    <div class="imageDiv">
+                        <img v-bind:src="selectImg" id="userImage">
+                    </div>
+                    <div class = "userInfo">
+                    <h5>{{ selectNicname }}</h5>
+                    <h6>{{ selectEmail }}</h6>
+                    </div>
+                </div>
+
+                <h3 id="msg" th:if="${msg}" th:text="${msg}"></h3>
+        </div>
+        <div class="middle">
+            <div class="menu">
+                <a href="/mypage" style="text-decoration: none">
+                    <div class="menuButton" id="button1">
+                    <img src="src/assets/mypage/img/menuImg1.png" class="menuImg">
+                        <h5 id="menuText1">프로필 수정</h5>
+                    </div>
+                </a>
+                <a href="/mypage" style="text-decoration: none">
+                    <div class="menuButton" id="button2">
+                    <img src="src/assets/mypage/img/menuImg2.png" class="menuImg">
+                        <h5 id="menuText2">내가 작성한 글</h5>
+                    </div>
+                </a>
+                <a href="/mypage" style="text-decoration: none">
+                    <div class="menuButton" id="button3">
+                    <img src="src/assets/mypage/img/menuImg3.png" class="menuImg">
+                        <h5 id="menuText3">내가 작성한 댓글</h5>
+                    </div>
+                </a>
+                <a href="/mypage" style="text-decoration: none">
+                    <div class="menuButton" id="button4">
+                    <img src="src/assets/mypage/img/menuImg4.png" class="menuImg">
+                        <h5 id="menuText4">좋아요 한 글</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="bottom">
+            <div id="logOut">
+                <a href="/logout" style="text-decoration: none">로그아웃</a>
+            </div>
+        </div>
     </div>
-    <div class="form-floating">
-      <input type="password" class="form-control" id="floatingPassword" placeholder="Password" 
-      @keyup.enter="submit()" v-model="state.form.password">
-      <label for="floatingPassword">암호</label>
-    </div>    
-    <button class="w-100 btn btn-lg btn-primary" @click="login()">로그인</button>
-    <hr>
-    <button class="w-100 btn btn-lg btn-warning" @click="logout()">로그아웃</button>
-    <hr>
-    <button class="w-100 btn btn-lg btn-danger" @click="check()">로그인 상태 채크</button>
-  </div>
+</div>
 </template>
 
-<script>
-import {reactive} from "vue";
+<script setup>
+import { onMounted, ref } from "vue";
 import axios from "axios";
 
-axios.defaults.withCredentials = true;
+const selectImg = ref('');
+const selectNicname = ref('');
+const selectEmail = ref('');
 
-export default {
-  setup() {
-    const state = reactive({
-      form: {
-        id: "",
-        password: ""
-      }
-    })
+  onMounted( () => {
+    axios.get("http://localhost:1023/mypage/테스터ID")
+          .then(response => {
+              console.log(response);
+              return response.data;
+          })
+          .then(user => {
+              console.log(user);
+              selectImg.value = `${user.userImagePath}`;
+              //selectImg.value = "src/assets/mypage/img/profileEx.png";
+              selectNicname.value = `${user.nickname}`;
+              selectEmail.value = `${user.userEmail}`;
+            })
+            .catch(err => console.error(err));
+  })
+      
+  </script>
 
-    const login = () => {      
-      axios.post("http://localhost:1023/login", state.form, 
-        {headers : {
-          "X-Requested-With": "XMLHttpRequest",
-          "withCredentials" : true}
-        }).then((res) => {  
-          console.log(res.headers);
-          console.log(res.headers.Authorization); // 모두 가능
-          console.log(res.headers.get('authorization'));
-          console.log(res.headers.Authorization);
-          console.log(res.headers.getAuthorization());   
-          console.log(res.headers['authorization']);
+<style>
+/* <!-- 상단 --> */
 
-          sessionStorage.setItem("token", res.headers.get('Authorization'));
+.top{
 
-          window.alert(res.data);
-        }).catch(() => {
-          window.alert("로그인을 수행하는 동안 오류가 발생하였습니다..");
-        });
-    }
-
-    const logout = () => {      
-      axios.get("http://localhost:1023/logout").then((res) => {
-        if (res.headers['authorization'] == 'delete') {
-          sessionStorage.removeItem("token")
-        }
-        window.alert(res.data);
-      }).catch(() => {
-        window.alert("로그아웃을 수행하는 동안 오류가 발생하였습니다..");
-      });
-    }
-
-    const check = () => {      
-      axios.get("http://localhost:1023/check",{
-            headers: {
-              'Authorization': sessionStorage.getItem("token")
-            }
-          }).then((res) => {       
-        window.alert(res.data);
-      });
-    }
-
-    return {state, login, logout, check}
-  }
-}
-</script>
-
-<style lang="scss" scoped></style>
-
-<!-- <style scoped>
-.form-signin {
-  max-width: 330px;
-  padding: 15px;
 }
 
-.form-signin .form-floating:focus-within {
-  z-index: 2
+#title{
+
+    display: flex;
+    justify-content: center;
+    padding-top: 10%;
+    padding-bottom: 5%;
 }
 
-.form-signin input[type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
+.profileBox{
+
 }
 
-.form-signin input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+.imageDiv{
+
+    display: flex;
+    justify-content: center;
 }
-</style> -->
+
+#userImage{
+
+    border-radius: 50%;
+    border: 3px solid #D7CBE3;
+    width: 20%;
+    height: 20%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.userInfo{
+
+    text-align: center;
+    margin: 2%;
+}
+
+#msg{
+
+}
+
+/* <!-- 가운데 --> */
+
+.middle{
+
+    display: flex;
+    justify-content: center;
+}
+
+.menu{
+    margin: 10% auto;
+    margin-left: 10%;
+    margin-right: 10%;
+    width: 70%;
+}
+
+.menuButton{
+      display: flex;
+      width: 100%;
+      height: 60px;
+      margin-bottom: 8%;
+      border-radius: 15px;
+      color: rgba(0, 0, 0, 0.70);
+      align-items: center;
+
+}
+
+#button1{
+  background: rgba(195, 220, 241, 0.6);
+  backdrop-filter: blur(2px);
+}
+
+#button2{
+  background: rgba(175, 150, 199, 0.6);
+  backdrop-filter: blur(2px);
+}
+
+#button3{
+  background: rgba(241, 171, 204, 0.6);
+  border-radius: 15px;
+}
+
+#button4{
+  background: rgba(247, 233, 237, 0.6);
+  backdrop-filter: blur(2px);
+}
+
+.menuImg{
+    width: 10%;
+    margin-right: 10%;
+    margin-left: 10%;
+}
+
+#menuText1{
+    margin-left: 8%;
+}
+
+#menuText2{
+    margin-left: 5%;
+}
+
+#menuText3{
+    margin-left: 3%;
+}
+
+#menuText4{
+    margin-left: 7%;
+}
+
+
+/* <!-- 하단 --> */
+
+.bottom{
+
+}
+
+#logOut{
+    text-align: center;
+}
+#logOut > a{
+       color: gray;
+       font-size: 14px;
+}
+
+</style>
