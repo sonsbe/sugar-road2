@@ -6,6 +6,7 @@ import com.example.sugarroad2.model.entity.Post;
 import com.example.sugarroad2.model.entity.PostCategory;
 import com.example.sugarroad2.model.entity.Users;
 import com.example.sugarroad2.repository.PostCategoryRepository;
+import com.example.sugarroad2.repository.PostRepository;
 import com.example.sugarroad2.repository.UsersRepository;
 import com.example.sugarroad2.service.PostService;
 import org.junit.jupiter.api.MethodOrderer;
@@ -25,6 +26,8 @@ import java.util.List;
 public class PostServiceTest {
 
 
+    @Autowired
+    private PostRepository postRepository;
     @Autowired
     private PostService postService;
     @Autowired

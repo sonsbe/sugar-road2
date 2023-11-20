@@ -9,66 +9,19 @@
             <input type="text" class="input" v-model="query" placeholder="찾고 싶은 가게 또는 디저트를 입력하세요" required>
         </form>
         </div>
-
     <hr>
-<div class="post-result" v-if="`${resultList.postList}`">
+<div class="post-result" v-if="resultList.postList">
   <h6>게시글</h6>
-    <SearchCard v-for="(post, index) in resultList.postList" :object="post" :key="index"></SearchCard>
+    <SearchPostCard v-for="(post, index) in resultList.postList" :post="post" :key="index"></SearchPostCard>
 </div>
-<div class="review-result" th:if="${reviewList}">
+<div class="review-result" v-if="resultList.reviewList">
     <h6>리뷰</h6>
-    <div class="thumbnail skyblue" th:each="review : ${reviewList}">
-        <a th:href="@{/review/detail(id=${review.reviewId})}">
-            <table class="v-table">
-                <tr>
-                    <td>
-                        <p class="t5 bold" th:text="${review.storeId}"></p>
-                    </td>
-                    <td class="v-table-half right">
-                        <p class="t6">댓글 수: 3</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <p th:text="${review.content}"></p>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" class="right">
-                        <th:block th:each="num :${#numbers.sequence(0, review.star-1)}">
-                            <span>★</span>
-                        </th:block>
-                    </td>
-                </tr>
-            </table>
-        </a>
-    </div>
+    <SearchReviewCard v-for="(review, index) in resultList.reviewList" :review="review" :key="index"></SearchReviewCard>
 </div>
-<div class="store-result" th:if="${storeList}">
+<div class="store-result" v-if="resultList.storeList">
     <h6 class="bold">가게</h6>
-    <div class="thumbnail lightgray" th:each="store : ${storeList}">
-        <a th:href="@{/store/detail(storeId=${store.storeId})}">
-            <table class="v-table">
-                <tr>
-                    <td class="left">
-                        <p class="t5 bold" th:text="${store.storeName}"></p>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <img th:src="${store.storeImagePath}? ${store.storeImagePath} : '/images/icons/bread.png'" alt="">
-                    </td>
-                </tr>
-                <tr>
-                    <td class="right">
-                        <p th:text="${store.phoneNumber}"></p>
-                    </td>
-                </tr>
-            </table>
-        </a>
-    </div>
+    <SearchStoreCard v-for="(store, index) in resultList.storeList" :store="store" :key="index"></SearchStoreCard>
 </div>
-<h3 th:if="${noResult}" th:text="${noResult}"></h3>
     </div>
 </div>
 </div>
@@ -77,8 +30,9 @@
 <script setup>
 import { ref } from 'vue';
 import { api } from '@/common'
-import SearchCard from '../../components/search/SearchCard.vue';
-
+import SearchPostCard from '../../components/search/SearchPostCard.vue';
+import SearchReviewCard from '../../components/search/SearchReviewCard.vue';
+import SearchStoreCard from '../../components/search/SearchStoreCard.vue';
 const query = ref("");
 const resultList = ref({});
 function search(){

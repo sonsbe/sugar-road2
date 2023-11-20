@@ -185,7 +185,8 @@ public class PostController {
     }
 
     @PutMapping(value = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<String> update(@PathVariable int id, @RequestPart PostRequest postRequest,
+    public ResponseEntity<String> update(@PathVariable int id,
+                                         @RequestPart PostRequest postRequest,
                                          @RequestPart(required = false) MultipartFile[] uploadImages) {
         try {
             Post post = postService.readById(id);

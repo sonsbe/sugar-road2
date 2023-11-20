@@ -19,7 +19,7 @@
             <tr>
                 <td colspan="2" class="left">
                     <span class="t5 bold" v-text="p.post.userId"></span>
-                    <span class="t5" v-text="`p.post.content`"></span>
+                    <span class="t5" v-text="p.post.content"></span>
                 </td>
             </tr>
         </table>

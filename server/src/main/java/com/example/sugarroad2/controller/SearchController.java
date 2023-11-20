@@ -44,8 +44,10 @@ public class SearchController {
                 .stream().map( store -> {return new StoreResponseDTO(store, null);})
                 .toList();
         Map<String, List<?>> listMap = new HashMap<>();
-        listMap.put("postList", postResponseList);
-        listMap.put("storeList", storeResponseDTOList);
+        if(!postResponseList.isEmpty())
+            listMap.put("postList", postResponseList);
+        if(!storeResponseDTOList.isEmpty())
+            listMap.put("storeList", storeResponseDTOList);
         return ResponseEntity.ok(listMap);
         //List<Store> storeList = storeService.search(query);
 

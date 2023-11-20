@@ -43,7 +43,7 @@ public class PostService {
                 .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
     }
     public List<Post> readByPostCategoryId(String id){
-        return postRepository.findByPostCategoryId(id);
+            return postRepository.findByPostCategoryId(id);
     }
     public List<Post> readByUser(String id){
         List<Post> postList = postRepository.findByUserId(id);
