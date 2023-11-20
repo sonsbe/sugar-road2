@@ -36,9 +36,11 @@
      <button onclick="location.href='/post/write'"><span class="t6">작성</span></button>
     
   </div> -->
+  <a href="/post/write">
   <div class="post-button-index bold h5">
-          <a href="/post/write">글 작성</a>
+          글 작성
         </div>
+      </a>
       </div>
   </div>
   </div>
