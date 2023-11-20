@@ -13,9 +13,8 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     //작성 글 조회
     public List<Post> findByUserId(String id);
 
-
-
     //검색
     public List<Post> findByContentContainsOrTitleContains(String content, String title);
+    public List<Post> findByPostCategoryId(String id);
 
 }
