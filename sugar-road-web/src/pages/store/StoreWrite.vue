@@ -24,8 +24,8 @@
     <span>설명</span> <input type="text" v-model="storeRequestDTO.storeDesc" />
   </div>
   <h4>메뉴</h4>
-  <div class="menuBox">
-    <div class="menu" v-for="(menu, index) in menuRequestListDTO" :key="index">
+  <!-- <div class="menuBox">
+   <div class="menu" v-for="(menu, index) in menuRequestListDTO" :key="index">
       <div class="inputBox">
         <span>메뉴이름</span>
         <input type="text" v-model="menu.menuName" />
@@ -34,8 +34,34 @@
         <span> 메뉴이미지</span>
         <input type="file" @change="handleMenuImageChange($event, index)" />
       </div>
+    </div> 
+  </div>-->
+  <div class="menuBox">
+    <!-- v-for 디렉티브가 렌더링할 대상이 없을 때 초기 메뉴를 추가합니다. -->
+    <div v-if="menuNameList.length === 0" class="menu" :key="0">
+      <div class="inputBox">
+        <span>메뉴이름</span>
+        <input type="text" v-model="menuNameList[0]" />
+      </div>
+      <div class="inputBox">
+        <span> 메뉴이미지</span>
+        <input type="file" @change="handleMenuImageChange($event, 0)" />
+      </div>
+    </div>
+
+    <!-- 기존 메뉴를 나타냅니다. -->
+    <div v-for="(menu, index) in menuNameList" :key="index" class="menu">
+      <div class="inputBox">
+        <span>메뉴이름</span>
+        <input type="text" v-model="menuNameList[index]" />
+      </div>
+      <div class="inputBox">
+        <span> 메뉴이미지</span>
+        <input type="file" @change="handleMenuImageChange($event, index)" />
+      </div>
     </div>
   </div>
+
   <br />
   <div class="store-menu-btnBox">
     <button type="button" @click="addMenu">메뉴➕</button>
@@ -43,7 +69,7 @@
   </div>
   <br />
   <div class="store-insert-btnBox">
-    <button >취소</button>
+    <button>취소</button>
     <button @click="createStore">저장</button>
   </div>
 </template>
@@ -52,7 +78,6 @@
 import axios from "axios";
 import { onMounted, ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
-
 const router = useRouter();
 const currentRoute = useRoute();
 let uri = window.location.pathname;
@@ -74,6 +99,9 @@ let menuRequestListDTO = ref([
   },
 ]);
 
+let menuNameList = ref([]);
+let menuImgList = ref([]);
+
 function handleStoreImageChange(e) {
   // 대표이미지 변경
   storeRequestDTO.value.storeImagePath = e.target.files[0];
@@ -83,22 +111,27 @@ function handleStoreImageChange(e) {
 function handleMenuImageChange(e, index) {
   const file = e.target.files[0];
 
-  // 메뉴이미지 변경
   if (file) {
-    // 해당 인덱스의 요소가 미리 정의되어 있지 않으면 초기화
-    if (!menuRequestListDTO[index]) {
-      menuRequestListDTO[index] = {
-        menuName: "",
-        menuImagePath: null,
-      };
-    }
-    menuRequestListDTO[index].menuImagePath = file;
+    menuImgList.value[index] = file;
   }
 }
 
+// 메뉴이미지 변경
+//   if (file) {
+//     // 해당 인덱스의 요소가 미리 정의되어 있지 않으면 초기화
+//     if (!menuRequestListDTO[index]) {
+//       menuRequestListDTO[index] = {
+//         menuName: "",
+//         menuImagePath: null,
+//       };
+//     }
+//     menuRequestListDTO.value[index].menuImagePath = file; // 수정한부분
+//   }
+// }
+
 function createStore() {
-  console.log(menuRequestListDTO.value);
-  console.log(menuRequestListDTO[0]);
+  // console.log(menuRequestListDTO.value);
+  // console.log(menuRequestListDTO[0]);
   const formData = new FormData();
 
   formData.append("storeName", storeRequestDTO.value.storeName);
@@ -106,19 +139,35 @@ function createStore() {
   formData.append("address", storeRequestDTO.value.address);
   formData.append("storeDesc", storeRequestDTO.value.storeDesc);
   formData.append("storeImagePath", storeRequestDTO.value.storeImagePath);
-  console.log("testpath", menuRequestListDTO.value[0].menuImagePath);
-  console.log("testname", menuRequestListDTO.value[0].menuName);
-  let menuDatas = [
-    {
-      menuName: menuRequestListDTO.value[0].menuName,
-      menuImagePath: menuRequestListDTO.value[0].menuImagePath,
-    },
-  ];
-  const json = JSON.stringify(menuDatas);
-  const blob = new Blob([json], { type: "application/json" });
-  formData.append("menuRequestListDTO", blob);
+  // console.log("testpath", menuRequestListDTO.value[0].menuImagePath);
+  // console.log("testname", menuRequestListDTO.value[0].menuName);
+  // let menuList = [
+  //   {
+  //     menuName: menuRequestListDTO.value[0].menuName,
+  //     menuImagePath: menuRequestListDTO.value[0].menuImagePath,
+  //   },
+  // ];
+  // formData.append("menuRequestListDTO", menuList);
+  // 각 메뉴 정보를 formData에 추가
+  menuNameList.value.forEach((menuName, index) => {
+    // Ensure that menuNameList.value[index] is defined before accessing its properties.
+    if (menuNameList.value[index]) {
+      formData.append(`menuNameList`, menuNameList.value[index]);
+    }
+  });
+  console.log(menuNameList.value[0]);
 
-  console.log(formData);
+  console.log("이름" + menuNameList.value[0].menuName);
+  menuImgList.value.forEach((menuImg, index) => {
+    // Ensure that menuImgList.value[index] is defined before accessing its properties.
+    if (menuImgList.value[index]) {
+      formData.append(`menuImgList`, menuImgList.value[index]);
+    }
+  });
+  // const json = JSON.stringify(menuData);
+  // const blob = new Blob([json], { type: "application/json" });
+  // formData.append("menuRequestListDTO", blob);
+
   // menuRequestListDTO.value.forEach((menu, index) => {
   //   formData.append(`menuRequestListDTO[${index}].menuName`, menu.menuName);
   //   formData.append(
@@ -126,28 +175,31 @@ function createStore() {
   //     menu.menuImagePath
   //   );
   // });
-  if (uri.includes("edit")) {
-    axios
-      .put("http://localhost:1023/store/" + storeId, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((response) => {
-        console.log(response);
-        router.push("/store/" + storeId);
-      })
-      .catch((err) => console.log(err));
-  } else {
-    axios
-      .post("http://localhost:1023/store", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((response) => console.log(response))
-      .catch((err) => console.log(err));
-  }
+
+  // ** update **
+  // if (uri.includes("edit")) {
+  //   axios
+  //     .put("http://localhost:1023/store/" + storeId, formData, {
+  //       headers: {
+  //         "Content-Type": "multipart/form-data",
+  //         accept: "application/json",
+  //       }
+  //     })
+  //     .then((response) => {
+  //       console.log(response);
+  //       router.push("/store/" + storeId);
+  //     })
+  //     .catch((err) => console.log(err));
+  // } else {
+  axios
+    .post("http://localhost:1023/store", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((response) => console.log(response))
+    .catch((err) => console.log(err));
+  // }
 }
 
 onMounted(() => {

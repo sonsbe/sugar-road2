@@ -109,11 +109,17 @@ public class StoreController {
             @RequestParam("phoneNumber") String phoneNumber,
             @RequestParam("address") String address,
             @RequestParam("storeDesc") String storeDesc,
-            @RequestPart( required = false) MultipartFile storeImagePath,
-            @RequestPart(value="menuRequestListDTO", required = false) List<MenuRequestDTO> menuRequestListDTO) {
+            @RequestPart(value = "storeImagePath", required = false) MultipartFile storeImagePath,
+
+        @RequestParam("menuNameList") List<String> menuNameList,
+            @RequestPart(value = "menuImgList", required = false) List<MultipartFile> menuImgList
+            // @RequestPart("menuRequestListDTO") List<MenuRequestDTO> menuRequestListDTO
+            ) {
         try {
-            System.out.println("============storeImagePath:"+storeImagePath);
             // 가게 정보 저장
+            System.out.println("menuNameList:"+menuNameList);
+                        System.out.println("menuImgList:"+menuImgList);
+
             StoreRequestDTO storeRequestDTO = StoreRequestDTO.builder()
                     .storeName(storeName)
                     .phoneNumber(phoneNumber)
@@ -123,26 +129,61 @@ public class StoreController {
                     .build();
      Store store = storeService.create(storeRequestToEntity(storeRequestDTO));
             // 메뉴 정보 저장
-            List<MenuResponseDTO> menuResponseDTOList = new ArrayList<>();
-            for (MenuRequestDTO menuRequestDTO : menuRequestListDTO) {
-                String menuImagePath = "";
-                if (menuRequestDTO.getMenuImagePath() != null) {
-                    menuImagePath = imageUtil.writeImage(menuRequestDTO.getMenuImagePath());
-                }
-                Menu menu = menuRequestDTO.toEntity(store, menuImagePath);
-                menuResponseDTOList.add(new MenuResponseDTO(menuService.create(menu)));
-            }
+            // List<MenuResponseDTO> menuResponseDTOList = new ArrayList<>();
+            // for (MenuRequestDTO menuRequestDTO : menuRequestListDTO) {
+            //     String menuImagePath = "";
+            //     if (menuRequestDTO.getMenuImagePath() != null) {
+            //         menuImagePath = imageUtil.writeImage(menuRequestDTO.getMenuImagePath());
+            //     }
+            //     Menu menu = menuRequestDTO.toEntity(store, menuImagePath);
+            //     menuResponseDTOList.add(new MenuResponseDTO(menuService.create(menu)));
+            // }
     
             // 가게 저장
            
-            StoreResponseDTO storeResponse = new StoreResponseDTO(store, menuResponseDTOList);
+            // StoreResponseDTO storeResponse = new StoreResponseDTO(store, menuResponseDTOList);
     
-            return ResponseEntity.status(HttpStatus.CREATED).body(storeResponse);
+            return ResponseEntity.status(HttpStatus.CREATED).body("가게만 저장");
         } catch (Exception exception) {
             exception.getStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
         }
     }
+    
+    // // 가게 생성
+    // @PostMapping
+    // public ResponseEntity<?> create(@RequestBody StoreCreateRequestDTO storeCreateRequestDTO) {
+    //     try {
+    //         String menuImagePath = "";
+    //         List<MenuResponseDTO> menuResponseDTOList = new ArrayList<>();
+    //         Store store = storeRequestToEntity(storeCreateRequestDTO.getStoreRequestDTO());
+
+    //         Store createStore = storeService.create(store);
+    //         List<MenuRequestDTO> menuRequestDTOList = storeCreateRequestDTO.getMenuRequestListDTO();
+    //         log.info("등록하는 메뉴 " + menuRequestDTOList.size());
+    //         if (menuRequestDTOList.isEmpty()) {
+    //             log.info("등록하는 메뉴가 없습니다");
+    //         } else {
+    //             Menu menu = null;
+    //             for (MenuRequestDTO menuRequestDTO : menuRequestDTOList) {
+    //                 log.info("메뉴 등록중");
+    //                 if (menuRequestDTO.getMenuImagePath() != null) {
+    //                     menuImagePath = imageUtil.writeImage(menuRequestDTO.getMenuImagePath());
+    //                     menu = menuRequestDTO.toEntity(store, menuImagePath);
+    //                 } else {
+    //                     log.info("이미지 없는 메뉴");
+    //                     menu = menuRequestDTO.toEntity(store, "");
+    //                 }
+    //                 menuResponseDTOList.add(new MenuResponseDTO(menuService.create(menu)));
+    //             }
+    //         }
+    //         StoreResponseDTO storeResponse = new StoreResponseDTO(createStore, menuResponseDTOList);
+    //         return ResponseEntity.status(HttpStatus.CREATED).body(storeResponse);
+    //     } catch (Exception exception) {
+    //         exception.printStackTrace();
+    //         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+    //     }
+    // }
 
     // 가게 수정
     @PutMapping("/{storeId}")
