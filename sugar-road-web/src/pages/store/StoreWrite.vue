@@ -116,22 +116,7 @@ function handleMenuImageChange(e, index) {
   }
 }
 
-// 메뉴이미지 변경
-//   if (file) {
-//     // 해당 인덱스의 요소가 미리 정의되어 있지 않으면 초기화
-//     if (!menuRequestListDTO[index]) {
-//       menuRequestListDTO[index] = {
-//         menuName: "",
-//         menuImagePath: null,
-//       };
-//     }
-//     menuRequestListDTO.value[index].menuImagePath = file; // 수정한부분
-//   }
-// }
-
 function createStore() {
-  // console.log(menuRequestListDTO.value);
-  // console.log(menuRequestListDTO[0]);
   const formData = new FormData();
 
   formData.append("storeName", storeRequestDTO.value.storeName);
@@ -139,18 +124,9 @@ function createStore() {
   formData.append("address", storeRequestDTO.value.address);
   formData.append("storeDesc", storeRequestDTO.value.storeDesc);
   formData.append("storeImagePath", storeRequestDTO.value.storeImagePath);
-  // console.log("testpath", menuRequestListDTO.value[0].menuImagePath);
-  // console.log("testname", menuRequestListDTO.value[0].menuName);
-  // let menuList = [
-  //   {
-  //     menuName: menuRequestListDTO.value[0].menuName,
-  //     menuImagePath: menuRequestListDTO.value[0].menuImagePath,
-  //   },
-  // ];
-  // formData.append("menuRequestListDTO", menuList);
+
   // 각 메뉴 정보를 formData에 추가
   menuNameList.value.forEach((menuName, index) => {
-    // Ensure that menuNameList.value[index] is defined before accessing its properties.
     if (menuNameList.value[index]) {
       formData.append(`menuNameList`, menuNameList.value[index]);
     }
@@ -159,22 +135,10 @@ function createStore() {
 
   console.log("이름" + menuNameList.value[0].menuName);
   menuImgList.value.forEach((menuImg, index) => {
-    // Ensure that menuImgList.value[index] is defined before accessing its properties.
     if (menuImgList.value[index]) {
       formData.append(`menuImgList`, menuImgList.value[index]);
     }
   });
-  // const json = JSON.stringify(menuData);
-  // const blob = new Blob([json], { type: "application/json" });
-  // formData.append("menuRequestListDTO", blob);
-
-  // menuRequestListDTO.value.forEach((menu, index) => {
-  //   formData.append(`menuRequestListDTO[${index}].menuName`, menu.menuName);
-  //   formData.append(
-  //     `menuRequestListDTO[${index}].menuImage`,
-  //     menu.menuImagePath
-  //   );
-  // });
 
   // ** update **
   // if (uri.includes("edit")) {
@@ -221,6 +185,15 @@ onMounted(() => {
   }
 });
 
+function addMenu() {
+  menuNameList.value.push("");
+}
+function deleteMenu() {
+  let menuCount = menuNameList.value.length;
+  if (menuCount > 1) {
+    menuNameList.value.pop();
+  }
+}
 function goBack() {
   router.go(-1);
 }
