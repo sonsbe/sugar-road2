@@ -31,7 +31,7 @@ async function getStoreList() {
   try {
     const response = await axios.get("http://localhost:1023/store");
     storeList.value = response.data;
-    // console.log(storeList.value);
+    console.log(storeList.value);
   } catch (err) {
     console.log(err);
   }

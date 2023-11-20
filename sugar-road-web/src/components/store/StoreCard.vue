@@ -8,6 +8,7 @@
           <div><span>추천수</span>, <span>리뷰수</span></div>
         </div>
         <img class="storeImg" v-bind:src="storeData.storeImagePath" />
+        {{ storeData.storeImagePath}}
         <div class="store-desc">가게 설명:{{ storeData.storeDesc }}</div>
       </a>
     </router-link>

@@ -16,6 +16,7 @@ const router = createRouter({
     { path: "/store", component: Store },
     { path: "/store/:storeId", component: StoreInfo },
     { path: "/store/write", component: StoreWrite },
+    { path: "/store/edit/:storeId", component: StoreWrite },
     { path: "/mypage", component: MyPage },
 
   ],
