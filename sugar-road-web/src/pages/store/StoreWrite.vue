@@ -92,12 +92,12 @@ let storeRequestDTO = ref({
   storeImagePath: null,
 });
 
-let menuRequestListDTO = ref([
-  {
-    menuName: "",
-    menuImagePath: null,
-  },
-]);
+// let menuRequestListDTO = ref([
+//   {
+//     menuName: "",
+//     menuImagePath: null,
+//   },
+// ]);
 
 let menuNameList = ref([]);
 let menuImgList = ref([]);
@@ -133,7 +133,6 @@ function createStore() {
   });
   console.log(menuNameList.value[0]);
 
-  console.log("이름" + menuNameList.value[0].menuName);
   menuImgList.value.forEach((menuImg, index) => {
     if (menuImgList.value[index]) {
       formData.append(`menuImgList`, menuImgList.value[index]);
@@ -141,29 +140,32 @@ function createStore() {
   });
 
   // ** update **
-  // if (uri.includes("edit")) {
-  //   axios
-  //     .put("http://localhost:1023/store/" + storeId, formData, {
-  //       headers: {
-  //         "Content-Type": "multipart/form-data",
-  //         accept: "application/json",
-  //       }
-  //     })
-  //     .then((response) => {
-  //       console.log(response);
-  //       router.push("/store/" + storeId);
-  //     })
-  //     .catch((err) => console.log(err));
-  // } else {
-  axios
-    .post("http://localhost:1023/store", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-    .then((response) => console.log(response))
-    .catch((err) => console.log(err));
-  // }
+  if (uri.includes("edit")) {
+    axios
+      .put("http://localhost:1023/store/" + storeId, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          accept: "application/json",
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        router.push("/store/" + storeId);
+      })
+      .catch((err) => console.log(err));
+  } else {
+    axios
+      .post("http://localhost:1023/store", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        router.push("/store");
+        console.log(response);
+      })
+      .catch((err) => console.log(err));
+  }
 }
 
 onMounted(() => {
@@ -178,8 +180,10 @@ onMounted(() => {
         storeRequestDTO.value.address = response.data.address;
         storeRequestDTO.value.storeDesc = response.data.storeDesc;
         storeRequestDTO.value.storeImagePath = response.data.storeImagePath;
-        menuRequestListDTO.value[0].menuName =
-          response.data.menuDTOList[0].menuName;
+        for (let i = 0; i < response.data.menuDTOList.length; i++) {
+          menuNameList.value[i] = response.data.menuDTOList[i].menuName;
+          menuImgList.value[i] = response.data.menuDTOList[i].menuImagePath;
+        }
       })
       .catch((err) => console.log(err));
   }

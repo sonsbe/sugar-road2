@@ -1,9 +1,8 @@
-package com.example.sugarroad2.model.dto.response;
+package com.example.sugarroad2.model.dto;
 
 import com.example.sugarroad2.model.entity.Post;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;

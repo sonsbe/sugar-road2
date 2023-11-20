@@ -1,9 +1,15 @@
 package com.example.sugarroad2.service;
 
+import com.example.sugarroad2.model.dto.PostRequest;
 import com.example.sugarroad2.model.entity.Post;
+import com.example.sugarroad2.model.entity.PostCategory;
+import com.example.sugarroad2.model.entity.PostImage;
+import com.example.sugarroad2.model.entity.Users;
 import com.example.sugarroad2.repository.PostCategoryRepository;
+import com.example.sugarroad2.repository.PostImageRepository;
 import com.example.sugarroad2.repository.PostRepository;
 import com.example.sugarroad2.repository.UsersRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -35,6 +41,9 @@ public class PostService {
     public Post readById(int id){
         return postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
+    }
+    public List<Post> readByPostCategoryId(String id){
+            return postRepository.findByPostCategoryId(id);
     }
     public List<Post> readByUser(String id){
         List<Post> postList = postRepository.findByUserId(id);
