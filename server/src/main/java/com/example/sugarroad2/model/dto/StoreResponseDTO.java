@@ -26,9 +26,16 @@ public class StoreResponseDTO {
     private long viewsCount;
     //    private String userId;
 //    private int recommendCount;
-
-    public StoreResponseDTO(Store store, List<MenuResponseDTO> menuResponseDTOList,long viewsCount){
-
+    public StoreResponseDTO(Store store, List<MenuResponseDTO> menuResponseDTOList){
+        storeId = store.getId();
+        storeName = store.getStoreName();
+        address = store.getAddress();
+        phoneNumber = store.getPhoneNumber();
+        storeDesc = store.getStoreDesc();
+        storeImagePath = store.getStoreImagePath();
+        menuDTOList = menuResponseDTOList;
+    }
+    public StoreResponseDTO(Store store, List<MenuResponseDTO> menuResponseDTOList, long viewsCount){
         storeId = store.getId();
         storeName = store.getStoreName();
         address = store.getAddress();

@@ -5,6 +5,7 @@ import com.example.sugarroad2.model.dto.StoreResponseDTO;
 import com.example.sugarroad2.service.MenuService;
 import com.example.sugarroad2.service.PostService;
 import com.example.sugarroad2.service.StoreService;
+import com.example.sugarroad2.service.ViewsService;
 import com.example.sugarroad2.util.ConvertionUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,12 +34,16 @@ public class HomeController {
     private ConvertionUtil convertionUtil;
 
     @GetMapping
-    public ResponseEntity<Map<String, List<?>>> read(){
+    public ResponseEntity<Map<String, List<?>>> read() {
         List<PostResponse> postResponseList = postService.readTop5ByOrderByPostedDateDesc()
-                .stream().map(post -> {return convertionUtil.convertToPostResponse(post);})git 
+                .stream().map(post -> {
+                    return convertionUtil.convertToPostResponse(post);
+                })
                 .toList();
         List<StoreResponseDTO> storeResponseDTOList = storeService.read()
-                .stream().map(store -> {return new StoreResponseDTO(store, null);})
+                .stream().map(store -> {
+                    return new StoreResponseDTO(store, null);
+                })
                 .toList();
         Map<String, List<?>> listMap = new HashMap<>();
         listMap.put("postList", postResponseList);

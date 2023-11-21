@@ -51,6 +51,7 @@
       <div class="inputBox">
         <span> 메뉴이미지</span>
         <input type="file" @change="handleMenuImageChange($event, 0)" />
+   
       </div>
     </div>
 
@@ -63,10 +64,14 @@
       <div class="inputBox">
         <span> 메뉴이미지</span>
         <input type="file" @change="handleMenuImageChange($event, index)" />
+        <img
+      :src="`http://localhost:1023${menuImgList[index]}`"
+      v-if="uri.includes('edit')"
+      alt="storeImg"
+    />
       </div>
     </div>
   </div>
-
   <br />
   <div class="store-menu-btnBox">
     <button type="button" @click="addMenu">메뉴➕</button>
@@ -75,7 +80,6 @@
   <br />
   <div class="store-insert-btnBox">
     <button>취소</button>
-    <button v-if="uri.includes('edit')" @click="updateStore">수정</button>
     <button @click="createStore">저장</button>
   </div>
 </template>
@@ -122,10 +126,11 @@ function createStore() {
     formData.append("storeDesc", storeRequestDTO.value.storeDesc);
   // << update >>
   if (uri.includes("edit")) {
-    // 수정할 때 string들은 다 보내기
-    // 이미지들은 파일객체가 아니라면 보내지않기..?
+    // v이미지를 수정하지않았을 경우
     if (typeof storeRequestDTO.value.storeImagePath !== "object") {
       formData.append("storeImagePath", null);
+    }else if(typeof storeRequestDTO.value.storeImagePath !== "object"){
+
     }
     
     axios
