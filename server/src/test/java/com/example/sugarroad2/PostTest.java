@@ -1,6 +1,5 @@
 package com.example.sugarroad2;
 
-import com.example.sugarroad2.model.dto.request.PostRequest;
 import com.example.sugarroad2.model.entity.*;
 import com.example.sugarroad2.repository.PostCategoryRepository;
 import com.example.sugarroad2.repository.PostImageRepository;

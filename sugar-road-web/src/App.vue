@@ -17,8 +17,8 @@
     padding : 0;
   }
 </style>
-
 <style>
   @import "@/assets/ui.css";
+  @import "@/assets/base.css";
 </style>
 

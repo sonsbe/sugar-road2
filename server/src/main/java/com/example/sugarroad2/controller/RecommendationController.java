@@ -63,11 +63,17 @@ public class RecommendationController {
 		}
 	}
 
-	@PostMapping
+	@PostMapping("/reference-type/{referenceType}/reference-id/{referenceId}")
 	public ResponseEntity<EntityModel<RecommendationResultResponseVO>> createRecommendation(
-		@RequestBody RecommendationRequestDTO recommendationRequestDTO) {
+		@PathVariable("referenceType") String referenceType,
+		@PathVariable("referenceId") int referenceId) {
 		try {
-			Users users = usersService.readById(recommendationRequestDTO.getUserId());
+
+			String userId = "vv980113";
+
+			Users users = usersService.readById(userId);
+			RecommendationRequestDTO recommendationRequestDTO =
+				RecommendationRequestDTO.builder().referenceId(referenceId).referenceType(referenceType).build();
 			Recommendation recommendation = recommendationRequestDTO.toEntity(users);
 			recommendationService.create(recommendation);
 

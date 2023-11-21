@@ -29,4 +29,9 @@ public class MenuService {
     public Menu update(Menu menu) {
         return menuRepository.save(menu);
     }
+    public  void delete(int storeId){
+        // 해당 가게의 메뉴 레코드를 먼저 삭제
+        menuRepository.deleteByStoreId(storeId);
+        System.out.println("메뉴삭제하고 가게 삭제하기");
+    }
 }

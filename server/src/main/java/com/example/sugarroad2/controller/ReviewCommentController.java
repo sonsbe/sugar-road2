@@ -53,7 +53,7 @@ public class ReviewCommentController {
 	public ResponseEntity<EntityModel<ReviewCommentResponseVO>> createReviewComment(
 		@RequestBody ReviewCommentRequestDTO reviewCommentRequestDTO) {
 
-		Users users = usersService.readById(reviewCommentRequestDTO.getUserId());
+		Users users = usersService.readById("vv980113");
 		Review review = reviewService.readById(reviewCommentRequestDTO.getReviewId());
 		ReviewComment reviewComment;
 
@@ -103,7 +103,7 @@ public class ReviewCommentController {
 		@RequestBody ReviewCommentRequestDTO reviewCommentRequestDTO) {
 
 		reviewCommentRequestDTO.setId(id);
-		Users users = usersService.readById(reviewCommentRequestDTO.getUserId());
+		Users users = usersService.readById("vv980113");
 		Review review = reviewService.readById(reviewCommentRequestDTO.getReviewId());
 		ReviewComment reviewComment;
 

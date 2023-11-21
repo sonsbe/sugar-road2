@@ -1,0 +1,100 @@
+.header{
+    margin-bottom: 10px;
+}
+.header > img{
+    height: 90px;
+}
+.search-bar{
+    width: 80%;
+    border-radius: 25px;
+    border: 2px solid #d3d3d3;
+    margin: 0 auto 20px;
+    background-color: white;
+    padding: 5px;
+}
+.search-bar i{
+    font-size: 20px;
+}
+.search-bar input{
+    top: 6px;
+    left: 40px;
+    width: 80%;
+    height: 80%;
+    border-radius: 10px;
+    border: 0.5px;
+    padding: 4px;
+}
+.search-bar input:focus{
+    outline: none;
+}
+input::placeholder{
+    color: #d3d3d3;
+    font-size: 12px;
+}
+.thumbnail{
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+.thumbnail > a{
+    text-decoration: none;
+    color: black;
+}
+.thumbnail > a:hover{
+    text-decoration: none;
+    color: black;
+}
+td > img{
+    width: 80%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.autocomplete {
+    /*the container must be positioned relative:*/
+    position: relative;
+    /* display: inline-block; */
+}
+/* input {
+    border: 1px solid transparent;
+    background-color: #f1f1f1;
+    padding: 5px;
+    font-size: 12px;
+}
+input[type=text] {
+    background-color: #f1f1f1;
+    width: 100%;
+}
+input[type=submit] {
+    background-color: #6BB0F0;
+    color: white;
+} */
+.autocomplete-items {
+    position: absolute;
+    margin-top: 1%;
+    border: 1px solid #d4d4d4;
+    border-bottom: none;
+    border-top: none;
+    z-index: 99;
+    /*position the autocomplete items to be the same width as the container:*/
+    top: 100%;
+    left: 5%;
+    right: 5%;
+}
+.autocomplete-items div {
+    padding: 3px;
+    cursor: pointer;
+    background-color: var(--white);
+    border-bottom: 1px solid var(--pink1);
+}
+.autocomplete-items div:hover {
+    /*when hovering an item:*/
+    background-color: var(--pink1);
+}
+.autocomplete-active {
+    /*when navigating through the items using the arrow keys:*/
+    background-color: var(--pink1) !important;
+    /* color: #ffffff; */
+}

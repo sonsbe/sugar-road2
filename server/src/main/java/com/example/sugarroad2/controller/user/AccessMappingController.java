@@ -30,8 +30,8 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
-@CrossOrigin(origins="http://localhost:5173", allowedHeaders = "*",
-		exposedHeaders="Authorization", allowCredentials = "true")//SOP 문제 해결과 쿠키를 전달받기 위한 설정
+//@CrossOrigin(origins="http://localhost:5173", allowedHeaders = "*",
+//		exposedHeaders="Authorization", allowCredentials = "true")//SOP 문제 해결과 쿠키를 전달받기 위한 설정
 public class AccessMappingController {
 
 	@Autowired

@@ -23,7 +23,7 @@ h3 {
      justify-content: center;
 }
 
-.category > span {
+.category > button {
         border: 1px solid rgb(228, 228, 228);
         border-radius: 5px;
         padding: 1.5vh 4vh 1.5vh 3vh;

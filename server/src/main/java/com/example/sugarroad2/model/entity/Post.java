@@ -2,6 +2,8 @@ package com.example.sugarroad2.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -29,8 +31,10 @@ public class Post {
     private LocalDateTime postedDate;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "user_id")
     private Users user;
+
 
     @ManyToOne
     @JoinColumn(name = "post_category_id")
