@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Slf4j
@@ -32,6 +33,11 @@ public class UsersService {
 
         users.setRole("USER");
         //회원가입 유저 권한 설정
+
+        users.setBirth(LocalDate.parse("2000-10-10"));
+        users.setGender("M");
+        users.setStatus("newBie");
+        //회원가입 테스트용 임시 등록 정보
 
         usersRepository.save(users);
     }

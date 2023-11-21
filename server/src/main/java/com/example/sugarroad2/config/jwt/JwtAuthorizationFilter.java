@@ -40,7 +40,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter{
                         return;
 		}
 
-		System.out.println("header : " + header);
+		System.out.println("필터 수행\n현재 header : " + header);
 		
 		String token = header.replace(JwtProperties.TOKEN_PREFIX, "");
 		
@@ -49,26 +49,26 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter{
 		String username = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET))
 				.build()
 				.verify(token)
-				.getClaim("username")
+				.getClaim("id")
 				.asString();
 
-		System.out.println("username : " + username);
+		System.out.println("인증 필터 수행 중인 유저 : " + username);
 
 		if(username != null) {	
 			Users user = usersRepository.findById(username).get();
-			System.out.println("NowUser : " + user);
+			System.out.println(" : " + user);
 			// 인증은 토큰 검증시 끝. 인증을 하기 위해서가 아닌 스프링 시큐리티가 수행해주는 권한 처리를 위해 
 			// 아래와 같이 토큰을 만들어서 Authentication 객체를 강제로 만들고 그걸 세션에 저장!
 			NowUserDetails principalDetails = new NowUserDetails(user);
-			System.out.println(principalDetails.getAuthorities());
+			//System.out.println(principalDetails.getAuthorities());
 			Authentication authentication =
 					new UsernamePasswordAuthenticationToken(
-							principalDetails, //나중에 컨트롤러에서 DI해서 쓸 때 사용하기 편함.
+							principalDetails, //나중에 컨트롤러에서 ID해서 쓸 때 사용하기 편함.
 							null, // 패스워드는 모르니까 null 처리, 어차피 지금 인증하는게 아니니까!!
 							principalDetails.getAuthorities());
 			
 			// 강제로 시큐리티의 세션에 접근하여 값 저장
-			SecurityContextHolder.getContext().setAuthentication(authentication);
+			//SecurityContextHolder.getContext().setAuthentication(authentication);
 		}
 	
 		chain.doFilter(request, response);

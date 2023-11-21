@@ -8,6 +8,7 @@ import StoreInfo from "@/pages/store/StoreInfo.vue";
 import MyPage from "@/pages/mypage/MyPage.vue";
 import InfoEdit from "@/pages/mypage/InfoEdit.vue";
 import Login from "@/pages/login/Login.vue";
+import Signup from "@/pages/login/Signup.vue";
 import ReviewEdit from "@/pages/review/ReviewEdit.vue";
 import ReviewDetail from "@/pages/review/ReviewDetail.vue";
 import ReviewTest from "@/pages/review/ReviewTest.vue";
@@ -30,11 +31,12 @@ const router = createRouter({
     { path: "/store/edit/:storeId", component: StoreWrite },
     { path: "/mypage", component: MyPage },
     { path: "/infoEdit", component: InfoEdit },
+    { path: "/login", component: Login },
+    { path: "/signup", component: Signup }
     { path: "/userLogin", component: Login },
     { path: "/review/:reviewId", component: ReviewDetail},
     { path: "/review/edit/:reviewId", component: ReviewEdit},
     { path: "/review/write/store/:storeId", component: ReviewWrite},
-    { path: "/test", component: ReviewTest}
   ],
 });
 export default router;
