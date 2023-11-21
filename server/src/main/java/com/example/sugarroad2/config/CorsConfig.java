@@ -1,19 +1,29 @@
 package com.example.sugarroad2.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration
-@EnableWebMvc
-public class CorsConfig implements WebMvcConfigurer {
-	@Override
-	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/**")
-			.allowedOrigins("http://localhost:5173")
-			.allowedHeaders("*")
-			.allowCredentials(true)
-			.allowedMethods("*");
-	}
+public class CorsConfig {
+
+   @Bean
+   public CorsConfigurationSource corsConfigurationSource() {
+
+      CorsConfiguration config = new CorsConfiguration();
+
+      config.setAllowCredentials(true);
+      config.setAllowedOrigins(List.of("http://localhost:5173")); //외부 접근이 허용된 URL
+      config.setAllowedHeaders(List.of("*"));
+      config.setAllowedMethods(List.of("*")); //CRUD 전부 허용
+      config.setExposedHeaders(List.of("Authorization"));
+
+      UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+      source.registerCorsConfiguration("/**", config);
+      return source;
+   }
 }

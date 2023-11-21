@@ -1,6 +1,5 @@
 package com.example.sugarroad2;
 
-import com.example.sugarroad2.model.entity.Users;
 import com.example.sugarroad2.repository.UsersRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +30,7 @@ public class UsersRepositoryTest {
     @Rollback(value = false)
     void save() { //save() 메서드 테스트
         Users UsersEntity = Users.builder()
-                .id("abcd1234")
+                .id("테스터ID")
                 .userPassword("q1w2e3")
                 .nickname("테스터별명")
                 .userName("테스터")
@@ -44,19 +43,20 @@ public class UsersRepositoryTest {
 
         usersR.save(UsersEntity);
 
-//        List<Users> list = usersR.findAll();
-//        for(Users u : list){
-//            System.out.println(u.getId());
-//            System.out.println(u.getUserPassword());
-//            System.out.println(u.getNickname());
-//            System.out.println(u.getUserName());
-//            System.out.println(u.getUserEmail());
-//            System.out.println(u.getUserImagePath() != null ? u.getUserImagePath() : "없음");
-//            System.out.println(u.getGender());
-//            System.out.println(u.getRole());
-//            System.out.println(u.getStatus());
-//            System.out.println(u.getBirth());
-//        }
+        List<Users> list = usersR.findAll();
+        for(Users u : list){
+            System.out.println(u.getId());
+            System.out.println(u.getUserPassword());
+            System.out.println(u.getNickname());
+            System.out.println(u.getUserName());
+            System.out.println(u.getUserEmail());
+            System.out.println(u.getUserImagePath() != null ? u.getUserImagePath() : "없음");
+            System.out.println(u.getGender());
+            System.out.println(u.getRole());
+            System.out.println(u.getStatus());
+            System.out.println(u.getBirth());
+        }
+
     }
 
     @Test

@@ -1,7 +1,6 @@
 package com.example.sugarroad2.controller;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import com.example.sugarroad2.model.dto.request.RecommendationRequestDTO;
 import com.example.sugarroad2.model.dto.response.RecommendationResultResponseVO;

@@ -1,10 +1,7 @@
 package com.example.sugarroad2.controller;
 
-import com.example.sugarroad2.model.dto.response.MenuResponseDTO;
 import com.example.sugarroad2.model.dto.response.PostResponse;
 import com.example.sugarroad2.model.dto.response.StoreResponseDTO;
-import com.example.sugarroad2.model.entity.Post;
-import com.example.sugarroad2.model.entity.Store;
 import com.example.sugarroad2.service.MenuService;
 import com.example.sugarroad2.service.PostService;
 import com.example.sugarroad2.service.StoreService;
@@ -20,9 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-@CrossOrigin("*")
+
 @Slf4j
 @RestController
 @RequestMapping("/search")

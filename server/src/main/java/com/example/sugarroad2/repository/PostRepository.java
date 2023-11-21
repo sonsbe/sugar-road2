@@ -5,8 +5,6 @@ import com.example.sugarroad2.model.entity.Post;
 import com.example.sugarroad2.model.entity.Users;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
