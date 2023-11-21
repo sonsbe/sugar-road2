@@ -6,6 +6,7 @@ import com.example.sugarroad2.service.MenuService;
 import com.example.sugarroad2.service.PostService;
 import com.example.sugarroad2.service.StoreService;
 import com.example.sugarroad2.util.ConvertionUtil;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +38,7 @@ public class SearchController {
                 .toList();
         //store에 맞게 수정
         List<StoreResponseDTO> storeResponseDTOList = storeService.readByStoreName(query)
-                .stream().map( store -> {return new StoreResponseDTO(store, null);})
+                .stream().map( store -> {return new StoreResponseDTO(store, null, 0);})
                 .toList();
         Map<String, List<?>> listMap = new HashMap<>();
         if(!postResponseList.isEmpty())

@@ -23,7 +23,6 @@ import java.util.List;
 public class Users {
     @Id
     @Column(name="user_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     @Column(nullable = false)

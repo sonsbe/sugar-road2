@@ -93,7 +93,7 @@ public class ReviewController {
 		@RequestBody ReviewRequestDTO reviewRequestDTO) {
 		try {
 			Users users = usersService.readById("vv980113");
-			Store store = storeService.readById(reviewRequestDTO.getStoreId());
+			Store store = storeService.readBy(reviewRequestDTO.getStoreId());
 //			String reviewImagePath = imageUtil.writeImage(reviewRequestDTO.getUploadImage());
 			String reviewImagePath = "";
 			Review review = reviewService.create(
@@ -118,7 +118,7 @@ public class ReviewController {
 		@PathVariable("id") int id) {
 		try {
 			Users users = usersService.readById("vv980113");
-			Store store = storeService.readById(reviewRequestDTO.getStoreId());
+			Store store = storeService.readBy(reviewRequestDTO.getStoreId());
 //			String reviewImagePath = imageUtil.writeImage(reviewRequestDTO.getUploadImage());
 			String reviewImagePath = "";
 			reviewRequestDTO.setId(id);

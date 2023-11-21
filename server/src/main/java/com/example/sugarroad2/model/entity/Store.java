@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Getter
 @Setter
@@ -26,8 +28,8 @@ public class Store {
     private String storeImagePath;
 //  private int recommendCount;
 
-    /* 유저용
-    @ManyToOne
-    @JoinColumn(name="user_id")
-    private String userId;*/
+//    @ManyToOne
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @JoinColumn(name="user_id")
+//    private Users users;
 }

@@ -3,7 +3,9 @@
     <div class="content">
       <div class="container">
         <div class="store-like-back">
-          <button id="backBtn" @click="goBack">◀</button>
+          <RouterLink to="/store">
+            <button id="backBtn">◀</button>
+          </RouterLink>
           <span>💖</span>
         </div>
         <h3>
@@ -16,7 +18,9 @@
           >
             수정
           </button>
-          <button class="buttons" @click="deleteStore">삭제</button>
+          <RouterLink to="/store">
+            <button class="buttons" @click="deleteStore">삭제</button>
+          </RouterLink>
           <br />
         </div>
         <img
@@ -68,7 +72,7 @@
 import axios from "axios";
 import { useRoute, useRouter } from "vue-router";
 import { onMounted, reactive, ref } from "vue";
-import StoreMenuCard from "../../components/store/StoreMEnuCard.vue";
+import StoreMenuCard from "@/components/store/StoreMEnuCard.vue";
 const currentRoute = useRoute();
 const router = useRouter();
 let storeId = currentRoute.params.storeId;
@@ -98,17 +102,11 @@ function deleteStore() {
         console.log(response);
       })
       .catch((err) => console.log(err));
-    router.push({
-      path: "/store",
-    });
   }
-}
-function goBack() {
-  router.go(-1);
 }
 
 </script>
 
 <style scoped>
-@import "../../../src/assets/storeDetail.css";
+@import "@/assets/storeDetail.css";
 </style>

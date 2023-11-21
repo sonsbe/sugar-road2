@@ -1,16 +1,13 @@
 package com.example.sugarroad2.model.entity;
 
-import com.example.sugarroad2.model.dto.PostRequest;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -34,6 +31,7 @@ public class Post {
     private LocalDateTime postedDate;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "user_id")
     private Users user;
 
