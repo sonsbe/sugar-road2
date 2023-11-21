@@ -12,7 +12,7 @@
           : '/images/93c339e1-eb4d-4d39-b773-bd50913b7dc1thymeleaf-logo-6E4D42A713-seeklogo.com.png'
       }`"
       class="storeImg"
-      alt="가게 대표 이미지"
+      alt="게시글 이미지"
     />
     <div v-text="p.object.title" class="store-name">
     </div>

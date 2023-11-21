@@ -2,10 +2,42 @@
   <div class="title">
     <img src="images/logonoback.png" class="main-title" />
   </div>
+  <span><b>최근 등록한 가게🥐</b></span><br/>
+  <div class="swiper">
+    <div class="swiper-wrapper">
+  <Swiper
+        :modules="modules"
+        :slides-per-view="2.3"
+        :space-between="10"
+        :centered-slides="true"
+        :autoplay="{
+          delay: 2500,
+          disableOnInteraction: false
+        }"
+        :loop="true"
+        :loop-additional-slides="1"
+        @swiper="onSwiper"
+        @slideChange="onSlideChange"
+      >
+        <SwiperSlide
+          v-for="(store, index) in resultList.storeList"
+        >
+          <HomeStoreCard :object="store" :key="index"></HomeStoreCard>
+        </SwiperSlide>
+      </Swiper>
+      </div>
+      </div>
+      <br/>
+        <div class="text-box">
+            <h4>Dessert Share PlatForm</h4>Welcome to Sugar Road
+        </div>
+        <br/>
+
   <span><b>인기 급상승 게시글🧁</b></span><br/>
   <div class="swiper">
     <div class="swiper-wrapper">
       <Swiper
+        :modules="modules"
         :slides-per-view="2.3"
         :space-between="10"
         :centered-slides="true"
@@ -21,11 +53,12 @@
         <SwiperSlide
           v-for="(post, index) in resultList.postList"
         >
-          <HomeCard :object="post" :key="index"></HomeCard>
+          <HomePostCard :object="post" :key="index"></HomePostCard>
         </SwiperSlide>
       </Swiper>
     </div>
   </div>
+  
   <div class="text-box" id="text-second-box">
     <h4>Recent Dessert</h4>
     i love sugar you too? hahaha
@@ -34,10 +67,13 @@
 </template>
 <script setup>
 import { Swiper, SwiperSlide } from "swiper/vue";
-import HomeCard from "../../components/home/HomeCard.vue";
+import { Autoplay } from 'swiper/modules';
+import HomePostCard from "../../components/home/HomePostCard.vue";
+import HomeStoreCard from "../../components/home/HomeStoreCard.vue"
 import { onMounted, ref } from "vue";
 import { api } from "@/common";
 const resultList = ref({});
+const modules = [Autoplay];
 const onSwiper = (swiper) => {
   console.log(swiper);
 };

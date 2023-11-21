@@ -34,7 +34,7 @@ public class HomeController {
 
     @GetMapping
     public ResponseEntity<Map<String, List<?>>> read(){
-        List<PostResponse> postResponseList = postService.read(null)
+        List<PostResponse> postResponseList = postService.readTop5ByOrderByPostedDateDesc()
                 .stream().map(post -> {return convertionUtil.convertToPostResponse(post);})
                 .toList();
         List<StoreResponseDTO> storeResponseDTOList = storeService.read()

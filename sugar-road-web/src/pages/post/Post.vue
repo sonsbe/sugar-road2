@@ -8,9 +8,6 @@
     <button @click="filtCategory('01')">🍩빵리뷰</button>
     <button @click="filtCategory('02')">🚲일상</button>
     <button @click="filtCategory('03')">📝정보</button>
-      <!-- <span><a href="/post?category=01">🍩빵리뷰</a></span>
-      <span> <a href="/post?category=02">🚲일상</a></span>
-      <span><a href="/post?category=03">📝정보</a></span> -->
   </div>
           <div class="search">
           <form @submit.prevent="search">
@@ -77,8 +74,13 @@
     }
 
     function sort(){
-      console.log("col", col.value)
-      api("http://localhost:1023/posts?col="+col.value, "GET", {})
+      var uri;
+      if(category.value.length>0)
+        uri = "http://localhost:1023/posts?col="+col.value+"&category="+category.value;
+      else
+        uri = "http://localhost:1023/posts?col="+col.value;
+      console.log("col", col.value, "uri", uri)
+      api(uri, "GET", {})
       .then(response => {
         console.log("response", response);
         postList.value = response;
