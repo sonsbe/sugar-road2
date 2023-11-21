@@ -1,6 +1,7 @@
 <template>
   <div class="thumbnail lightgray">
-    <!-- <router-link :to="'/store/'+p.store.id" :id="p.store.id"> -->
+
+    <router-link :to="'/store/'+p.store.id" :id="p.store.id">
             <table class="v-table">
                 <tr>
                     <td class="left">
@@ -18,7 +19,8 @@
                     </td>
                 </tr>
             </table>
-    <!-- </router-link> -->
+
+    </router-link>
     </div>
 </template>
 

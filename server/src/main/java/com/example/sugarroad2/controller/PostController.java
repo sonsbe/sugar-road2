@@ -91,7 +91,8 @@ public class PostController {
         try {
             List<Post> postList = new ArrayList<>();
             if(category != null){
-                postList = postService.readByPostCategoryId(category);
+
+                postList = postService.readByPostCategoryId(category, col);
             }
             else if (query != null) {
                 postList = postService.readByTitleOrContent(query);
