@@ -18,7 +18,7 @@
   </div>
   <div class="inputBox">
     <span>대표이미지</span>
-    <input type="file" @change="handleStoreImageChange" />
+    <input type="file" @change="handleStoreImageChange" ref="uploadImage"/>
   </div>
   <div class="inputBox">
     <span>설명</span> <input type="text" v-model="storeRequestDTO.storeDesc" />
@@ -92,18 +92,11 @@ let storeRequestDTO = ref({
   storeImagePath: null,
 });
 
-// let menuRequestListDTO = ref([
-//   {
-//     menuName: "",
-//     menuImagePath: null,
-//   },
-// ]);
-
 let menuNameList = ref([]);
 let menuImgList = ref([]);
 
+// 가게 대표이미지 변경
 function handleStoreImageChange(e) {
-  // 대표이미지 변경
   storeRequestDTO.value.storeImagePath = e.target.files[0];
   console.log(storeRequestDTO.value.storeImagePath);
 }
@@ -167,14 +160,14 @@ function createStore() {
       .catch((err) => console.log(err));
   }
 }
-
 onMounted(() => {
   if (uri.includes("edit")) {
     axios
       .get("http://localhost:1023/store/" + storeId)
       .then((response) => {
         console.log(response);
-        // store.value = response;
+        store.value = response;
+
         storeRequestDTO.value.storeName = response.data.storeName;
         storeRequestDTO.value.phoneNumber = response.data.phoneNumber;
         storeRequestDTO.value.address = response.data.address;

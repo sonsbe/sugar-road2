@@ -23,7 +23,7 @@ public class StoreService {
     MenuRepository menuRepository;
 
     public List<Store> read() {
-        List<Store> storeList = storeRepository.findAll();
+        List<Store> storeList = storeRepository.findAllByOrderByIdDesc();
         return storeList;
     }
 

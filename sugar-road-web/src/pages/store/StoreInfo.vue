@@ -3,11 +3,11 @@
     <div class="content">
       <div class="container">
         <div class="store-like-back">
-          <button @click="goBack">◀</button>
-          <span>좋아요 수:</span>
+          <button id="backBtn" @click="goBack">◀</button>
+          <span>💖</span>
         </div>
         <h3>
-          <div>가게명: {{ storeInfo.storeName }}</div>
+          <div>{{ storeInfo.storeName }}</div>
         </h3>
         <div class="edit-remove-btnBox">
           <button
@@ -29,20 +29,20 @@
         <div class="addressBox">
           <!-- <i class="fa-solid fa-map-location-dot" style="color: #999999"></i
           >&nbsp -->
-          &nbsp&nbsp🏠&nbsp&nbsp&nbsp
+          &nbsp🏠&nbsp&nbsp&nbsp
           <div>{{ storeInfo.address }}</div>
         </div>
         <div class="phoneBox">
-          &nbsp&nbsp📞&nbsp &nbsp
+          &nbsp📞&nbsp &nbsp
           <div>{{ storeInfo.phoneNumber }}</div>
         </div>
         <div class="descBox">
-          &nbsp&nbsp📃&nbsp&nbsp
+          &nbsp📃&nbsp&nbsp
           <div>{{ storeInfo.storeDesc }}</div>
         </div>
       </div>
       <!--메뉴 이름/이미지 없을 경우에 뜨지 않도록-->
-      <h4>Menu</h4>
+      <h4 class="menuTitle">Menu</h4>
       <hr />
       <div class="menu-container">
         <StoreMenuCard
@@ -60,7 +60,6 @@
       </div>
       <br />
       <div><b>Store Location</b></div>
-
       <div id="map" style="width: 100%; height: 200px">지도위치</div>
     </div>
   </div>
@@ -107,6 +106,7 @@ function deleteStore() {
 function goBack() {
   router.go(-1);
 }
+
 </script>
 
 <style scoped>

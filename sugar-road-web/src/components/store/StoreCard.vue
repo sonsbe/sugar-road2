@@ -5,15 +5,15 @@
         <div class="storeBoxTop">
           <!-- <p>id: {{ storeData.storeId }}</p> -->
           <h4>{{ storeData.storeName }}</h4>
-          <div><span>추천수</span>, <span>리뷰수</span></div>
+          <div>
+            <span>조회수: {{ storeData.viewsCount }}</span>
+          </div>
         </div>
         <img
           class="storeImg"
           v-bind:src="`http://localhost:1023${storeData.storeImagePath}`"
           alt="img"
         />
-
-        {{ storeData.storeImagePath }}
         <div class="store-desc">{{ storeData.storeDesc }}</div>
       </a>
     </router-link>
@@ -50,7 +50,10 @@ a {
   justify-content: space-between;
   height: 4vh;
 }
-.storeBoxTop div > span,
+.storeBoxTop > div > span {
+  font-size: 12px;
+  color: gray;
+}
 .store-desc {
   font-size: 14px;
 }

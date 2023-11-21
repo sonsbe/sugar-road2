@@ -7,9 +7,9 @@
   display: flex;
   justify-content: space-between;
 }
-.store-like-back > a {
-  text-decoration: none;
-  color: gray;
+#backBtn {
+  border: none;
+  background: none;
 }
 .edit-remove-btnBox {
   text-align: right;
@@ -28,7 +28,7 @@
   border: 1px solid black;
 }
 .address-phone-box {
-  padding: 4vh 0 3vh 2vh;
+  padding: 2vh 0 5vh 2vh;
   font-size: 15px;
 }
 .addressBox,
@@ -41,7 +41,7 @@
 .descBox {
   margin-bottom: 1.5vh;
 }
-addressBox > div {
+.addressBox > div {
   font-size: 14px;
 }
 .addressBox > i,
@@ -49,7 +49,8 @@ addressBox > div {
 .descBox > i {
   margin-right: 10px;
 }
-.swiper {
+
+/* .swiper {
   width: 600px;
   border: 2px solid lightgray;
   padding: 10px;
@@ -72,7 +73,7 @@ addressBox > div {
   line-height: 23px;
   height: 23px;
   font-size: 14px;
-}
+} */
 /*#menu-container {
   border: 2px solid #cdcdcd;
   padding: 1vh;

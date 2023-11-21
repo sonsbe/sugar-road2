@@ -14,6 +14,7 @@
       storeDesc: store.storeDesc,
       storeImagePath: store.storeImagePath,
       storeId: store.storeId,
+      viewsCount:store.viewsCount
     }"
   >
   </StoreCard>
@@ -28,7 +29,7 @@ import { onMounted, reactive } from "vue";
 let storeList = reactive([]);
 onMounted(async () => {
   await getStoreList();
-  // console.log(storeList.value);
+   console.log(storeList.value);
 });
 async function getStoreList() {
   try {
@@ -50,8 +51,6 @@ async function getStoreList() {
   background-color: #decfed;
   text-align: center;
   border-radius: 5px;
-  /* left: 4%; */
-  /* top: 95%; */
   bottom: 3%;
   z-index: 99999;
   /*   font-size: 20px;*/
