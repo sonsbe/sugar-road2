@@ -7,6 +7,9 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Getter
 @Setter
@@ -47,5 +50,10 @@ public class Users {
 
     private String userImagePath;
 
-
+    public List<String> getRoleList(){
+        if(!this.role.isEmpty()){
+            return Arrays.asList(this.role.split(","));
+        }
+        return new ArrayList<>();
+    }
 }
