@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Test from "@/pages/main/Test.vue";
+import Home from "@/pages/main/Home.vue";
 import Search from "@/pages/search/Search.vue";
 import Post from "@/pages/post/Post.vue";
 import Store from "@/pages/store/Store.vue";
@@ -11,7 +11,7 @@ import PostDetail from "@/pages/post/PostDetail.vue";
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    { path: "/", component: Test},
+    { path: "/", component: Home},
     { path: "/search", component: Search },
     { path: "/post", component: Post },
     { path: "/post/edit/:postId", component: PostWrite},

@@ -1,10 +1,9 @@
 package com.example.sugarroad2.util;
 
 import com.example.sugarroad2.model.dto.PostResponse;
-import com.example.sugarroad2.model.dto.StoreResponseDTO;
+
 import com.example.sugarroad2.model.entity.Post;
 import com.example.sugarroad2.model.entity.PostImage;
-import com.example.sugarroad2.model.entity.Store;
 import com.example.sugarroad2.service.PostImageService;
 import com.example.sugarroad2.service.ViewsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,4 +33,3 @@ public class ConvertionUtil {
         return postResponse;
     }
 
-}

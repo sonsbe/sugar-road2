@@ -39,6 +39,7 @@ public class SearchController {
         List<PostResponse> postResponseList = postService.readByTitleOrContent(query)
                 .stream().map( post -> { return convertionUtil.convertToPostResponse(post);})
                 .toList();
+        //store에 맞게 수정
         List<StoreResponseDTO> storeResponseDTOList = storeService.readByStoreName(query)
                 .stream().map( store -> {return new StoreResponseDTO(store, null);})
                 .toList();

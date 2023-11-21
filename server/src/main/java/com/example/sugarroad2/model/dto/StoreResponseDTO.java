@@ -28,6 +28,7 @@ public class StoreResponseDTO {
 //    private int recommendCount;
 
     public StoreResponseDTO(Store store, List<MenuResponseDTO> menuResponseDTOList,long viewsCount){
+
         storeId = store.getId();
         storeName = store.getStoreName();
         address = store.getAddress();

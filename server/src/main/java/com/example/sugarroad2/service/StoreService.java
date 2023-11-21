@@ -51,6 +51,7 @@ public class StoreService {
         Store store = storeRepository.findById(storeId).orElseThrow(()-> new EntityNotFoundException("가게가 없습니다."));
         storeRepository.deleteById(storeId);
     }
+
 }
 
 //    public void delete(Store store) {
