@@ -40,7 +40,16 @@ export default {
           "Content-Type": "application/json",
           "X-Requested-With": "XMLHttpRequest"
           // "withCredentials" : true
+          //토큰 값 가져와야하면
+          //sessionStorage.getItem('token')
+          //Authorization : 'token'
         }
+        }).then((response)=>{
+          console.log("헤더확인");
+          console.log(response.headers.authorization);
+          sessionStorage.setItem('token',response.headers.authorization);
+          //토큰 값 가져와야하면
+          //sessionStorage.getItem('token')
         });
 
       // fetch("http://localhost:1023/login", {
@@ -59,9 +68,9 @@ export default {
       // .then((json) => {
       //   console.log(json);
       // })
-      console.log(response)
-      console.log(response.headers.getAuthorization())
-      console.log(response.headers.get('authorization'))
+      // console.log(response)
+      // console.log(response.headers.getAuthorization())
+      // console.log(response.headers.get('authorization'))
 
       // .then((res) => {  
       //     console.log(res.headers);
@@ -106,26 +115,6 @@ export default {
 </script>
 
 <style lang="scss" scoped></style>
-
-<!-- <style scoped>
-.form-signin {
-  max-width: 330px;
-  padding: 15px;
-}
-
-.form-signin .form-floating:focus-within {
-  z-index: 2
-}
-
-.form-signin input[type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-.form-signin input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-</style> -->
+<style>
+@import "src/assets/users/login.css";
+</style>

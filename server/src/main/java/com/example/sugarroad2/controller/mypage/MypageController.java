@@ -6,16 +6,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
 
 @Slf4j
 @RestController
 @RequestMapping("/mypage")
+@CrossOrigin(origins="http://localhost:5173", allowedHeaders = "*",
+        exposedHeaders="Authorization", allowCredentials = "true")//SOP 문제 해결과 쿠키를 전달받기 위한 설정
 public class MypageController {
 
     @Autowired

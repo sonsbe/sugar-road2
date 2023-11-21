@@ -1,6 +1,5 @@
 package com.example.sugarroad2.service;
 
-import com.example.sugarroad2.config.Security.JwtPromise;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,7 +23,7 @@ public class JwtServiceImpl implements JwtService {
         log.info(d.toString() +" : " + d.getTime());
 
 
-        byte[] secretByteKey = DatatypeConverter.parseBase64Binary(JwtPromise.SECRET);
+        byte[] secretByteKey = DatatypeConverter.parseBase64Binary("asdfqwerasdfqwerasdf1234asdfqwer1234asdfzxcv");
         Key signKey = new SecretKeySpec(secretByteKey, SignatureAlgorithm.HS256.getJcaName());
 
         Map<String, Object> headerMap = new HashMap<>();
@@ -47,7 +46,7 @@ public class JwtServiceImpl implements JwtService {
         if (token != null && !"".equals(token)) {
             token = token.replace("Bearer ", "");
             try {
-                byte[] secretByteKey = DatatypeConverter.parseBase64Binary(JwtPromise.SECRET);
+                byte[] secretByteKey = DatatypeConverter.parseBase64Binary("asdfqwerasdfqwerasdf1234asdfqwer1234asdfzxcv");
                 Key signKey = new SecretKeySpec(secretByteKey, SignatureAlgorithm.HS256.getJcaName());
                 return Jwts.parserBuilder().setSigningKey(signKey).build().parseClaimsJws(token).getBody();
             } catch (ExpiredJwtException e) {

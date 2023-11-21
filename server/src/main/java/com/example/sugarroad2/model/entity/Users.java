@@ -49,4 +49,13 @@ public class Users {
     private LocalDate birth;
 
     private String userImagePath;
+
+    //권한 식별을 위해 리스트 생성
+    //UserDetails 오버라이딩 항목에 사용됩니다
+    public List<String> getRoleList(){
+        if(!this.role.isEmpty()){
+            return Arrays.asList(this.role.split(","));
+        }
+        return new ArrayList<>();
+    }
 }

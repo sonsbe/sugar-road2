@@ -4,7 +4,6 @@ import com.example.sugarroad2.model.dto.request.PostRequest;
 import com.example.sugarroad2.model.dto.response.PostResponse;
 import com.example.sugarroad2.model.entity.Post;
 import com.example.sugarroad2.model.entity.PostCategory;
-import com.example.sugarroad2.model.entity.Users;
 import com.example.sugarroad2.repository.PostCategoryRepository;
 import com.example.sugarroad2.repository.UsersRepository;
 import com.example.sugarroad2.service.PostService;

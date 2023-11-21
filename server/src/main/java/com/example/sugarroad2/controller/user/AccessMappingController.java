@@ -1,6 +1,5 @@
 package com.example.sugarroad2.controller.user;
 
-import com.example.sugarroad2.config.Security.JwtPromise;
 import com.example.sugarroad2.model.entity.Users;
 import com.example.sugarroad2.repository.UsersRepository;
 import com.example.sugarroad2.service.JwtService;
@@ -10,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
@@ -69,17 +67,16 @@ public class AccessMappingController {
 	@PostMapping("/login")
 	public ResponseEntity<String> login(@RequestBody Map<String, String> params,
 										HttpServletResponse res) {
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
 		Optional<Users> member = userRepository.findById(params.get("id"));
 
-		boolean isPassword = encoder.matches(params.get("password"), member.get().getUserPassword());
+		//boolean isPassword = encoder.matches(params.get("password"), member.get().getUserPassword());
 
-		System.out.println("패스워드 일치 여부 : " + isPassword);
+		//System.out.println("패스워드 일치 여부 : " + isPassword);
 
 		log.info("login 실행");
 
-		if (member.isPresent() && isPassword) {
+		if (member.isPresent()) {
 			String id = member.get().getId();
 
 			String token = jwtService.getToken("id", id);
@@ -117,7 +114,7 @@ public class AccessMappingController {
 			Claims jwtclaims = null;
 
 			try {
-				byte[] secretByteKey = DatatypeConverter.parseBase64Binary(JwtPromise.SECRET);
+				byte[] secretByteKey = DatatypeConverter.parseBase64Binary("asdfqwerasdfqwerasdf1234asdfqwer1234asdfzxcv");
 				Key signKey = new SecretKeySpec(secretByteKey, SignatureAlgorithm.HS256.getJcaName());
 				jwtclaims = Jwts.parserBuilder().setSigningKey(signKey).build().parseClaimsJws(token).getBody();
 			} catch (ExpiredJwtException e) {

@@ -1,13 +1,10 @@
-<!-- 상단 -->
 
 .top{
 
 }
 
 #title{
-
-    display: flex;
-    justify-content: center;
+    margin-left: 30%;
     padding-top: 10%;
     padding-bottom: 5%;
 }
@@ -17,9 +14,8 @@
 }
 
 .imageDiv{
-
+    
     display: flex;
-    justify-content: center;
 }
 
 #userImage{
@@ -42,7 +38,7 @@
 
 }
 
-<!-- 가운데 -->
+
 
 .middle{
 
@@ -51,7 +47,7 @@
 }
 
 .menu{
-
+    width: 70%;
     margin: 10% auto;
     margin-left: 10%;
     margin-right: 10%;
@@ -110,8 +106,6 @@
     margin-left: 7%;
 }
 
-
-<!-- 하단 -->
 
 .bottom{
 

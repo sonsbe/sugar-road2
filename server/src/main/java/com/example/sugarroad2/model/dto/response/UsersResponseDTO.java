@@ -2,7 +2,6 @@ package com.example.sugarroad2.model.dto.response;
 
 import com.example.sugarroad2.model.entity.Users;
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 

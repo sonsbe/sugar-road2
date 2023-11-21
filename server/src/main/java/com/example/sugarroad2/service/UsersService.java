@@ -7,24 +7,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.Optional;
 
 @Slf4j
 @Service
+@CrossOrigin(origins="http://localhost:5173", allowedHeaders = "*",
+        exposedHeaders="Authorization", allowCredentials = "true")//SOP 문제 해결과 쿠키를 전달받기 위한 설정
 public class UsersService {
     // 아이디 닉네임 이메일 중복 처리 repository, service에 추가하고
     // 중복될 경우 throw DuplicateException하고 <- 방법을 못찾음
     // 스태이터스 Forbidden 로 반환 <- 컨트롤러에서 구현함
 
-    private final PasswordEncoder passwordEncoder;
-    private final UsersRepository usersRepository;
+    @Autowired
+    UsersRepository usersRepository;
 
     @Autowired
-    public UsersService(PasswordEncoder passwordEncoder, UsersRepository usersRepository){
-        this.passwordEncoder = passwordEncoder;
-        this.usersRepository = usersRepository;
-    }
+    PasswordEncoder passwordEncoder;
 
     public void create(Users users){ //회원가입
         users.setUserPassword(passwordEncoder.encode(users.getUserPassword()));
@@ -68,6 +68,7 @@ public class UsersService {
         Users origin = usersRepository.findById(users.getId()).get(); //수정하려는 유저 조회
 
         origin.setUserPassword(passwordEncoder.encode(users.getUserPassword())); //암호화하여 저장
+        //origin.setUserPassword(users.getUserPassword());//패스워드 저장 (암호화X)
         origin.setUserName(users.getUserName()); //유저 이름
         origin.setBirth(users.getBirth()); //생일
         //origin.setRole(users.getRole()); //유저권한 수정 필요 시 사용
