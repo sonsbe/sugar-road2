@@ -1,5 +1,5 @@
 <template>
-    <table :class="[data.parentComment!=null?'child-comment':'comment', 'v-table']" >
+    <table :class="[data.parentComment!=null?'child-comment':'comment', 'v-table', 'left']" >
         <tr>
             <td class = "v-table-half t5">
                 {{data.nickname}}
@@ -19,7 +19,9 @@
         </tr>
         <tr>
             <td>
-                <Recommendation :data = "data._links"></Recommendation>
+                <Suspense>
+                    <Recommendation :data = "data._links"></Recommendation>
+                </Suspense>
             </td>
             <td class = "t6">
                 <a v-if="data.parentComment==undefined" onclick = 'setParent("+ comment[this.referenceType + "CommentId"] +");' class = 't-lightgray'>답글</a>

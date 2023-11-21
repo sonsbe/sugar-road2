@@ -1,7 +1,10 @@
 <template>
-    <a href="javascript:history.back();" id="backBtn" style="text-decoration:none">◀</a><br>
-    <div class ="center"><h3>자세히 보기</h3></div>
-    <table class="v-table pink1">
+    <div class="store-like-back">
+        <RouterLink :to="'/store/' + data.storeId">
+            <button id="backBtn">◀</button>
+        </RouterLink>
+    </div>
+    <table class="v-table pink1 left">
         <tr>
             <td class = "v-table-half t4 bold">
                 🍰 {{ data.nickname }}
@@ -20,14 +23,14 @@
         <tr>
             <td>
                 <Suspense>
-                    <Recommendation :data = "data._links"></Recommendation>
+                    <Recommendation v-if="data._links!=undefined" :data = "data._links"></Recommendation>
                 </Suspense>
             </td>
             <td class = "t5 t-lightgray right">
                 <router-link :to="'/review/edit/' + data.id">수정</router-link>
             </td>
             <td class = "t5 center t-lightgray">
-                <router-link @click = "deleteReview(data._links.self.href)" to="/store">삭제</router-link>
+                <router-link @click = "deleteReview(data._links.self.href)" :to="'/store/' + data.storeId">삭제</router-link>
             </td>
         </tr>
         <tr>
@@ -36,8 +39,6 @@
             </td>
         </tr>
     </table>
-    <!-- Comment Input-->
-    <!-- Comment -->
 </template>
 <script setup>
     import {apiService} from '@/services/APIService.js';
@@ -54,4 +55,6 @@
 </script>
 <style scoped>
     @import "@/assets/review.css";
+    @import "@/assets/storeDetail.css";
+
 </style>

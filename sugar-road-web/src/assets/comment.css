@@ -22,11 +22,14 @@
 
 .comment {
     width : 95%;
+    background-color: var(--pink1);
+
 }
 
 .child-comment {
     width : 85%;
     margin-left : 12%;
+    background-color: var(--pink1);
 }
 
 .child-comment-icon {
