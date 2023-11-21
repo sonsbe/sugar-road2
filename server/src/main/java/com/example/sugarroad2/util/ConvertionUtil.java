@@ -1,7 +1,6 @@
 package com.example.sugarroad2.util;
 
-import com.example.sugarroad2.model.dto.PostResponse;
-
+import com.example.sugarroad2.model.dto.response.PostResponse;
 import com.example.sugarroad2.model.entity.Post;
 import com.example.sugarroad2.model.entity.PostImage;
 import com.example.sugarroad2.service.PostImageService;
@@ -14,6 +13,7 @@ import java.util.List;
 
 @Component
 public class ConvertionUtil {
+
     @Autowired
     private PostImageService postImageService;
     @Autowired
@@ -32,5 +32,7 @@ public class ConvertionUtil {
         //조회수
         return postResponse;
     }
-    }
+
+}
+>>>>>>> e748a60cb2bcd6ad90902109081ba3543657055a
 

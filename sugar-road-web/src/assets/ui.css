@@ -313,7 +313,3 @@ h6 {
 .bottom_menu > div:hover {
   background-color: rgb(240, 240, 240);
 }
-
-div {
-  border : 2px dotted #d3d3d3;
-}

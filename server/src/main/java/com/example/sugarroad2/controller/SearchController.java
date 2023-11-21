@@ -1,13 +1,12 @@
 package com.example.sugarroad2.controller;
 
-import com.example.sugarroad2.model.dto.PostResponse;
+import com.example.sugarroad2.model.dto.response.PostResponse;
 import com.example.sugarroad2.model.dto.response.StoreResponseDTO;
-import com.example.sugarroad2.model.entity.Post;
-import com.example.sugarroad2.model.entity.Store;
 import com.example.sugarroad2.service.MenuService;
 import com.example.sugarroad2.service.PostService;
 import com.example.sugarroad2.service.StoreService;
 import com.example.sugarroad2.util.ConvertionUtil;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-@CrossOrigin("*")
+
 @Slf4j
 @RestController
 @RequestMapping("/search")
@@ -41,7 +38,7 @@ public class SearchController {
                 .toList();
         //store에 맞게 수정
         List<StoreResponseDTO> storeResponseDTOList = storeService.readByStoreName(query)
-                .stream().map( store -> {return new StoreResponseDTO(store, null);})
+                .stream().map( store -> {return new StoreResponseDTO(store, null, 0);})
                 .toList();
         Map<String, List<?>> listMap = new HashMap<>();
         if(!postResponseList.isEmpty())

@@ -14,6 +14,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Setter
@@ -33,9 +36,10 @@ public class Recommendation {
 	private String referenceType;
 
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name = "user_id")
 	private Users users;
 
-	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+	@CreatedDate
 	private LocalDateTime postedDate;
 }

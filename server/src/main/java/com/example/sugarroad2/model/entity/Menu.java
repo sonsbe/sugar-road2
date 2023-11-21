@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Getter
 @Setter
@@ -21,8 +23,9 @@ public class Menu {
     private int price;
     private String menuDesc;
     @ManyToOne()
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="store_id")
-    @NotFound(action = NotFoundAction.IGNORE)
+//    @NotFound(action = NotFoundAction.IGNORE)
     private Store store;
     private String menuImagePath;
 }

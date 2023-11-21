@@ -1,9 +1,8 @@
 package com.example.sugarroad2.controller;
 
-import com.example.sugarroad2.model.dto.PostRequest;
-import com.example.sugarroad2.model.dto.PostResponse;
+import com.example.sugarroad2.model.dto.request.PostRequest;
+import com.example.sugarroad2.model.dto.response.PostResponse;
 import com.example.sugarroad2.model.entity.*;
-import com.example.sugarroad2.repository.PostCategoryRepository;
 import com.example.sugarroad2.repository.UsersRepository;
 import com.example.sugarroad2.service.PostCategoryService;
 import com.example.sugarroad2.service.PostImageService;
@@ -14,27 +13,19 @@ import com.example.sugarroad2.util.ConvertionUtil;
 import com.example.sugarroad2.util.ImageUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.swing.text.html.parser.Entity;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
-@CrossOrigin("*")
 @Slf4j
 @RestController
 @RequestMapping("/posts")
@@ -182,6 +173,7 @@ public class PostController {
             return ResponseEntity.created(URI.create("/posts/" + post.getId())).body("작성 완료");
         } catch (Exception e) {
             String error = e.getMessage();
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(error);
         }
     }

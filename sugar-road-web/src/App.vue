@@ -10,6 +10,7 @@
 <script setup>
   import Nav from '@/components/ui/Nav.vue'
 </script>
+
 <style>
   #app {
     margin : 0;
@@ -20,4 +21,8 @@
   @import "@/assets/ui.css";
 </style>
 
+
+<style>
+  @import "@/assets/ui.css";
+</style>
 
