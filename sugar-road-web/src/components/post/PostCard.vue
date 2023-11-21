@@ -13,7 +13,7 @@
             </tr>
             <tr class="center">
                 <td colspan="2">
-                    <img :src="`${p.post.postImage.length>0 ? p.post.postImage[0] : '/images/93c339e1-eb4d-4d39-b773-bd50913b7dc1thymeleaf-logo-6E4D42A713-seeklogo.com.png'}`" alt="img">
+                    <img :src="`http://localhost:1023${p.post.postImage.length>0 ? p.post.postImage[0] : '/images/93c339e1-eb4d-4d39-b773-bd50913b7dc1thymeleaf-logo-6E4D42A713-seeklogo.com.png'}`" alt="img">
                 </td>
             </tr>
             <tr>
@@ -27,7 +27,7 @@
     </div>
 </template>
 <script setup>
-import { reactive } from 'vue';
+import { defineProps } from 'vue';
 
   // const post = defineProps({
   //   title: String,
