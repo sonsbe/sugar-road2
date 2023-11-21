@@ -14,20 +14,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ImageController {
-	@Autowired
-	ImageUtil imageUtil;
-	@GetMapping("/images/**")
-	@ResponseBody
-	public byte[] readImage(HttpServletRequest req) throws IOException {
-		return imageUtil.readImage(req.getRequestURI().substring(7));
-	}
-
-	@GetMapping("/test/images")
-	public ModelAndView testImage(){
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("/test/image");
-		mav.addObject("imageSrc", "/images/test.png");
-		return mav;
-	}
-
+    @Autowired
+    ImageUtil imageUtil;
+    @GetMapping("/images/**")
+    @ResponseBody
+    public byte[] readImage(HttpServletRequest req) throws IOException {
+        return imageUtil.readImage(req.getRequestURI().substring(7));
+    }
 }

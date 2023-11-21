@@ -54,7 +54,7 @@ public class ReviewController {
 		@PageableDefault(value = 3) Pageable pageable) {
 
 		try {
-			Page<Review> reviewPage = reviewService.readPage(storeService.readById(storeId), pageable);
+			Page<Review> reviewPage = reviewService.readPage(storeService.readBy(storeId), pageable);
 			Page<ReviewResponseVO> reviewResponseVOPage = reviewPage.map(ReviewResponseVO::new);
 			PagedModel<EntityModel<ReviewResponseVO>> reviewResponseVOPagedModel =
 				hateoasUtil.constrainHATEOASReviewPage(reviewResponseVOPage, pagedResourcesAssembler);
