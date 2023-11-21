@@ -38,7 +38,7 @@ public class HomeController {
                 .stream().map(post -> {return convertionUtil.convertToPostResponse(post);})
                 .toList();
         List<StoreResponseDTO> storeResponseDTOList = storeService.read()
-                .stream().map(store -> {return new StoreResponseDTO(store, null);})
+                .stream().map(store -> {return new StoreResponseDTO(store, null, 0);})
                 .toList();
         Map<String, List<?>> listMap = new HashMap<>();
         listMap.put("postList", postResponseList);
