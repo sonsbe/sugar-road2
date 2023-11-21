@@ -51,7 +51,7 @@ public class ReviewController {
 	@GetMapping("/of/store/{storeId}")
 	public ResponseEntity<PagedModel<EntityModel<ReviewResponseVO>>> readReviewPage(
 		@PathVariable("storeId") int storeId,
-		@PageableDefault(value = 2) Pageable pageable) {
+		@PageableDefault(value = 3) Pageable pageable) {
 
 		try {
 			Page<Review> reviewPage = reviewService.readPage(storeService.readById(storeId), pageable);
@@ -92,7 +92,7 @@ public class ReviewController {
 	public ResponseEntity<EntityModel<ReviewResponseVO>> createReview(
 		@RequestBody ReviewRequestDTO reviewRequestDTO) {
 		try {
-			Users users = usersService.readById(reviewRequestDTO.getUserId());
+			Users users = usersService.readById("vv980113");
 			Store store = storeService.readById(reviewRequestDTO.getStoreId());
 //			String reviewImagePath = imageUtil.writeImage(reviewRequestDTO.getUploadImage());
 			String reviewImagePath = "";
@@ -107,6 +107,7 @@ public class ReviewController {
 			return ResponseEntity.status(HttpStatus.CREATED).body(reviewResponseVOEntityModel);
 		}
 		catch (Exception exception){
+			exception.printStackTrace();
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 		}
 	}
@@ -116,11 +117,12 @@ public class ReviewController {
 		@RequestBody ReviewRequestDTO reviewRequestDTO,
 		@PathVariable("id") int id) {
 		try {
-			Users users = usersService.readById(reviewRequestDTO.getUserId());
+			Users users = usersService.readById("vv980113");
 			Store store = storeService.readById(reviewRequestDTO.getStoreId());
 //			String reviewImagePath = imageUtil.writeImage(reviewRequestDTO.getUploadImage());
 			String reviewImagePath = "";
 			reviewRequestDTO.setId(id);
+			System.out.println(reviewRequestDTO.toString());
 			Review review = reviewService.update(
 				reviewRequestDTO.toEntity(users, store, reviewImagePath)
 			);
@@ -132,6 +134,7 @@ public class ReviewController {
 			return ResponseEntity.status(HttpStatus.CREATED).body(reviewResponseVOEntityModel);
 		}
 		catch (Exception exception){
+			exception.printStackTrace();
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 		}
 	}
