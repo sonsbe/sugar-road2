@@ -1,6 +1,5 @@
 package com.example.sugarroad2.util;
 
-
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
@@ -15,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Component
 public class ImageUtil {
     private static final String BASEDIR = "C:/sugar-road/database/images";
+
 
     public ImageUtil() {
         File dir = new File(BASEDIR);
@@ -38,6 +38,7 @@ public class ImageUtil {
             imageFile.transferTo(f);
             return "/images/" + fileName;
         } catch (IOException e) {
+            e.printStackTrace();
             return "";
         }
     }

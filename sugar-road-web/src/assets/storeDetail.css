@@ -1,34 +1,41 @@
-  /*detail.css*/
-  .store-detail-name{
-      margin-bottom: 4vh;
-  }
-.store-like-back {
-margin: 1vh 0 5vh 0;
-    display: flex;
-    justify-content: space-between;
+/*detail.css*/
+.buttons {
+  border: none;
+  margin-left: 15px;
+  background: none;
+  color: #999999;
+  cursor: pointer;
 }
-.store-like-back > a{
-text-decoration: none;
-    color: gray;
+.store-detail-name {
+  margin-bottom: 4vh;
+}
+.store-like-back {
+  margin: 1vh 0 5vh 0;
+  display: flex;
+  justify-content: space-between;
+}
+.store-like-back > a {
+  text-decoration: none;
+  color: gray;
 }
 .edit-remove-btnBox {
   text-align: right;
-    margin: 1vh 0;
+  margin: 1vh 0;
 }
 .edit-remove-btnBox > a {
   margin-right: 2vh;
   text-decoration: none;
-   color:  #999999;
-   font-size: 13px;
+  color: #999999;
+  font-size: 13px;
 }
 .store-image {
   width: 100%;
-height: 25vh;
+  height: 25vh;
   object-fit: cover;
 }
 .address-phone-box {
   padding: 2vh 0 2vh 2vh;
-      font-size: 15px;
+  font-size: 15px;
 }
 .addressBox,
 .phoneBox,
@@ -36,47 +43,63 @@ height: 25vh;
   display: flex;
 }
 .addressBox,
-.phoneBox, .descBox {
+.phoneBox,
+.descBox {
   margin-bottom: 1.5vh;
 }
-addressBox > div{
-font-size: 14px;
+addressBox > div {
+  font-size: 14px;
 }
-.addressBox > i, .phoneBox > i, .descBox > i{
-    margin-right: 10px;
+.addressBox > i,
+.phoneBox > i,
+.descBox > i {
+  margin-right: 10px;
 }
-#menu-container {
+.menu-container {
   border: 2px solid #cdcdcd;
   padding: 1vh;
   border-radius: 10px;
   margin-bottom: 30px;
-}
-#menu-container > div{
-font-size: 18px;
-}
-#storeLocation{
-    margin: 10px 0 15px 5px;
-}
-.imageName-box{
-display: flex;
-    overflow-x: scroll;
+  display: flex;
+  overflow-x: scroll;
 }
 .imageName-box::-webkit-scrollbar {
   display: none;
 }
-#menuBox {
-   margin-right: 10px;
-       border: 1px solid lightgrey;
-       border-radius: 5px;
+#menu-container > div {
+  font-size: 18px;
 }
-#menuBox > img{
-width: 35vw;
-    height: 15vh;
-    object-fit: cover;
+#storeLocation {
+  margin: 10px 0 15px 5px;
 }
-#menuBox > div{
-text-align: center;
-    line-height: 23px;
-    height: 23px;
-    font-size: 14px;
+.imageName-box {
+  display: flex;
+  overflow-x: scroll;
 }
+/* .imageName-box::-webkit-scrollbar {
+  display: none;
+} */
+hr {
+  margin: 3px 0 10px 0;
+}
+.menuItem {
+  margin-right: 10px;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+}
+/* #menuBox {
+  margin-right: 10px;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+} */
+/* #menuBox > img {
+  width: 35vw;
+  height: 15vh;
+  object-fit: cover;
+}
+#menuBox > div {
+  text-align: center;
+  line-height: 23px;
+  height: 23px;
+  font-size: 14px;
+} */

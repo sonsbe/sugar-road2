@@ -17,6 +17,10 @@
     padding : 0;
   }
 </style>
+<style>
+  @import "@/assets/ui.css";
+</style>
+
 
 <style>
   @import "@/assets/ui.css";

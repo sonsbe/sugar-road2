@@ -14,6 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,7 +41,7 @@ public class Review {
 
 	private String content;
 
-	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+	@CreatedDate
 	private LocalDateTime postedDate;
 	private int star;
 	private String reviewImagePath;

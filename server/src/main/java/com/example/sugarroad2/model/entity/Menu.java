@@ -2,6 +2,8 @@ package com.example.sugarroad2.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 @Getter
 @Setter
@@ -18,8 +20,9 @@ public class Menu {
     private String menuName;
     private int price;
     private String menuDesc;
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name="store_id")
+    @NotFound(action = NotFoundAction.IGNORE)
     private Store store;
     private String menuImagePath;
 }

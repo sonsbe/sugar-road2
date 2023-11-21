@@ -1,7 +1,9 @@
 package com.example.sugarroad2.model.dto.response;
 
 import com.example.sugarroad2.model.entity.Post;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
@@ -18,6 +20,7 @@ public class PostResponse {
     private String content;
     private String title;
     private List<String> postImage;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime postedDate;
     private String userId;
     private String postCategoryId;
