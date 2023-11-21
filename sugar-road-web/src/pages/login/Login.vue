@@ -88,15 +88,9 @@ export default {
       //   });
     }
 
-    const logout = () => {      
-      axios.get("http://localhost:1023/logout").then((res) => {
-        if (res.headers['authorization'] == 'delete') {
-          sessionStorage.removeItem("token")
-        }
-        window.alert(res.data);
-      }).catch(() => {
-        window.alert("로그아웃을 수행하는 동안 오류가 발생하였습니다..");
-      });
+    const logout = () => {  
+          sessionStorage.removeItem("token");
+          window.alert("로그아웃 수행");
     }
 
     const check = () => {      
@@ -115,6 +109,6 @@ export default {
 </script>
 
 <style lang="scss" scoped></style>
-<style>
+<style scoped>
 @import "src/assets/users/login.css";
 </style>

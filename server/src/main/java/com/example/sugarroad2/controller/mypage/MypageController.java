@@ -46,10 +46,10 @@ public class MypageController {
         updateUser.setUserName(users.getUserName());
         updateUser.setNickname(users.getNickname());
         updateUser.setUserEmail(users.getUserEmail());
-        updateUser.setBirth(users.getBirth());
-        updateUser.setGender(users.getGender());
-        updateUser.setRole(users.getRole());
-        updateUser.setStatus(users.getStatus());
+        //updateUser.setBirth(users.getBirth());
+        //updateUser.setGender(users.getGender());
+        //updateUser.setRole(users.getRole());
+        //updateUser.setStatus(users.getStatus());
         updateUser.setUserImagePath(users.getUserImagePath());
 
         usersService.update(updateUser);

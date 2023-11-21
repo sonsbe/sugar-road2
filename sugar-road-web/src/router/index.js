@@ -6,6 +6,7 @@ import Store from "@/pages/store/Store.vue";
 import MyPage from "@/pages/mypage/MyPage.vue";
 import InfoEdit from "@/pages/mypage/InfoEdit.vue";
 import Login from "@/pages/login/Login.vue";
+import Signup from "@/pages/login/Signup.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -16,7 +17,8 @@ const router = createRouter({
     { path: "/store", component: Store },
     { path: "/mypage", component: MyPage },
     { path: "/infoEdit", component: InfoEdit },
-    { path: "/userLogin", component: Login },
+    { path: "/login", component: Login },
+    { path: "/signup", component: Signup }
   ],
 });
 export default router;
