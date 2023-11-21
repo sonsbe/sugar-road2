@@ -23,10 +23,12 @@ public class StoreResponseDTO {
     private float longitude;
     private String storeImagePath;
     private List<MenuResponseDTO> menuDTOList;
+    private long viewsCount;
     //    private String userId;
 //    private int recommendCount;
 
-    public StoreResponseDTO(Store store, List<MenuResponseDTO> menuResponseDTOList){
+    public StoreResponseDTO(Store store, List<MenuResponseDTO> menuResponseDTOList,long viewsCount){
+
         storeId = store.getId();
         storeName = store.getStoreName();
         address = store.getAddress();
@@ -34,5 +36,6 @@ public class StoreResponseDTO {
         storeDesc = store.getStoreDesc();
         storeImagePath = store.getStoreImagePath();
         menuDTOList = menuResponseDTOList;
+        this.viewsCount=viewsCount;
     }
 }

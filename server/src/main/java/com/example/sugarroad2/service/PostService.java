@@ -40,6 +40,7 @@ public class PostService {
         return postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
     }
+
     public List<Post> readByPostCategoryId(String id, String col){
         return postRepository.findByPostCategoryId(id, Sort.by(Sort.Direction.DESC, Objects.requireNonNullElse(col, "postedDate")));
     }

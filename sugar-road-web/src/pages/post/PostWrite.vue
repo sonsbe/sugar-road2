@@ -7,6 +7,7 @@
         </div>
         <hr />
         <div class="post-content">
+
           <form>
             <input type="hidden" v-model="postId" />
             <input

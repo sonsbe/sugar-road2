@@ -2,13 +2,12 @@
   <div class="app-body">
     <div class="content">
       <div class="container">
-        스토어 상세 페이지 //
         <div class="store-like-back">
-          <button @click="goBack">◀</button>
-          <span>좋아요 수:</span>
+          <button id="backBtn" @click="goBack">◀</button>
+          <span>💖</span>
         </div>
         <h3>
-          <div>가게명: {{ storeInfo.storeName }}</div>
+          <div>{{ storeInfo.storeName }}</div>
         </h3>
         <div class="edit-remove-btnBox">
           <button
@@ -20,28 +19,34 @@
           <button class="buttons" @click="deleteStore">삭제</button>
           <br />
         </div>
-        <img class="store-image" alt="가게 대표 이미지" />
+        <img
+          v-bind:src="`http://localhost:1023${storeInfo.storeImagePath}`"
+          class="store-image"
+          alt="가게 대표 이미지"
+        />
       </div>
       <div class="address-phone-box">
         <div class="addressBox">
-          <i class="fa-solid fa-map-location-dot" style="color: #999999"></i
-          >&nbsp
-          <div>🏠 {{ storeInfo.address }}</div>
+          <!-- <i class="fa-solid fa-map-location-dot" style="color: #999999"></i
+          >&nbsp -->
+          &nbsp🏠&nbsp&nbsp&nbsp
+          <div>{{ storeInfo.address }}</div>
         </div>
         <div class="phoneBox">
-          <i class="fa-solid fa-phone" style="color: #878787"></i> &nbsp
-          <div>📞 {{ storeInfo.phoneNumber }}</div>
+          &nbsp📞&nbsp &nbsp
+          <div>{{ storeInfo.phoneNumber }}</div>
         </div>
         <div class="descBox">
-          <i class="fa-solid fa-store" style="color: #878787"></i>&nbsp
-          <div>📃 {{ storeInfo.storeDesc }}</div>
+          &nbsp📃&nbsp&nbsp
+          <div>{{ storeInfo.storeDesc }}</div>
         </div>
       </div>
       <!--메뉴 이름/이미지 없을 경우에 뜨지 않도록-->
-      <h4>Menu</h4>
+      <h4 class="menuTitle">Menu</h4>
       <hr />
       <div class="menu-container">
         <StoreMenuCard
+          class="menuItem"
           v-for="menu in menuList"
           :key="menu.menuId"
           :menuInfo="{
@@ -52,16 +57,9 @@
             menuDesc: menu.menuDesc,
           }"
         ></StoreMenuCard>
-        <!-- <div class="menu">
-          <div th:each="mList : ${mlist}" class="swiper-slide">
-            <img alt="메뉴 이미지" />
-            <div th:text="${mList.menuName}">메뉴 이름</div>
-          </div>
-        </div> -->
       </div>
       <br />
       <div><b>Store Location</b></div>
-
       <div id="map" style="width: 100%; height: 200px">지도위치</div>
     </div>
   </div>
@@ -79,7 +77,6 @@ let menuList = ref();
 onMounted(async () => {
   await getStoreInfo();
   console.log(storeInfo);
-  console.log(storeInfo.value.menuDTOList);
   menuList.value = storeInfo.value.menuDTOList;
   console.log(menuList);
 });
@@ -90,21 +87,26 @@ async function getStoreInfo() {
     console.log(storeInfo.value);
   } catch (error) {}
 }
+
 function deleteStore() {
+  console.log(storeId);
   let result = confirm("정말 삭제하시겠습니까?");
   if (result) {
     axios
       .delete(`http://localhost:1023/store/${storeId}`)
       .then((response) => {
         console.log(response);
-        router.push("/store");
       })
       .catch((err) => console.log(err));
+    router.push({
+      path: "/store",
+    });
   }
 }
 function goBack() {
   router.go(-1);
 }
+
 </script>
 
 <style scoped>

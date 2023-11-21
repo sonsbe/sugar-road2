@@ -8,6 +8,7 @@
     <button @click="filtCategory('01')">🍩빵리뷰</button>
     <button @click="filtCategory('02')">🚲일상</button>
     <button @click="filtCategory('03')">📝정보</button>
+
   </div>
           <div class="search">
           <form @submit.prevent="search">
@@ -33,6 +34,7 @@
      <button onclick="location.href='/post/write'"><span class="t6">작성</span></button>
     
   </div> -->
+
   <a href="/post/write">
   <div class="post-button-index bold h5">
           글 작성
@@ -74,6 +76,7 @@
     }
 
     function sort(){
+
       var uri;
       if(category.value.length>0)
         uri = "http://localhost:1023/posts?col="+col.value+"&category="+category.value;

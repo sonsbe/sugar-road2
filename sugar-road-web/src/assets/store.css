@@ -178,6 +178,7 @@ h6 {
   border-radius: 5px;
   padding: 7px 10px;
   color: black;
+  cursor: pointer;
 }
 .store-insert-btnBox > button:hover {
   background-color: #cab9dc;
@@ -189,6 +190,7 @@ h6 {
   border: none;
   background-color: #faebd700;
   font-size: 14px;
+  cursor: pointer;
 }
 .store-menu-btnBox > button:hover {
   background-color: #d8cae5;

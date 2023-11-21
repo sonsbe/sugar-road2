@@ -1,15 +1,20 @@
 <template>
   <div class="storeBox">
-    <router-link :to="'/store/'+ storedId">
+    <router-link :to="'/store/' + storedId">
       <a href="#">
         <div class="storeBoxTop">
-          <p>storeId: {{ storeData.storeId }}</p>
-          <h3>가게명: {{ storeData.storeName }}</h3>
-          <div><span>추천수</span>, <span>리뷰수</span></div>
+          <!-- <p>id: {{ storeData.storeId }}</p> -->
+          <h4>{{ storeData.storeName }}</h4>
+          <div>
+            <span>조회수: {{ storeData.viewsCount }}</span>
+          </div>
         </div>
-        <img class="storeImg" v-bind:src="storeData.storeImagePath" />
-        {{ storeData.storeImagePath}}
-        <div class="store-desc">가게 설명:{{ storeData.storeDesc }}</div>
+        <img
+          class="storeImg"
+          v-bind:src="`http://localhost:1023${storeData.storeImagePath}`"
+          alt="img"
+        />
+        <div class="store-desc">{{ storeData.storeDesc }}</div>
       </a>
     </router-link>
   </div>
@@ -45,7 +50,10 @@ a {
   justify-content: space-between;
   height: 4vh;
 }
-.storeBoxTop div > span,
+.storeBoxTop > div > span {
+  font-size: 12px;
+  color: gray;
+}
 .store-desc {
   font-size: 14px;
 }

@@ -91,6 +91,7 @@ public class PostController {
         try {
             List<Post> postList = new ArrayList<>();
             if(category != null){
+
                 postList = postService.readByPostCategoryId(category, col);
             }
             else if (query != null) {
@@ -175,6 +176,7 @@ public class PostController {
             postService.create(post);
             //이미지 저장
             if (uploadImages != null) {
+                log.info("이미지 있음~");
                 saveImage(postRequest, uploadImages, post);
             }
             return ResponseEntity.created(URI.create("/posts/" + post.getId())).body("작성 완료");

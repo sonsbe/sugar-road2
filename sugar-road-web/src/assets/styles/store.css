@@ -1,106 +1,95 @@
 /*store.html*/
-.app-body{
-  background-image: url('images/bac3.jpg');
-  background-repeat : no-repeat;
-  background-size : cover;
+.app-body {
+  background-image: url("images/bac3.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
-.container {
-/*     margin: 40px 20px;*/
-}
+
 h3 {
-  margin:30px 0 30px 20px;
+  margin: 30px 0 30px 20px;
 }
 .btnList {
-      margin-bottom: 13px;
-      display: flex;
-      justify-content: left;
+  margin-bottom: 13px;
+  display: flex;
+  justify-content: left;
 }
 .btnList > span {
   border: 1px solid rgb(228, 228, 228);
-      border-radius: 5px;
-       padding: 1.5vh 4vh 1.5vh 3vh;
-      box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-    margin: 5px;
-      cursor: pointer;
+  border-radius: 5px;
+  padding: 1.5vh 4vh 1.5vh 3vh;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  margin: 5px;
+  cursor: pointer;
 }
-
-.store-insertBtn{
- text-decoration: none;
- padding: 10px;
- width: 96%;
- display: inline-block;
- position: sticky;
- background-color: #decfed;
- text-align: center;
- border-radius: 5px;
- /* left: 4%; */
- /* top: 95%; */
- bottom : 0;
- z-index: 99999;
-/*   font-size: 20px;*/
- box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
- border: 1px solid gray;
+.store-insertBtn {
+  text-decoration: none;
+  padding: 10px;
+  width: 96%;
+  display: inline-block;
+  position: sticky;
+  background-color: #decfed;
+  text-align: center;
+  border-radius: 5px;
+  bottom: 0;
+  z-index: 99999;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  border: 1px solid gray;
 }
-.store-insertBtn:hover{
-   background-color: #cab9dc;
+.store-insertBtn:hover {
+  background-color: #cab9dc;
 }
-.storeList {
- /* border-radius: 10px;*/
+.store-insertBtn > button {
+  cursor: pointer;
 }
 .storeBox {
-border: 2px solid var(--lightgray);
-padding: 13px 8px;
-margin-bottom: 2vh;
-border-radius: 10px;
-transition: .5s ease;
-cursor: pointer;
-box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  border: 2px solid var(--lightgray);
+  padding: 13px 8px;
+  margin-bottom: 2vh;
+  border-radius: 10px;
+  transition: 0.5s ease;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
-.storeBox > a{
-text-decoration: none;
+.storeBox > a {
+  text-decoration: none;
 }
- .storeBox:hover{
-      box-shadow:
-      1px 1px #e1d5ed,
-      2px 2px #e1d5ed,
-      3px 3px #e1d5ed,
-      4px 4px #e1d5ed,
-      5px 5px #e1d5ed,
-      6px 6px #e1d5ed;
-      -webkit-transform: translateX(-3px);
-      transform: translateX(-3px);
-      transition: .3s ease;
-   }
+.storeBox:hover {
+  box-shadow: 1px 1px #e1d5ed, 2px 2px #e1d5ed, 3px 3px #e1d5ed, 4px 4px #e1d5ed,
+    5px 5px #e1d5ed, 6px 6px #e1d5ed;
+  -webkit-transform: translateX(-3px);
+  transform: translateX(-3px);
+  transition: 0.3s ease;
+}
 .storeBoxTop {
   display: flex;
   justify-content: space-between;
-  height: 4vh;
+  height: 6vh;
 }
-   .storeBoxTop div > span{
-      font-size: 13px;
-   }
-     .btnList > span:hover{
-      background: whitesmoke;
-     }
-  .store-name{
-   font-weight: 600;
-       font-size: 19px;
-  }
-  .store-desc{
-      font-size: 14px;
-  }
+/* .storeBoxTop > div > span {
+  font-size: 100px;
+} */
+.btnList > span:hover {
+  background: whitesmoke;
+}
+.store-name {
+  font-weight: 600;
+  font-size: 19px;
+}
+.store-desc {
+  font-size: 14px;
+}
 .storeImg {
   width: 100%;
-  height: 25vh;
+  height: 20vh;
   object-fit: cover;
   margin-bottom: 5px;
 }
-.store-click{
-text-align: right;
+.store-click {
+  text-align: right;
 }
-.store-click > a{
-text-decoration: none;
-color: gray;
+.store-click > a {
+  text-decoration: none;
+  color: gray;
 }
 .storeSearchBar {
   width: 80%;
@@ -114,112 +103,113 @@ color: gray;
 } */
 /*==================================================*/
 /*write.html*/
-      #plusBtn,
-      #minusBtn {
-        cursor: pointer;
-      }
-      .HeadLine {
-        width: 100%;
-        height: 2px;
-        background-color: #af96c7;
-      }
-    .store-write-title {
-        text-align: center;
-        font-size: 15px;
-            font-weight: 900;
-            margin: 25px auto
-      }
-      .inputBox {
-        border-bottom: 1.5px solid #b4b3b3;
-         width: 100%;
-        height: 6vh;
-        line-height: 6vh;
-        display: flex;
-      }
-      input:focus{
-            outline:2px solid #c2aed6ba;
-      }
-      .inputBox > span {
-        flex: 1;
-        margin-left: 7%;
-        font-size: 13px;
-      }
-      .inputBox > input {
-        flex: 3;
-        line-height: 6vh;
-        border: none;
-            font-size: 13px;
-      }
-      .inputBox > input[type="file"]{
-     /*     width: 0;
+#plusBtn,
+#minusBtn {
+  cursor: pointer;
+}
+.HeadLine {
+  width: 100%;
+  height: 2px;
+  background-color: #af96c7;
+}
+.store-write-title {
+  text-align: center;
+  font-size: 15px;
+  font-weight: 900;
+  margin: 25px auto;
+}
+.inputBox {
+  border-bottom: 1.5px solid #b4b3b3;
+  width: 100%;
+  height: 6vh;
+  line-height: 6vh;
+  display: flex;
+}
+input:focus {
+  outline: 2px solid #c2aed6ba;
+}
+.inputBox > span {
+  flex: 1;
+  margin-left: 7%;
+  font-size: 13px;
+}
+.inputBox > input {
+  flex: 3;
+  line-height: 6vh;
+  border: none;
+  font-size: 13px;
+}
+.inputBox > input[type="file"] {
+  /*     width: 0;
           height: 0;
           padding: 0;
           overflow: hidden;
           border: 0;*/
-      }
-      h6{
-          margin: 25px ;
-          font-weight: 700;
-          }
-.store-insert-btnBox{
-display: flex;
-justify-content: space-between;
-margin: 2vh;
-position: relative;
-bottom: -2vh;
 }
-.store-insert-btnBox > button{
-border: none;
-background-color: #f0f8ff00;
+h6 {
+  margin: 25px;
+  font-weight: 700;
 }
-.store-insert-btnBox > button[type="submit"]{
-background-color: #af96c7ba;
-border-radius: 5px;
-padding: 7px 10px;
-color: black;
+.store-insert-btnBox {
+  display: flex;
+  justify-content: space-between;
+  margin: 2vh;
+  position: relative;
+  bottom: 2vh;
 }
-.store-insert-btnBox > button[type="submit"]:hover{
-background-color: #cab9dc;
+.store-insert-btnBox > button {
+  border: none;
+  background-color: #f0f8ff00;
 }
-.store-insert-btnBox a{
-text-decoration: none;
-color: gray;
+.store-insert-btnBox > button[type="submit"] {
+  background-color: #af96c7ba;
+  border-radius: 5px;
+  padding: 7px 10px;
+  color: black;
 }
-.store-menu-btnBox{
-margin-left: 2vh;
+.store-insert-btnBox > button[type="submit"]:hover {
+  background-color: #cab9dc;
 }
-.store-menu-btnBox > button{
-border: none;
-background-color: #faebd700;
-font-size: 14px;
+.store-insert-btnBox a {
+  text-decoration: none;
+  color: gray;
 }
-.store-menu-btnBox > button:hover{
-background-color: #d8cae5;
-padding: 5px;
- border-radius: 5px;
+.store-menu-btnBox {
+  margin-left: 2vh;
+}
+.store-menu-btnBox > button {
+  border: none;
+  background-color: #faebd700;
+  font-size: 14px;
+  cursor: pointer;
+}
+.store-menu-btnBox > button:hover {
+  background-color: #d8cae5;
+  padding: 5px;
+  border-radius: 5px;
 }
 /* edit.html */
-#container > a{
-text-decoration: none;
-color: gray;
-}}
-.edit-menu > div{
-width: 100%;
+#container > a {
+  text-decoration: none;
+  color: gray;
 }
-.edit-menu-item{
-border: 1.5px solid #b4b3b3;
-border-radius: 5px;
-margin-bottom:7px;
+.edit-menu > div {
+  width: 100%;
+}
+.edit-menu-item {
+  border: 1.5px solid #b4b3b3;
+  border-radius: 5px;
+  margin-bottom: 7px;
 }
 .edit-menu-item > div {
-margin: 10px 0 10px 3vh;
+  margin: 10px 0 10px 3vh;
 }
-.edit-menu-item > div > span{
-display: inline-block;
-width: 90px;
+.edit-menu-item > div > span {
+  display: inline-block;
+  width: 90px;
   font-size: 13px;
 }
-.edit-menu-item > div > input{
+.edit-menu-item > div > input {
   font-size: 13px;
   border: none;
   color: gray;

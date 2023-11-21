@@ -1,28 +1,37 @@
 <template>
   <div class="menuItem">
-    스토어 메뉴 카드
-    <img v-bind:src="menuInfo.menumenuImagePath" />
-    <p>메뉴 이름:{{ menuInfo.menuName }}</p>
+    <img
+      v-bind:src="`http://localhost:1023${menuInfo.menuImagePath}`"
+      alt="img"
+    />
+    <p>{{ menuInfo.menuName }}</p>
   </div>
 </template>
 
 <script setup>
 import { defineProps, onMounted } from "vue";
 const { menuInfo } = defineProps(["menuInfo"]);
-// onMounted(() => {
-//   console.log(menuInfo);
-// });
+onMounted(() => {
+  console.log(menuInfo.menumenuImagePath);
+});
 </script>
 
 <style scoped>
 img {
-  width: 100px;
-  height: 100px;
-  border: 1px solid black;
+  width: 35vw;
+  height: 15vh;
+  object-fit: cover;
 }
 .menuItem {
-  width: 150px;
-  height: 150px;
-  border: 1px solid green;
+  margin-right: 10px;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+}
+
+.menuItem > p {
+  text-align: center;
+  line-height: 23px;
+  height: 23px;
+  font-size: 14px;
 }
 </style>
