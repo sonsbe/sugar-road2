@@ -1,6 +1,7 @@
 package com.example.sugarroad2.controller;
 
-import com.example.sugarroad2.model.dto.PostResponse;
+import com.example.sugarroad2.model.dto.response.MenuResponseDTO;
+import com.example.sugarroad2.model.dto.response.PostResponse;
 import com.example.sugarroad2.model.dto.response.StoreResponseDTO;
 import com.example.sugarroad2.model.entity.Post;
 import com.example.sugarroad2.model.entity.Store;

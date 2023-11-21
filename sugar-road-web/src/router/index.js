@@ -6,8 +6,13 @@ import Store from "@/pages/store/Store.vue";
 import StoreWrite from "@/pages/store/StoreWrite.vue";
 import StoreInfo from "@/pages/store/StoreInfo.vue";
 import MyPage from "@/pages/mypage/MyPage.vue";
+import ReviewEdit from "@/pages/review/ReviewEdit.vue";
+import ReviewDetail from "@/pages/review/ReviewDetail.vue";
+import ReviewTest from "@/pages/review/ReviewTest.vue";
+import ReviewWrite from "@/pages/review/ReviewWrite.vue";
 import PostWrite from "@/pages/post/PostWrite.vue";
 import PostDetail from "@/pages/post/PostDetail.vue";
+
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -22,7 +27,10 @@ const router = createRouter({
     { path: "/store/write", component: StoreWrite },
     { path: "/store/edit/:storeId", component: StoreWrite },
     { path: "/mypage", component: MyPage },
-
+    { path: "/review/:reviewId", component: ReviewDetail},
+    { path: "/review/edit/:reviewId", component: ReviewEdit},
+    { path: "/review/write/store/:storeId", component: ReviewWrite},
+    { path: "/test", component: ReviewTest}
   ],
 });
 export default router;
