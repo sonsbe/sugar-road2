@@ -1,8 +1,9 @@
 <template>
-  <div>Store page</div>
-  <router-link :to="'/store/write'">
+  <h3>Store page</h3>
+  <!-- <router-link :to="'/store/write'">
     <button @onClick="createStore">가게 등록</button>
-  </router-link>
+  </router-link> -->
+  <input type="">
   <StoreCard
     class="container"
     v-for="store in storeList.value"
@@ -14,9 +15,13 @@
       storeDesc: store.storeDesc,
       storeImagePath: store.storeImagePath,
       storeId: store.storeId,
+      viewsCount:store.viewsCount
     }"
   >
   </StoreCard>
+  <router-link :to="'/store/write'">
+    <div class="store-insertBtn bold h5" @onClick="createStore">가게 등록</div>
+  </router-link>
 </template>
 <script setup>
 import axios from "axios";
@@ -25,7 +30,7 @@ import { onMounted, reactive } from "vue";
 let storeList = reactive([]);
 onMounted(async () => {
   await getStoreList();
-  // console.log(storeList.value);
+   console.log(storeList.value);
 });
 async function getStoreList() {
   try {
@@ -38,7 +43,23 @@ async function getStoreList() {
 }
 </script>
 <style scoped>
-.container {
-  border: 1px solid black;
+.store-insertBtn {
+  text-decoration: none;
+  padding: 10px;
+  width: 100%;
+  display: inline-block;
+  position: sticky;
+  background-color: #decfed;
+  text-align: center;
+  border-radius: 5px;
+  bottom: 3%;
+  z-index: 99999;
+  /*   font-size: 20px;*/
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  border: 1px solid gray;
 }
+.store-insertBtn:hover {
+  background-color: #cab9dc;
+}
+@import "../../../src/assets/store.css";
 </style>

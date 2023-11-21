@@ -10,4 +10,7 @@ import java.util.List;
 @Repository
 public interface MenuRepository  extends JpaRepository<Menu, Integer> {
     public List<Menu> findByStore(Store store);
+    public void  deleteByStoreId(int storeId);
+
+
 }

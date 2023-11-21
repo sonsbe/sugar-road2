@@ -13,6 +13,7 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post, Integer> {
     //작성 글 조회
     public List<Post> findByUserId(String id);
+
     public List<Post> findTop5ByOrderByPostedDateDesc();
     //검색
     public List<Post> findByContentContainsOrTitleContains(String content, String title);
