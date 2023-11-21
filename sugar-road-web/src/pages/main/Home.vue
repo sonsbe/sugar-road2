@@ -1,6 +1,6 @@
 <template>
   <div class="title">
-    <img src="images/logonoback.png" class="main-title" />
+    <img src="http://localhost:1023/images/logonoback.png" class="main-title" />
   </div>
   <span><b>최근 등록한 가게🥐</b></span><br/>
   <div class="swiper">
@@ -74,6 +74,7 @@ import { onMounted, ref } from "vue";
 import { api } from "@/common";
 const resultList = ref({});
 const modules = [Autoplay];
+
 const onSwiper = (swiper) => {
   console.log(swiper);
 };

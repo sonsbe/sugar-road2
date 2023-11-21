@@ -15,7 +15,7 @@
                     <hr>
                     <p v-text="post.content"></p>
                 <div class="post-image" v-for=" image in post.postImage">
-                    <img :src="image" alt="img">
+                    <img :src="`http://localhost:1023${image}`" alt="img">
                 </div>
                 </div>
     <!--            <div class="post-comment">-->
