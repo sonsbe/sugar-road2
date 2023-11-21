@@ -102,6 +102,6 @@ const PutEmail = ref('');
 
 </script>
 
-<style>
+<style scoped>
 @import "src/assets/mypage/edit.css";
 </style>

@@ -24,6 +24,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -87,12 +89,15 @@ public class PostController {
             }
             else if (query != null) {
                 postList = postService.readByTitleOrContent(query);
-            } else {
-                postList = postService.read(col);
+            }  else{
+                postList = postService.read("postedDate");
             }
             List<PostResponse> postResponseList = new ArrayList<>();
             for (Post post : postList) {
                 postResponseList.add(convertionUtil.convertToPostResponse(post));
+            }
+            if(col.equals("recommendCount")){
+                Collections.sort(postResponseList);
             }
             return ResponseEntity.ok().body(postResponseList);
         } catch (Exception e) {

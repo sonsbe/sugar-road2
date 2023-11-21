@@ -79,6 +79,6 @@ const selectEmail = ref('');
       
   </script>
 
-<style>
+<style scoped>
 @import "src/assets/mypage/index.css";
 </style>
