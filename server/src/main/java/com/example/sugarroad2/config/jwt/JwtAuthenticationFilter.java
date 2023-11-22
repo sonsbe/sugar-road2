@@ -102,6 +102,7 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
 				.sign(Algorithm.HMAC512(JwtProperties.SECRET)); //시크릿 키 이용하여 HMAC512 알고리즘 적용
 		
 		response.addHeader("Authorization", JwtProperties.TOKEN_PREFIX + jwtToken);
+		response.addHeader("User", principalDetailis.getUser().getId());
 	}
 	
 }
