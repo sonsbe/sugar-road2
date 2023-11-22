@@ -28,8 +28,8 @@ public class Store {
     private String storeImagePath;
 //  private int recommendCount;
 
-//    @ManyToOne
-//    @OnDelete(action = OnDeleteAction.CASCADE)
-//    @JoinColumn(name="user_id")
-//    private Users users;
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name="user_id")
+    private Users user;
 }
