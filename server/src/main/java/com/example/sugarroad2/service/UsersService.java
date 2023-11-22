@@ -71,7 +71,11 @@ public class UsersService {
         origin.setUserName(users.getUserName());
         usersRepository.save(origin);
     }
-
+    public Optional<Users> findUser(String id){
+        //Spring Security의 UserDetailsService를 위해 추가했습니다
+        //리턴한 곳에서 회원 인증 절차를 수행합니다
+        return usersRepository.findById(id);
+    }
     public void delete(Users users){ //Delete
         // 현재 패스워드 일치 여부는 구현하지 않았습니다. 추후 구현할 예정입니다.
         // 패스워드 일치하지 않으면 ...
