@@ -93,7 +93,7 @@ const postRequest = ref({
   title: "",
   content: "",
   postImage: [],
-  userId: "abcd1234",
+  userId: "",
   postCategoryId: "",
 });
 const uploadImages = ref([]);
@@ -131,6 +131,7 @@ function postWrite() {
       .put("http://localhost:1023/posts/" + postId, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
+          "Authorization" : sessionStorage.getItem("token")
         },
       })
       .then((response) => {
@@ -142,6 +143,7 @@ function postWrite() {
       .post("http://localhost:1023/posts", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
+          "Authorization": sessionStorage.getItem("token")
         },
       })
       .then((response) => {
@@ -152,8 +154,10 @@ function postWrite() {
 }
 
 onMounted(() => {
+  console.log("token", sessionStorage.getItem("token"))
   if (uri.includes("edit")) {
     console.log("id", postId);
+   
     api("http://localhost:1023/posts/" + postId, "GET", {})
     .then((response) => {
       console.log(response);

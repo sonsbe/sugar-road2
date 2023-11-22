@@ -46,8 +46,10 @@ export default {
         }
         }).then((response)=>{
           console.log("헤더확인");
+          console.log(response.headers.user);
           console.log(response.headers.authorization);
           sessionStorage.setItem('token',response.headers.authorization);
+          sessionStorage.setItem('user', response.headers.user)
           //토큰 값 가져와야하면
           //sessionStorage.getItem('token')
         });
@@ -88,15 +90,10 @@ export default {
       //   });
     }
 
-    const logout = () => {      
-      axios.get("http://localhost:1023/logout").then((res) => {
-        if (res.headers['authorization'] == 'delete') {
-          sessionStorage.removeItem("token")
-        }
-        window.alert(res.data);
-      }).catch(() => {
-        window.alert("로그아웃을 수행하는 동안 오류가 발생하였습니다..");
-      });
+    const logout = () => {  
+          sessionStorage.removeItem("token");
+          sessionStorage.removeItem("user");
+          window.alert("로그아웃 수행");
     }
 
     const check = () => {      
@@ -114,7 +111,6 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
-<style>
-@import "src/assets/users/login.css";
+<style lang="scss" scoped>
+@import "../../../src/assets/users/login.css";
 </style>

@@ -23,7 +23,8 @@
     
     onMounted(
         () => {
-            url = nextReview(url);
+            // url = nextReview(url);
+            nextReview(props.reviewPageURL);
         }
     )
 

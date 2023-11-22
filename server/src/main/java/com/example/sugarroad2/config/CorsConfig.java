@@ -21,6 +21,7 @@ public class CorsConfig {
       config.setAllowedHeaders(List.of("*"));
       config.setAllowedMethods(List.of("*")); //CRUD 전부 허용
       config.setExposedHeaders(List.of("Authorization"));
+      config.setExposedHeaders(List.of("User"));
 
       UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
       source.registerCorsConfiguration("/**", config);

@@ -35,7 +35,7 @@ public class HATEOASUtil {
             .add(
                 linkTo(
                     methodOn(RecommendationController.class)
-                        .createRecommendation(new RecommendationRequestDTO())
+                        .createRecommendation("R", reviewResponseVO.getId())
                 ).withRel("createRecommendation")
             )
             .add(
@@ -126,13 +126,13 @@ public class HATEOASUtil {
             .add(
                 linkTo(
                     methodOn(RecommendationController.class)
-                        .checkRecommendation("R", postCommentResponseVO.getId())
+                        .checkRecommendation("C", postCommentResponseVO.getId())
                 ).withRel("recommendation")
             )
             .add(
                 linkTo(
                     methodOn(RecommendationController.class)
-                        .createRecommendation(new RecommendationRequestDTO())
+                        .createRecommendation("C", postCommentResponseVO.getId())
                 ).withRel("createRecommendation")
             )
             .add(
@@ -188,13 +188,13 @@ public class HATEOASUtil {
             .add(
                 linkTo(
                     methodOn(RecommendationController.class)
-                        .checkRecommendation("R", content.getId())
+                        .checkRecommendation("M", content.getId())
                 ).withRel("recommendation")
             )
             .add(
                 linkTo(
                     methodOn(RecommendationController.class)
-                        .createRecommendation(new RecommendationRequestDTO())
+                        .createRecommendation("M", content.getId())
                 ).withRel("createRecommendation")
             )
             .add(
@@ -252,7 +252,7 @@ public class HATEOASUtil {
             .add(
                 linkTo(
                     methodOn(RecommendationController.class)
-                        .createRecommendation(new RecommendationRequestDTO())
+                        .createRecommendation("P", content.getId())
                 ).withRel("createRecommendation")
             )
             .add(
@@ -297,7 +297,7 @@ public class HATEOASUtil {
                     methodOn(ReviewController.class)
                         .readReviewPage(
                             content.getStoreId(),
-                            PageRequest.of(0, 5))
+                            PageRequest.of(0, 3))
                 ).withRel("reviewFirstPage")
             )
             .add(
@@ -309,7 +309,7 @@ public class HATEOASUtil {
             .add(
                 linkTo(
                     methodOn(RecommendationController.class)
-                        .createRecommendation(new RecommendationRequestDTO())
+                        .createRecommendation("S", content.getStoreId())
                 ).withRel("createRecommendation")
             )
             .add(

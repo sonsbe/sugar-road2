@@ -1,19 +1,5 @@
 /* 컬러 변수 선언 */
 /* var(--pink1) -> 이런 식으로 색깔 대신 값 넣으면 됨 */
-:root {
-  --pink1:#F7E9ED;
-  --pink2:#F2D6E7;
-  --pink3:#F1ABCC;
-  --pink4:#FF3594;
-  --skyblue:#C3DCF1;
-  --purple:#AF96C7;
-  --lightlightgray:#eeeeee;
-  --lightgray:#d3d3d3;
-  --fontcolor:#333333;
-  --white:#fefefe;
-  --gray:#a9a9a9;
-}
-
 .pink1 {
     background-color : var(--pink1);
 }
@@ -223,6 +209,10 @@ h6 {
     text-align : right;
 }  
 
+.left {
+    text-align : left;
+}
+
 .center {
     text-align : center;
 }
@@ -314,6 +304,6 @@ h6 {
   background-color: rgb(240, 240, 240);
 }
 
-div {
-  border : 2px dotted #d3d3d3;
+div, table, tr, td{
+  border: 1px dotted gray;
 }

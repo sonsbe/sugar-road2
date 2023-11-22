@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequestMapping("/mypage")
-@CrossOrigin(origins="http://localhost:5173", allowedHeaders = "*",
-        exposedHeaders="Authorization", allowCredentials = "true")//SOP 문제 해결과 쿠키를 전달받기 위한 설정
+//@CrossOrigin(origins="http://localhost:5173", allowedHeaders = "*",
+//        exposedHeaders="Authorization", allowCredentials = "true")//SOP 문제 해결과 쿠키를 전달받기 위한 설정
 public class MypageController {
 
     @Autowired
@@ -46,10 +46,10 @@ public class MypageController {
         updateUser.setUserName(users.getUserName());
         updateUser.setNickname(users.getNickname());
         updateUser.setUserEmail(users.getUserEmail());
-        updateUser.setBirth(users.getBirth());
-        updateUser.setGender(users.getGender());
-        updateUser.setRole(users.getRole());
-        updateUser.setStatus(users.getStatus());
+        //updateUser.setBirth(users.getBirth());
+        //updateUser.setGender(users.getGender());
+        //updateUser.setRole(users.getRole());
+        //updateUser.setStatus(users.getStatus());
         updateUser.setUserImagePath(users.getUserImagePath());
 
         usersService.update(updateUser);

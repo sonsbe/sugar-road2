@@ -26,12 +26,16 @@
 <script setup>
 import axios from "axios";
 import StoreCard from "../../components/store/StoreCard.vue";
-import { onMounted, reactive } from "vue";
+import { onMounted, reactive, watch } from "vue";
 let storeList = reactive([]);
 onMounted(async () => {
   await getStoreList();
-   console.log(storeList.value);
+  console.log(storeList.value);
 });
+// onUpdated( async () => {
+//   await getStoreList();
+//   console.log(storeList.value);
+// });
 async function getStoreList() {
   try {
     const response = await axios.get("http://localhost:1023/store");
@@ -43,6 +47,7 @@ async function getStoreList() {
 }
 </script>
 <style scoped>
+@import "@/assets/store.css";
 .store-insertBtn {
   text-decoration: none;
   padding: 10px;
@@ -61,5 +66,4 @@ async function getStoreList() {
 .store-insertBtn:hover {
   background-color: #cab9dc;
 }
-@import "../../../src/assets/store.css";
 </style>

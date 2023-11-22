@@ -40,9 +40,7 @@
         else {
             commentPage.value = commentPage.value.concat(response.data._embedded.reviewCommentResponseVOList);
         }
-        console.log(commentPage.value);
         sortComments();
-        console.log(commentPage.value);
         return response.data._links.next != undefined?response.data._links.next.href:"";
     }
     
@@ -68,21 +66,29 @@
     }
 
     function deleteComment(index){
-        commentPage.splice(index, 1);
+        commentPage.value.splice(index, 1);
     }
 
     async function createComment(){
         commentRequest.value.body[props.commentType + "Id"] = props.referenceId;
         let now = new Date();
         commentRequest.value.body.postedDate = now.toISOString();
-        const newComment = await apiService.post(
-            `http://localhost:1023/${props.commentType}-comment`, 
-            commentRequest.value.body
-        ).catch(error => console.log(error)).data;
-        commentPage.value.push(newComment);
-        console.log(newComment)
-        sortComments();
-        console.log(commentPage.value)
+        if(commentRequest.value._index===null) {
+            const newComment = await apiService.post(
+                `http://localhost:1023/${props.commentType}-comment`, 
+                commentRequest.value.body
+            ).catch(error => console.log(error));
+            commentPage.value.push(newComment.data);
+            sortComments();
+        }
+        else {
+            const newComment = await apiService.put(
+                commentPage.value[commentRequest.value._index]._links.self.href, 
+                commentRequest.value.body
+            ).catch(error => console.log(error));
+            commentPage.value[commentRequest.value._index] = newComment.data;
+        }
+        
         commentRequest.value.body = {
             url : "",
             body : {

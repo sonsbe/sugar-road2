@@ -1,5 +1,9 @@
 <template>
-    <button :class = "[isRecommended?t-pink3:t-lightgray, t4, bold]"  @click="clickHandler">
+    <button 
+        :class = "[isRecommended?'t-pink3':'t-lightgray', 't4', 'bold']"
+        @click="clickHandler(data.createRecommendation.href)"
+        style = "border : none; background-color: transparent;"
+    >
         ♥ {{count}}
     </button>
 </template>
@@ -9,30 +13,37 @@
     const props = defineProps( {
         data : Object
     });
-    const count = ref(0);
+    const count = ref(null);
     const isRecommended = ref(false);
     let recommendation;
     onMounted(
         async () => {
             console.log(props.data);
-            recommendation = await apiService.get(props.data.recommendation.href).catch(error => console.log(error)).data;
+            recommendation = await apiService.get(props.data.recommendation.href).catch(error => console.log(error));
 
-            count.value = recommendation.count;
+            count.value = recommendation.data.count;
 
-            isRecommended.value = recommendation.isRecommended;
+            isRecommended.value = recommendation.data.isRecommended;
         }
     );
-    
 
-    const clickHandler = async () => {
+    const clickHandler = async (url) => {
         if (isRecommended.value) {
-            recommendation = await apiService.delete(props.data.deleteRecommendation.href).catch(error => console.log(error));
+            recommendation = await apiService.delete(url).catch(error => console.log(error));
         }
         else {
-            recommendation = await apiService.post(props.data.createRecommendation.href).catch(error => console.log(error));
+            recommendation = await apiService.post(url).catch(error => console.log(error));
         }
         count.value = recommendation.data.count;
         isRecommended.value = recommendation.data.isRecommended;
     }
 
 </script>
+<style scoped>
+    /* .t-pink3 {
+        color : #F1ABCC;
+    }
+    .t-lightgray {
+        color : #d3d3d3;
+    } */
+</style>

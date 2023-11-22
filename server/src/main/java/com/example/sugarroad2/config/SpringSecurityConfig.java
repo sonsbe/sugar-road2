@@ -48,7 +48,7 @@ public class SpringSecurityConfig {
         http.csrf().disable();
         http.formLogin().disable();
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                //.addFilter(jwtAuthorizationFilter())
+                .addFilter(jwtAuthorizationFilter())
                 .authorizeHttpRequests(request -> request
                         .dispatcherTypeMatchers(DispatcherType.FORWARD)
                         .permitAll()

@@ -1,5 +1,5 @@
 <template>
-    <div class = "v-item pink1">
+    <div class = "v-item pink1 left">
         <router-link :to="'/review/' + data.id">
             <table class = "v-table">
                 <tr>
@@ -25,7 +25,9 @@
                 </tr>
                 <tr>
                     <td>
-                        <Recommendation :data = "data._links"></Recommendation>
+                        <Suspense>
+                            <Recommendation v-if="data._links!=undefined" :data = "data._links"></Recommendation>
+                        </Suspense>
                     </td>
                 </tr>
             </table>

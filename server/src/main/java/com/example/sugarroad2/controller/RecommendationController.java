@@ -1,7 +1,6 @@
 package com.example.sugarroad2.controller;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import com.example.sugarroad2.model.dto.request.RecommendationRequestDTO;
 import com.example.sugarroad2.model.dto.response.RecommendationResultResponseVO;
@@ -64,11 +63,17 @@ public class RecommendationController {
 		}
 	}
 
-	@PostMapping
+	@PostMapping("/reference-type/{referenceType}/reference-id/{referenceId}")
 	public ResponseEntity<EntityModel<RecommendationResultResponseVO>> createRecommendation(
-		@RequestBody RecommendationRequestDTO recommendationRequestDTO) {
+		@PathVariable("referenceType") String referenceType,
+		@PathVariable("referenceId") int referenceId) {
 		try {
-			Users users = usersService.readById(recommendationRequestDTO.getUserId());
+
+			String userId = "vv980113";
+
+			Users users = usersService.readById(userId);
+			RecommendationRequestDTO recommendationRequestDTO =
+				RecommendationRequestDTO.builder().referenceId(referenceId).referenceType(referenceType).build();
 			Recommendation recommendation = recommendationRequestDTO.toEntity(users);
 			recommendationService.create(recommendation);
 

@@ -2,9 +2,10 @@ package com.example.sugarroad2.model.dto.request;
 
 import com.example.sugarroad2.model.entity.Review;
 import com.example.sugarroad2.model.entity.Store;
-import com.example.sugarroad2.model.entity.Users;
-import com.example.sugarroad2.util.ImageUtil;
+
 import java.time.LocalDateTime;
+
+import com.example.sugarroad2.model.entity.Users;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.web.multipart.MultipartFile;
 
 @Getter

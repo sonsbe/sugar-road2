@@ -1,5 +1,10 @@
 package com.example.sugarroad2.controller.user;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.example.sugarroad2.config.auth.NowUserDetails;
+import com.example.sugarroad2.config.jwt.JwtAuthorizationFilter;
+import com.example.sugarroad2.config.jwt.JwtProperties;
 import com.example.sugarroad2.model.entity.Users;
 import com.example.sugarroad2.repository.UsersRepository;
 import com.example.sugarroad2.service.JwtService;
@@ -9,6 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +30,8 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
-@CrossOrigin(origins="http://localhost:5173", allowedHeaders = "*",
-		exposedHeaders="Authorization", allowCredentials = "true")//SOP 문제 해결과 쿠키를 전달받기 위한 설정
+//@CrossOrigin(origins="http://localhost:5173", allowedHeaders = "*",
+//		exposedHeaders="Authorization", allowCredentials = "true")//SOP 문제 해결과 쿠키를 전달받기 위한 설정
 public class AccessMappingController {
 
 	@Autowired
@@ -64,73 +72,51 @@ public class AccessMappingController {
 //		return userRepository.findAll();
 //	}
 
-	@PostMapping("/login")
-	public ResponseEntity<String> login(@RequestBody Map<String, String> params,
-										HttpServletResponse res) {
-
-		Optional<Users> member = userRepository.findById(params.get("id"));
-
-		//boolean isPassword = encoder.matches(params.get("password"), member.get().getUserPassword());
-
-		//System.out.println("패스워드 일치 여부 : " + isPassword);
-
-		log.info("login 실행");
-
-		if (member.isPresent()) {
-			String id = member.get().getId();
-
-			String token = jwtService.getToken("id", id);
-
-			System.out.println("token : " + token);
-
-			MultiValueMap<String, String> header = new LinkedMultiValueMap<>();
-			header.add("Authorization", token);
-
-			return new ResponseEntity<>("로그인 성공", header, HttpStatus.OK);
-			// authorization
-		}
-
-		throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-	}
-
-	@GetMapping("/logout")
-	public ResponseEntity<String> logout(@RequestHeader(value = "Authorization", required = false) String token, HttpServletResponse res) {
-		log.info("logout 실행");
-		MultiValueMap<String, String> header = new LinkedMultiValueMap<>();
-		header.add("Authorization", "delete");
-		return new ResponseEntity<>("로그아웃 성공", header, HttpStatus.OK);
-	}
-
 	@GetMapping("/check")
 	public ResponseEntity check(@RequestHeader(value = "Authorization", required = false) String token) {
 
-
-        System.out.println("getClaims() 호출 : " + token);
+		log.info("check 수행");
 
         if (token != null && !"".equals(token)) {
 
 			token = token.replace("Bearer ", "");
 
-			Claims jwtclaims = null;
+			System.out.println("token : " + token);
 
 			try {
-				byte[] secretByteKey = DatatypeConverter.parseBase64Binary("asdfqwerasdfqwerasdf1234asdfqwer1234asdfzxcv");
-				Key signKey = new SecretKeySpec(secretByteKey, SignatureAlgorithm.HS256.getJcaName());
-				jwtclaims = Jwts.parserBuilder().setSigningKey(signKey).build().parseClaimsJws(token).getBody();
+				// 토큰 검증 (이게 인증이기 때문에 AuthenticationManager도 필요 없음)
+				// 내가 SecurityContext에 집적접근해서 세션을 만들때 자동으로 UserDetailsService에 있는 loadByUsername이 호출됨.
+				String tokenUser = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET))
+						.build()
+						.verify(token)
+						.getClaim("id")
+						.asString();
+
+				System.out.println("토큰 속 ID 정보 : " + tokenUser);
+
+				if(tokenUser != null) {
+					Users user = userRepository.findById(tokenUser).get();
+					System.out.println("현재 로그인 중인 유저 : " + user);
+					// 인증은 토큰 검증시 끝. 인증을 하기 위해서가 아닌 스프링 시큐리티가 수행해주는 권한 처리를 위해
+					// 아래와 같이 토큰을 만들어서 Authentication 객체를 강제로 만들고 그걸 세션에 저장!
+					NowUserDetails principalDetails = new NowUserDetails(user);
+					//System.out.println(principalDetails.getAuthorities());
+					Authentication authentication = new UsernamePasswordAuthenticationToken(
+									principalDetails, //나중에 컨트롤러에서 ID해서 쓸 때 사용하기 편함.
+									null, // 패스워드는 모르니까 null 처리, 어차피 지금 인증하는게 아니니까!!
+									principalDetails.getAuthorities());
+
+					// 강제로 시큐리티의 세션에 접근하여 값 저장
+					//SecurityContextHolder.getContext().setAuthentication(authentication);
+
+					return new ResponseEntity<>("반가워요.. " + user.getId() + " 회원님!!", HttpStatus.OK);
+				}
 			} catch (ExpiredJwtException e) {
 				System.out.println("토큰 만료");
 			} catch (JwtException e) {
 				System.out.println("토큰 유효하지 않음");
 			}
-
-			if (jwtclaims != null) {
-				String id = jwtclaims.get("id").toString();
-				Users member = userRepository.findById(id).get();
-				return new ResponseEntity<>("반가워요.. " + member.getId() + " 회원님!!", HttpStatus.OK);
-			}
-
 		}
-
         return new ResponseEntity<>("로그인을 먼저 수행하세용~~~", HttpStatus.OK);
     }
 }
