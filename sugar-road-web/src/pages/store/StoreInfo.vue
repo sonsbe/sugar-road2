@@ -1,19 +1,14 @@
 <template>
   <div class="container">
     <div class="store-like-back">
-      <RouterLink to="/store">
-        <button id="backBtn">◀</button>
-      </RouterLink>
+      <a href="/store">◀</a>
       <span>💖</span>
     </div>
     <h3>
       <div>{{ storeInfo.storeName }}</div>
     </h3>
-    <div class="edit-remove-btnBox">
-      <button
-        class="buttons"
-        @click="router.push('/store/edit/' + storeId)"
-      >
+    <div class="edit-remove-btnBox" v-if="storeInfo.userId === userId">
+      <button class="buttons" @click="router.push('/store/edit/' + storeId)">
         수정
       </button>
       <RouterLink to="/store">
@@ -63,12 +58,17 @@
   <br />
   <div><b>Store Location</b></div>
   <div id="map" style="width: 100%; height: 200px">
-    <KakaoMap :address="storeInfo.address" v-if="storeInfo.address!=undefined"></KakaoMap>
+    <KakaoMap
+      :address="storeInfo.address"
+      v-if="storeInfo.address != undefined"
+    ></KakaoMap>
   </div>
   <RouterLink :to="'/review/write/store/' + storeId">
-        <button class="buttons">리뷰 작성</button>
+    <button class="buttons">리뷰 작성</button>
   </RouterLink>
-  <Cards :reviewPageURL="'http://localhost:1023/review/of/store/' + storeId"></Cards>
+  <Cards
+    :reviewPageURL="'http://localhost:1023/review/of/store/' + storeId"
+  ></Cards>
 </template>
 
 <script setup>
@@ -84,9 +84,12 @@ const router = useRouter();
 let storeId = currentRoute.params.storeId;
 let storeInfo = ref({});
 let menuList = ref();
+let userId = sessionStorage.getItem("user");
+console.log("user", userId);
 onMounted(async () => {
   await getStoreInfo();
-  console.log(storeInfo);
+  console.log("체크", storeInfo.value.userId);
+  console.log("storeInfo.userId", storeInfo.userId);
   menuList.value = storeInfo.value.menuDTOList;
   console.log(menuList);
 });
@@ -110,7 +113,6 @@ function deleteStore() {
       .catch((err) => console.log(err));
   }
 }
-
 </script>
 
 <style scoped>

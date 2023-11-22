@@ -90,6 +90,7 @@ public class StoreController {
     public ResponseEntity<?> createStore(
             @AuthenticationPrincipal NowUserDetails nowUserDetails,
             @RequestParam String storeName,
+            @RequestParam String userId,
             @RequestParam("phoneNumber") String phoneNumber,
             @RequestParam("address") String address,
             @RequestParam("storeDesc") String storeDesc,
@@ -99,7 +100,7 @@ public class StoreController {
             // @RequestPart("menuRequestListDTO") List<MenuRequestDTO> menuRequestListDTO
     ) {
         try {
-            String userId = nowUserDetails.getUser().getId();
+//            String userId = nowUserDetails.getUser().getId();
             System.out.println("id:" + userId);
             // 가게 정보 저장
             System.out.println("menuNameList:" + menuNameList.get(0));

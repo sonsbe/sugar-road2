@@ -20,8 +20,7 @@ public class CorsConfig {
       config.setAllowedOrigins(List.of("http://localhost:5173")); //외부 접근이 허용된 URL
       config.setAllowedHeaders(List.of("*"));
       config.setAllowedMethods(List.of("*")); //CRUD 전부 허용
-      config.setExposedHeaders(List.of("Authorization"));
-      config.setExposedHeaders(List.of("User"));
+      config.setExposedHeaders(List.of("Authorization", "User"));
 
       UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
       source.registerCorsConfiguration("/**", config);

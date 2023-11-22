@@ -14,18 +14,23 @@
       storeDesc: store.storeDesc,
       storeImagePath: store.storeImagePath,
       storeId: store.storeId,
-      viewsCount:store.viewsCount
+      viewsCount: store.viewsCount,
+      userId: store.userId
     }"
   >
   </StoreCard>
   <router-link :to="'/store/write'">
-    <div class="store-insertBtn bold h5" @onClick="createStore">가게 등록</div>
+    <div v-if="userId" class="store-insertBtn bold h5" @onClick="createStore">
+      가게 등록
+    </div>
   </router-link>
 </template>
 <script setup>
 import axios from "axios";
 import StoreCard from "../../components/store/StoreCard.vue";
 import { onMounted, reactive, watch } from "vue";
+
+let userId = sessionStorage.getItem("user");
 let storeList = reactive([]);
 onMounted(async () => {
   await getStoreList();

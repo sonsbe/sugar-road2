@@ -1,5 +1,7 @@
 <template>
-  <button class="backBtn" @click="goBack">◀</button>
+  <router-link :to="'/store'">
+    <button class="backBtn">◀</button>
+  </router-link>
   <div class="store-write-title" v-if="uri.includes('edit')">가게 수정</div>
   <div class="store-write-title" v-else>가게 등록</div>
   <div class="HeadLine"></div>
@@ -96,6 +98,8 @@ let menuNameList = ref([]);
 let menuImgList = ref([]);
 let menuIdList = ref([]);
 
+let userId = sessionStorage.getItem("user");
+
 // 가게 대표이미지 변경
 function handleStoreImageChange(e) {
   storeRequestDTO.value.storeImagePath = e.target.files[0];
@@ -115,6 +119,7 @@ function createStore() {
   formData.append("phoneNumber", storeRequestDTO.value.phoneNumber);
   formData.append("address", storeRequestDTO.value.address);
   formData.append("storeDesc", storeRequestDTO.value.storeDesc);
+  formData.append("userId", userId);
   // << update >>
   if (uri.includes("edit")) {
     formData.append("storeImagePath", storeRequestDTO.value.storeImagePath);
@@ -137,6 +142,7 @@ function createStore() {
       .put("http://localhost:1023/store/" + storeId, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
+          Authorization: sessionStorage.getItem("token"),
         },
       })
       .then((response) => {
@@ -164,10 +170,10 @@ function createStore() {
       .post("http://localhost:1023/store", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
+          Authorization: sessionStorage.getItem("token"),
         },
       })
       .then((response) => {
-        router.push("/store");
         console.log(response);
       })
       .catch((err) => console.log(err));
