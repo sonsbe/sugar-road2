@@ -4,7 +4,7 @@
 }
 
 #title{
-    margin-left: 30%;
+    margin-left: 40%;
     padding-top: 10%;
     padding-bottom: 5%;
 }
@@ -14,8 +14,8 @@
 }
 
 .imageDiv{
-    
     display: flex;
+    justify-content: center;
 }
 
 #userImage{

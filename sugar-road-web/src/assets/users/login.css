@@ -19,7 +19,7 @@ body {
 
 .app-body{
     background-repeat: no-repeat;
-    background-image: url(../mypage/img/backGround.jpg);
+    background-image: url(src/assets/users/img/backGround.jpg);
     background-size: cover;
 }
 

@@ -52,7 +52,8 @@ const InfoEmail = ref('');
 
 
   onMounted( () => {
-    axios.get("http://localhost:1023/mypage/id")
+    const headerId = sessionStorage.getItem('user');
+    axios.get(`http://localhost:1023/mypage/${headerId}`)
           .then(response => {
               console.log(response);
               return response.data;

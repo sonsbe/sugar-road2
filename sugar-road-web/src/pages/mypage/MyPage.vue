@@ -46,7 +46,7 @@
         </div>
         <div class="bottom">
             <div id="logOut">
-                <a href="/logout" style="text-decoration: none">로그아웃</a>
+                <a @click="logout()" style="text-decoration: none">로그아웃</a>
             </div>
         </div>
     </div>
@@ -62,7 +62,8 @@ const selectNicname = ref('');
 const selectEmail = ref('');
 
   onMounted( () => {
-    axios.get("http://localhost:1023/mypage/id")
+    const headerId = sessionStorage.getItem('user');
+    axios.get(`http://localhost:1023/mypage/${headerId}`)
           .then(response => {
               console.log(response);
               return response.data;
@@ -77,6 +78,11 @@ const selectEmail = ref('');
             .catch(err => console.error(err));
   })
       
+  const logout = () => {  
+          sessionStorage.removeItem("token");
+          sessionStorage.removeItem("user");
+          window.alert("로그아웃 수행");
+    }
   </script>
 
 <style scoped>
