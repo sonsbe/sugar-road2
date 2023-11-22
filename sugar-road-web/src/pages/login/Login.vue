@@ -46,8 +46,10 @@ export default {
         }
         }).then((response)=>{
           console.log("헤더확인");
+          console.log(response.headers.user);
           console.log(response.headers.authorization);
           sessionStorage.setItem('token',response.headers.authorization);
+          sessionStorage.setItem('user', response.headers.user)
           //토큰 값 가져와야하면
           //sessionStorage.getItem('token')
         });
@@ -90,6 +92,7 @@ export default {
 
     const logout = () => {  
           sessionStorage.removeItem("token");
+          sessionStorage.removeItem("user");
           window.alert("로그아웃 수행");
     }
 
