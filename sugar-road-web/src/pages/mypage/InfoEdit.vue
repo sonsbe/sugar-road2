@@ -8,14 +8,14 @@
         <br>
             <br>
         <br>
-           <img v-bind:src="InfoImg" id="userImage">
+           <img :src="InfoImg" id="userImage">
 
             <label class="imgChange" for="input-image">
                 <img src="src/assets/mypage/img/edit.png">
             </label>
             <form id="editForm">
                 <input type="hidden" name="userId" v-model="InfoId">
-                <input type="file" name="image" style="display:none" id="input-image" @change="changeProfile(this)">
+                <input type="file" name="image" style="display:none" id="input-image" @change="changeProfile">
                 <h5 class="editText">PW</h5>
                 <br>
                 <input class="editBox" type="password" name="userPassword" v-model="Password" required><br>
@@ -49,6 +49,7 @@ const Password = ref('');
 const InfoName = ref('');
 const InfoNickname = ref('');
 const InfoEmail = ref('');
+const InputImgPath = '';
 
 
   onMounted( () => {
@@ -71,15 +72,22 @@ const InfoEmail = ref('');
             .catch(err => console.error(err));
   })
 
+  function changeProfile(e){ 	
+    console.log(e.target.files[0]);
+    document.querySelector('#userImage').src=URL.createObjectURL(e.target.files[0]);
+    document.querySelector('#userImage').addEventListener("load", function(){
+        URL.revokeObjectURL(this.src);
+    })} 
+
   function userInfoEdit(){
     console.log("put request")
     axios.put(`http://localhost:1023/mypage/${InfoId.value}`, {
         id: InfoId.value,
         userPassword: Password.value,
-        userImagePath: InfoImg.value,
         userName: InfoName.value,
         nickname: InfoNickname.value,
-        userEmail: InfoEmail.value
+        userEmail: InfoEmail.value,
+        userImagePath: InfoImg.value
     },{
         headers: {
             "Content-Type": "application/json",

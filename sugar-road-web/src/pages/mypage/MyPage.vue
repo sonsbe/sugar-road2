@@ -56,12 +56,19 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import axios from "axios";
+import router from "../../router";
 
 const selectImg = ref('');
 const selectNicname = ref('');
 const selectEmail = ref('');
 
   onMounted( () => {
+    if(sessionStorage.getItem("user") === undefined || sessionStorage.getItem("user") === null){
+        console.log("if문 걸림", sessionStorage.getItem("user"));
+        router.push("/login")
+    } else {
+        console.log("로그인 아이디", sessionStorage.getItem("user"));
+    }
     const headerId = sessionStorage.getItem('user');
     axios.get(`http://localhost:1023/mypage/${headerId}`)
           .then(response => {
@@ -74,6 +81,7 @@ const selectEmail = ref('');
               //selectImg.value = "src/assets/mypage/img/profileEx.png";
               selectNicname.value = `${user.nickname}`;
               selectEmail.value = `${user.userEmail}`;
+      
             })
             .catch(err => console.error(err));
   })

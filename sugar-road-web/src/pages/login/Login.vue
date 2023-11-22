@@ -20,7 +20,7 @@
     <div class = "content">
             <img id="loginTitle" src="src/assets/users/img/Sugar-Road Logo.png">
         <div id="loginBox">
-            <form method="post" name="loginForm">
+            <form name="loginForm">
                 <h4 id="please">Please Login</h4>
                 <input id="loginText1" type="text" name="userId" @keyup.enter="submit()" v-model="state.form.id" placeholder="Id" autocomplete='off' required><br>
                 <br>
@@ -28,7 +28,7 @@
                 <br>
                 <!-- <input type="submit" id="signIn" value="Login"> -->
              </form>
-             <button id="signIn" @click="login()">Login</button>
+             <button id="signIn" @click="login">Login</button>
                 <br>
                 <button id="signUp" onclick="location.href = '/signup'">Go to Sign Up</button>
         </div>
@@ -39,11 +39,13 @@
 <script>
 import {reactive} from "vue";
 import axios from "axios";
+import { useRoute, useRouter } from "vue-router";
 
 axios.defaults.withCredentials = true;
 
 export default {
   setup() {
+    const router = useRouter();
     const state = reactive({
       form: {
         id: "",
@@ -67,8 +69,9 @@ export default {
           console.log(response.headers.authorization);
           sessionStorage.setItem('token',response.headers.authorization);
           sessionStorage.setItem('user', response.headers.user)
-
+          
           window.alert(`반갑습니다, ${response.headers.user} 님!`);
+          router.push('/')
           //토큰 값 가져와야하면
           //sessionStorage.getItem('token')
         });
