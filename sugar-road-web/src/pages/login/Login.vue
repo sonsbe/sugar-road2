@@ -49,7 +49,7 @@ export default {
           console.log(response.headers.user);
           console.log(response.headers.authorization);
           sessionStorage.setItem('token',response.headers.authorization);
-          sessionStorage.setItem('user', response.headers.user)
+          sessionStorage.setItem('user', response.headers.user);
           //토큰 값 가져와야하면
           //sessionStorage.getItem('token')
         });

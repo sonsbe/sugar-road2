@@ -111,7 +111,7 @@ function postWrite() {
     title: postRequest.value.title,
     content: postRequest.value.content,
     postImage: postRequest.value.postImage,
-    userId: postRequest.value.userId,
+    userId: sessionStorage.getItem("user"),
     postCategoryId: postRequest.value.postCategoryId,
   };
   const json = JSON.stringify(jsonData);

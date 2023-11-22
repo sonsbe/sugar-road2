@@ -45,13 +45,17 @@
     
   </div> -->
 
-          <a href="/post/write">
+          <a 
+          v-if="isLogin"
+          href="/post/write">
             <div
+           
               class="post-button-index bold h5"
             >
               글 작성
             </div>
           </a>
+
         </div>
       </div>
     </div>
@@ -62,19 +66,20 @@
 import { onMounted, ref } from "vue";
 import { api } from "@/common";
 import PostCard from "../../components/post/PostCard.vue";
-
 const postList = ref([]);
 const query = ref("");
 const col = ref("");
 const category = ref("");
+const isLogin = ref();
+isLogin.value = sessionStorage.getItem("user");
 
+console.log(sessionStorage.getItem("user"));
+console.log("session", isLogin.value!==null);
 function search() {
   console.log(query.value);
   api("http://localhost:1023/posts?query=" + query.value, "GET", {}).then(
     (response) => {
-      console.log("response", response);
       postList.value = response;
-      console.log(postList);
     }
   );
 }
@@ -100,17 +105,13 @@ function sort() {
   else uri = "http://localhost:1023/posts?col=" + col.value;
   console.log("col", col.value, "uri", uri);
   api(uri, "GET", {}).then((response) => {
-    console.log("response", response);
     postList.value = response;
-    console.log(postList);
   });
 }
 
 onMounted(() => {
   api("http://localhost:1023/posts", "GET", {}).then((response) => {
-    console.log(response);
     postList.value = response;
-    console.log(postList);
   });
 });
 </script>
