@@ -3,7 +3,6 @@
   <!-- <router-link :to="'/store/write'">
     <button @onClick="createStore">가게 등록</button>
   </router-link> -->
-  <input type="">
   <StoreCard
     class="container"
     v-for="store in storeList.value"

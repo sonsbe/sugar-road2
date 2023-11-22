@@ -23,6 +23,11 @@ public class MenuService {
         return menuRepository.findAll();
     }
 
+    public Menu readBy(int menuId)
+    {
+        return menuRepository.findById(menuId).get();
+    }
+
     public Menu create(Menu menu) {
         return menuRepository.save(menu);
     }
