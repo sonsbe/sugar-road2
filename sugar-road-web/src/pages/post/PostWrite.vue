@@ -173,6 +173,7 @@ onMounted(() => {
 
 );
 </script>
+
 <style scoped>
 @import "../../../src/assets/post.css";
 </style>
