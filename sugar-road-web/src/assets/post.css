@@ -29,10 +29,17 @@ h3 {
         padding: 1.5vh 4vh 1.5vh 3vh;
         box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
         margin: 5px;
-
         cursor: pointer;
 }
-
+.category > clicked{
+        border: 1px solid rgb(228, 228, 228);
+        border-radius: 5px;
+        padding: 1.5vh 4vh 1.5vh 3vh;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        margin: 5px;
+        background-color: red;
+        cursor: pointer;
+}
 
 /*
 .category > .image-button{
