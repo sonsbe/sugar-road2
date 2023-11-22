@@ -1,6 +1,8 @@
 package com.example.sugarroad2.config.auth;
 
 import com.example.sugarroad2.model.entity.Users;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -8,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 
+@Getter
+@Setter
 public class NowUserDetails implements UserDetails{
 
 	private Users user;
@@ -54,6 +58,7 @@ public class NowUserDetails implements UserDetails{
     public Collection<? extends GrantedAuthority> getAuthorities() {
 		Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
         user.getRoleList().forEach(r -> {
+            System.out.println("r:"+r);
         	authorities.add(()->{ return r;});
         });
         return authorities;
