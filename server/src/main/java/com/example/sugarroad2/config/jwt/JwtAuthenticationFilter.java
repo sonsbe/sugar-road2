@@ -93,16 +93,16 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
 		System.out.println("successful Authentication");
 		
 		NowUserDetails principalDetailis = (NowUserDetails) authResult.getPrincipal();
-
+		System.out.println("로그인 계정:"+principalDetailis.getUser().getId());
 		// JWT Token 생성해서 response에 담아주기
 		String jwtToken = JWT.create()
 				.withSubject(principalDetailis.getUsername())
 				.withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME)) //토큰 유효시간
 				.withClaim("id", principalDetailis.getUser().getId()) //id값
 				.sign(Algorithm.HMAC512(JwtProperties.SECRET)); //시크릿 키 이용하여 HMAC512 알고리즘 적용
-		
-		response.addHeader("Authorization", JwtProperties.TOKEN_PREFIX + jwtToken);
+
 		response.addHeader("User", principalDetailis.getUser().getId());
+		response.addHeader("Authorization", JwtProperties.TOKEN_PREFIX + jwtToken);
 	}
 	
 }

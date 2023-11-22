@@ -64,7 +64,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter{
 			Authentication authentication =
 					new UsernamePasswordAuthenticationToken(
 							principalDetails, //나중에 컨트롤러에서 ID해서 쓸 때 사용하기 편함.
-							principalDetails.getPassword(), // 패스워드는 모르니까 null 처리, 어차피 지금 인증하는게 아니니까!!
+							null, // 패스워드는 모르니까 null 처리, 어차피 지금 인증하는게 아니니까!!
 							principalDetails.getAuthorities());
 			
 			// 강제로 시큐리티의 세션에 접근하여 값 저장
