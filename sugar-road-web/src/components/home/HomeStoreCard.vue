@@ -1,8 +1,9 @@
 <template>
-<RouterLink :to="'/store/' + p.object.id">
+  <RouterLink :to="'/store/' + p.object.storeId">
     <div class="storeBoxTop">
       <div class="store-like">
-        👍<span v-text="p.object.recommendCount"></span>
+        <span>{{ p.object.storeName }}</span>
+        <span v-text="p.object.recommendCount"></span>
       </div>
     </div>
     <img
@@ -10,8 +11,7 @@
       class="storeImg"
       alt="가게 대표 이미지"
     />
-    <div v-text="p.object.storeName" class="store-name">
-    </div>
+    <div v-text="p.object.storeName" class="store-name"></div>
   </RouterLink>
 </template>
 <script setup>
@@ -24,3 +24,8 @@ const p = defineProps({
 });
 console.log("p", p.object);
 </script>
+<style scoped>
+.store-like > span {
+  text-align: left;
+}
+</style>
