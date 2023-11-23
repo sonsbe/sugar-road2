@@ -1,48 +1,50 @@
 <template>
-<div class="app-body">
-    <div class = "content">
-        <div class="top">
-            <h4 id="title">MyPage</h4>
-
-                <div class="profileBox">
-                    <div class="imageDiv">
-                        <img v-bind:src="selectImg" id="userImage">
+    <div class="app-body">
+        <div class = "content">
+            <div class="top">
+                <h4 id="title">MyPage</h4>
+    
+                    <div class="profileBox">
+                        <div class="imageDiv">
+                            <img v-bind:src="selectImg" id="userImage">
+                        </div>
+                        <div class = "userInfo">
+                        <h5>{{ selectNicname }}</h5>
+                        <h6>{{ selectEmail }}</h6>
+                        </div>
                     </div>
-                    <div class = "userInfo">
-                    <h5>{{ selectNicname }}</h5>
-                    <h6>{{ selectEmail }}</h6>
-                    </div>
-                </div>
-
-                <h3 id="msg" th:if="${msg}" th:text="${msg}"></h3>
-        </div>
-        <div class="middle">
-            <div class="menu">
-                <a href="/InfoEdit" style="text-decoration: none">
-                    <div class="menuButton" id="button1">
-                    <img src="src/assets/mypage/img/menuImg1.png" class="menuImg">
-                        <h5 id="menuText1">프로필 수정</h5>
-                    </div>
-                </a>
-                <a href="/mypage" style="text-decoration: none">
-                    <div class="menuButton" id="button2">
-                    <img src="src/assets/mypage/img/menuImg2.png" class="menuImg">
-                        <h5 id="menuText2">내가 작성한 글</h5>
-                    </div>
-                </a>
-                <a href="/mypage" style="text-decoration: none">
-                    <div class="menuButton" id="button3">
-                    <img src="src/assets/mypage/img/menuImg3.png" class="menuImg">
-                        <h5 id="menuText3">내가 작성한 댓글</h5>
-                    </div>
-                </a>
-                <a href="/mypage" style="text-decoration: none">
-                    <div class="menuButton" id="button4">
-                    <img src="src/assets/mypage/img/menuImg4.png" class="menuImg">
-                        <h5 id="menuText4">좋아요 한 글</h5>
-                    </div>
-                </a>
+    
+                    <h3 id="msg" th:if="${msg}" th:text="${msg}"></h3>
             </div>
+            <div class="middle">
+                <div class="menu">
+                    <a href="/InfoEdit" style="text-decoration: none">
+                        <div class="menuButton" id="button1">
+                        <img src="src/assets/mypage/img/menuImg1.png" class="menuImg">
+                            <h5 id="menuText1">프로필 수정</h5>
+                        </div>
+                    </a>
+                    <a href="/mypage" style="text-decoration: none">
+                        <div class="menuButton" id="button2">
+                        <img src="src/assets/mypage/img/menuImg2.png" class="menuImg">
+                            <h5 id="menuText2">내가 작성한 글</h5>
+                        </div>
+                    </a>
+                    <a href="/mypage" style="text-decoration: none">
+                        <div class="menuButton" id="button3">
+                        <img src="src/assets/mypage/img/menuImg3.png" class="menuImg">
+                            <h5 id="menuText3">내가 작성한 댓글</h5>
+                        </div>
+                    </a>
+                    <a href="/mypage" style="text-decoration: none">
+                        <div class="menuButton" id="button4">
+                        <img src="src/assets/mypage/img/menuImg4.png" class="menuImg">
+                            <h5 id="menuText4">좋아요 한 글</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
         </div>
         <div class="bottom">
             <div id="logOut">
