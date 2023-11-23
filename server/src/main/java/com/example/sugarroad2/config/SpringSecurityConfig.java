@@ -56,7 +56,7 @@ public class SpringSecurityConfig {
                         .requestMatchers("/**")
                         .permitAll()
                         .anyRequest()
-                        .permitAll()
+                        .authenticated()
                 );
 
         return http.build();
