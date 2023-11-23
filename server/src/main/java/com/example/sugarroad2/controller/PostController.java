@@ -1,5 +1,6 @@
 package com.example.sugarroad2.controller;
 
+import com.example.sugarroad2.config.auth.NowUserDetails;
 import com.example.sugarroad2.model.dto.request.PostRequest;
 import com.example.sugarroad2.model.dto.response.PostResponse;
 import com.example.sugarroad2.model.entity.*;
@@ -19,11 +20,14 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -87,12 +91,15 @@ public class PostController {
             }
             else if (query != null) {
                 postList = postService.readByTitleOrContent(query);
-            } else {
-                postList = postService.read(col);
+            }  else{
+                postList = postService.read("postedDate");
             }
             List<PostResponse> postResponseList = new ArrayList<>();
             for (Post post : postList) {
                 postResponseList.add(convertionUtil.convertToPostResponse(post));
+            }
+            if(col!=null && col.equals("recommendCount")){
+                Collections.sort(postResponseList);
             }
             return ResponseEntity.ok().body(postResponseList);
         } catch (Exception e) {
@@ -100,32 +107,6 @@ public class PostController {
             return ResponseEntity.badRequest().body(error);
         }
     }
-//    @GetMapping
-//    public ResponseEntity<CollectionModel<EntityModel<PostResponse>>> read(String col) {
-//        List<Post> postList = postService.read(col);
-//        List<PostResponse> postResponseList = new ArrayList<>();
-//        List<EntityModel<PostResponse>> postResponseEntityModel = new ArrayList<>();
-//        for (Post post : postList) {
-//            //postResponseList.add(convertToPostResponse(post));
-//            postResponseEntityModel.
-//                    add(EntityModel.of(convertToPostResponse(post),
-//                            linkTo(methodOn(PostController.class).readById(post.getId()))
-//                                    .withSelfRel())
-//                            .add(linkTo(methodOn(PostController.class).delete(post.getId()))
-//                                    .withRel("delete"))
-//                            .add(linkTo(methodOn(PostController.class).update(post.getId(), null, null))
-//                                    .withRel("update"))
-//                    );
-//        }
-//
-//        CollectionModel<EntityModel<PostResponse>> postResponseCollectionModel =
-//                CollectionModel.of(postResponseEntityModel)
-//                        .add(linkTo(methodOn(PostController.class).read(col))
-//                                .withSelfRel());
-//
-//        return ResponseEntity.ok().body(postResponseCollectionModel);
-//
-//    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> readById(@PathVariable int id) {
@@ -157,9 +138,15 @@ public class PostController {
     }
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<String> create(@RequestPart PostRequest postRequest, @RequestPart(required = false) MultipartFile[]
-            uploadImages) {
+    public ResponseEntity<String> create(
+            @AuthenticationPrincipal NowUserDetails nowUserDetails,
+            @RequestPart PostRequest postRequest,
+                                         @RequestPart(required = false) MultipartFile[] uploadImages
+                                         ) {
         try {
+            String userId = nowUserDetails.getUser().getId();
+            System.out.println("id:" + userId);
+            postRequest.setUserId(userId);
             System.out.println("form:" + postRequest);
             Users users = usersRepository.findById(postRequest.getUserId()).get();
             PostCategory postCategory = postCategoryService.readById(postRequest.getPostCategoryId());

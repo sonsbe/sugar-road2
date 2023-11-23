@@ -67,5 +67,5 @@ const InEmail = ref('');
 </script>
 
 <style scoped>
-@import "src/assets/users/signup.css";
+@import "../../../src/assets/users/signup.css";
 </style>

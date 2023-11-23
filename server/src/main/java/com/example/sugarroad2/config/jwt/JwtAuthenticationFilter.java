@@ -93,7 +93,7 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
 		System.out.println("successful Authentication");
 		
 		NowUserDetails principalDetailis = (NowUserDetails) authResult.getPrincipal();
-
+		System.out.println("로그인 계정:"+principalDetailis.getUser().getId());
 		// JWT Token 생성해서 response에 담아주기
 		String jwtToken = JWT.create()
 				.withSubject(principalDetailis.getUsername())

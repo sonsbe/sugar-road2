@@ -72,6 +72,7 @@ export default {
           
           window.alert(`반갑습니다, ${response.headers.user} 님!`);
           router.push('/')
+
           //토큰 값 가져와야하면
           //sessionStorage.getItem('token')
         });

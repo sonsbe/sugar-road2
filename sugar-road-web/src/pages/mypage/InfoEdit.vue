@@ -1,6 +1,13 @@
 <template>
-<div class="app-body">
-    <div class = "content">
+  <div class="app-body">
+    <div class="content">
+      <a href="javascript:history.back();" id="backBtn">◀</a>
+      <br /><br /><br />
+      <h4 id="title">프로필 변경</h4>
+      <br />
+      <br />
+      <br />
+      <img v-bind:src="InfoImg" id="userImage" />
 
         <a href="javascript:history.back();" id="backBtn">◀</a>
         <br><br><br>
@@ -32,11 +39,11 @@
                 
             </form>
             <button id="editButtom" @click="userInfoEdit">업데이트 프로필</button>
-            
-        <div id="delete"><a @click="userDelete" style="text-decoration: none">회원탈퇴</a></div>
-
+      <div id="delete">
+        <a @click="userDelete" style="text-decoration: none">회원탈퇴</a>
+      </div>
     </div>
-</div>
+  </div>
 </template>
 
 <script setup>
@@ -90,27 +97,29 @@ const InputImgPath = '';
         userImagePath: InfoImg.value
     },{
         headers: {
-            "Content-Type": "application/json",
+          "Content-Type": "application/json",
         },
-    })
-        .then((response) => {
-            console.log("put response", response);
-            window.alert(response.data);
-        })
-        .catch(response => {
-            console.log("put error");
-            window.alert(response.data);
-        })
-  }
-
-  function userDelete(){
-    console.log("delete request",InfoId.value)
-    axios.delete(`http://localhost:1023/mypage/${InfoId.value}`)
+      }
+    )
     .then((response) => {
-        console.log("delete response", response);
-        window.alert(response.data);
+      console.log("put response", response);
+      window.alert(response.data);
     })
-  }
+    .catch((response) => {
+      console.log("put error");
+      window.alert(response.data);
+    });
+}
+
+function userDelete() {
+  console.log("delete request", InfoId.value);
+  axios
+    .delete(`http://localhost:1023/mypage/${InfoId.value}`)
+    .then((response) => {
+      console.log("delete response", response);
+      window.alert(response.data);
+    });
+}
 </script>
 
 <style scoped>
