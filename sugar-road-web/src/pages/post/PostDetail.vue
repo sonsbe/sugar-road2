@@ -26,8 +26,11 @@
             </div>
             <link rel="stylesheet" href="/css/comment.css">
             <div is = "custom-comment" data-referenceType="post" th:data-referenceId="${dto.postId}" th:data-loginId="${session.nowLogin}" id = "comment-area"></div>
-            <input type="text" class = "v-item commentInput t5" id = "commentInput" th:disabled="${session.nowLogin == null}?'disabled'" maxlength="100">
-            <button class = "t6 pink2 no-border" id = "commentBtn" onclick = "writeComment()" th:disabled="${session.nowLogin == null}?'disabled'">send</button>
+            <CommentCards
+              :commentPageURL = "'http://localhost:1023/post-comment/of/post/' + postId"
+              commentType = "post"
+              :referenceId = "postId"
+            />
         </div>
     
     </div>
@@ -37,6 +40,8 @@
     import { useRoute, useRouter } from "vue-router";
     import { onMounted, ref  } from 'vue';
     import { api } from '@/common'
+    import CommentCards from '@/components/comment/CommentCards.vue';
+
     const currentRoute = useRoute();
     const router = useRouter();
     const postId = currentRoute.params.postId;

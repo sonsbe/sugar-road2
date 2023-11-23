@@ -1,14 +1,6 @@
 <template>
   <div class="app-body">
     <div class="content">
-      <a href="javascript:history.back();" id="backBtn">◀</a>
-      <br /><br /><br />
-      <h4 id="title">프로필 변경</h4>
-      <br />
-      <br />
-      <br />
-      <img v-bind:src="InfoImg" id="userImage" />
-
         <a href="javascript:history.back();" id="backBtn">◀</a>
         <br><br><br>
         <h4 id="title">프로필 변경</h4>
@@ -49,6 +41,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import axios from "axios";
+import { useRoute, useRouter } from "vue-router";
 
 const InfoImg = ref('');
 const InfoId = ref('');
@@ -57,6 +50,7 @@ const InfoName = ref('');
 const InfoNickname = ref('');
 const InfoEmail = ref('');
 const InputImgPath = '';
+const router = useRouter();
 
 
   onMounted( () => {
@@ -109,6 +103,7 @@ const InputImgPath = '';
       console.log("put error");
       window.alert(response.data);
     });
+    router.push("/mypage");
 }
 
 function userDelete() {
@@ -123,5 +118,5 @@ function userDelete() {
 </script>
 
 <style scoped>
-@import "src/assets/mypage/edit.css";
+@import "@/assets/mypage/edit.css";
 </style>

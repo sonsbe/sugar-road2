@@ -1,24 +1,8 @@
 <template>
-  <!-- <div class="form-signin w-100 m-auto">
-    <h1 class="h3 mb-3 fw-normal">JWT 로그인 테스트</h1>
-    <div class="form-floating">
-      <input type="text" class="form-control" id="floatingInput" placeholder="사용자 ID"
-            @keyup.enter="submit()" v-model="state.form.id">
-      <label for="floatingInput">계정(id)</label>
-    </div>
-    <div class="form-floating">
-      <input type="password" class="form-control" id="floatingPassword" placeholder="Password" 
-      @keyup.enter="submit()" v-model="state.form.password">
-      <label for="floatingPassword">암호</label>
-    </div>    
-    <button class="w-100 btn btn-lg btn-primary" @click="login()">로그인</button>
-    <hr>
-    <button class="w-100 btn btn-lg btn-danger" @click="check()">로그인 상태 채크</button>
-  </div> -->
-
-  <div class="app-body">
-    <div class = "content">
-            <img id="loginTitle" src="src/assets/users/img/Sugar-Road Logo.png">
+  <div class="not-overflow-y">
+    <div class="app-body">
+    <div class = "content center">
+        <img id="loginTitle" src="src/assets/users/img/Sugar-Road Logo.png">
         <div id="loginBox">
             <form name="loginForm">
                 <h4 id="please">Please Login</h4>
@@ -27,11 +11,14 @@
                 <input id="loginText2" type="password" name="userPassword" @keyup.enter="submit()" v-model="state.form.password" placeholder="Password" required><br>
                 <br>
                 <!-- <input type="submit" id="signIn" value="Login"> -->
-             </form>
-             <button id="signIn" @click="login">Login</button>
-                <br>
-                <button id="signUp" onclick="location.href = '/signup'">Go to Sign Up</button>
+            </form>
+            <P style="margin-bottom: 10%;">
+              <button id="signIn" @click="login">Login</button>
+            </P>
+            <br>
+            <button id="signUp" onclick="location.href = '/signup'">Go to Sign Up</button>
         </div>
+      </div>
     </div>
   </div>
 </template>
@@ -101,4 +88,8 @@ export default {
 
 <style scoped>
 @import "src/assets/users/login.css";
+.not-overflow-y {
+  height: 100%;
+  overflow-y: hidden;
+}
 </style>

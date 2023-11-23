@@ -1,6 +1,6 @@
 <template>
   <div class="title">
-    <img src="http://localhost:1023/images/logonoback.png" class="main-title" />
+    <img src="src/assets/users/img/Sugar-Road Logo.png" class="main-title" />
   </div>
 
   <span><b>최근 등록한 가게🥐</b></span

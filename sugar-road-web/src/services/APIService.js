@@ -5,7 +5,8 @@ const apiService = axios.create({
     baseURL: API_BASE_URL, 
     headers: {
         // Host : window.location.hostname,
-        Accept: "application/json"
+        Accept: "application/json",
+        Authorization : sessionStorage.getItem("token")
     }
 });
 

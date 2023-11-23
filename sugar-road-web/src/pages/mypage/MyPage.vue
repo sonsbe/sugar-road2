@@ -77,8 +77,9 @@ const selectEmail = ref('');
           })
           .then(user => {
               console.log(user);
-              selectImg.value = `${user.userImagePath}`;
-              //selectImg.value = "src/assets/mypage/img/profileEx.png";
+              selectImg.value = `${user.userImagePath ? user.userImagePath : 
+                "src/assets/mypage/img/male_user.png"}`;
+            //   selectImg.value = "src/assets/mypage/img/profileEx.png";
               selectNicname.value = `${user.nickname}`;
               selectEmail.value = `${user.userEmail}`;
       

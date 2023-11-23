@@ -6,7 +6,7 @@
                 <td>
                     <p class="t5 bold" v-text="p.post.title"></p>
                 </td>
-                <td class="v-table-half right">
+                <td class="v-table-quater right">
                     <p class="t6" v-text="`조회수: ${p.post.viewsCount}`"></p>
                 </td>
 

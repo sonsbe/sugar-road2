@@ -125,7 +125,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-@import "../../../src/assets/post.css";
+@import "@/assets/post.css";
 .clicked{
         border: 1px solid rgb(228, 228, 228);
         border-radius: 5px;

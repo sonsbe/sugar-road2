@@ -304,6 +304,6 @@ h6 {
   background-color: rgb(240, 240, 240);
 }
 
-div, table, tr, td{
+div, table, tr, td, img{
   border: 1px dotted gray;
 }
