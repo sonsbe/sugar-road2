@@ -1,9 +1,11 @@
 <template>
     <div class="app-body">
       <div class="content">
+        <a href="/post">◀</a>
         <div class="header" style="text-align: center">
-          <h5 v-if="uri.includes('edit')">글 수정</h5>
-          <h5 v-else>글 작성</h5>
+          
+          <p v-if="uri.includes('edit')">글 수정</p>
+          <p v-else>글 작성</p>
         </div>
         <hr />
         <div class="post-content">
