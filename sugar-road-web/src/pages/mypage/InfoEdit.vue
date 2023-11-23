@@ -81,9 +81,9 @@ const router = useRouter();
     })} 
 
   function userInfoEdit(){
-    console.log("put request")
-
-    if(Password.value === null & Password.value === undefined){
+    console.log("put request");
+    console.log("Password.value : " + Password.value);
+    if(Password.value === ''){
       console.log("password null");
       window.alert("패스워드를 입력하세요");
     } else{
