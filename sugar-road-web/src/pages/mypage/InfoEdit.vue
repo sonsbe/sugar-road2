@@ -81,7 +81,12 @@ const router = useRouter();
     })} 
 
   function userInfoEdit(){
-    console.log("put request")
+    console.log("put request");
+    console.log("Password.value : " + Password.value);
+    if(Password.value === ''){
+      console.log("password null");
+      window.alert("패스워드를 입력하세요");
+    } else{
     axios.put(`http://localhost:1023/mypage/${InfoId.value}`, {
         id: InfoId.value,
         userPassword: Password.value,
@@ -93,17 +98,17 @@ const router = useRouter();
         headers: {
           "Content-Type": "application/json",
         },
-      }
-    )
+      })
     .then((response) => {
-      console.log("put response", response);
+      console.log("put response", response.data);
       window.alert(response.data);
+      router.push("/mypage");
     })
     .catch((response) => {
-      console.log("put error");
-      window.alert(response.data);
+      console.log("put error", response.response.data);
+      window.alert(response.response.data);
     });
-    router.push("/mypage");
+  }
 }
 
 function userDelete() {
