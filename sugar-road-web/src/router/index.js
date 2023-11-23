@@ -15,6 +15,7 @@ import ReviewTest from "@/pages/review/ReviewTest.vue";
 import ReviewWrite from "@/pages/review/ReviewWrite.vue";
 import PostWrite from "@/pages/post/PostWrite.vue";
 import PostDetail from "@/pages/post/PostDetail.vue";
+import MyPost from "@/pages/mypage/MyPost.vue"
 
 const router = createRouter({
   history: createWebHistory(),
@@ -30,6 +31,7 @@ const router = createRouter({
     { path: "/store/write", component: StoreWrite },
     { path: "/store/edit/:storeId", component: StoreWrite },
     { path: "/mypage", component: MyPage },
+    { path: "/mypage/post/:userId", component: MyPost},
     { path: "/infoEdit", component: InfoEdit },
     { path: "/login", component: Login },
     { path: "/signup", component: Signup },

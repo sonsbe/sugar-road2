@@ -80,5 +80,6 @@ const selectEmail = ref('');
   </script>
 
 <style scoped>
-@import "src/assets/mypage/index.css";
+
+@import "../../../src/assets/post.css";
 </style>
