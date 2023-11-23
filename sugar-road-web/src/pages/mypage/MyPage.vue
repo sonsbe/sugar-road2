@@ -25,12 +25,12 @@
                             <h5 id="menuText1">프로필 수정</h5>
                         </div>
                     </a>
-                    <a href="/mypage" style="text-decoration: none">
+                    <router-link :to="'/mypage/post/'+userId">
                         <div class="menuButton" id="button2">
                         <img src="src/assets/mypage/img/menuImg2.png" class="menuImg">
                             <h5 id="menuText2">내가 작성한 글</h5>
                         </div>
-                    </a>
+                    </router-link>
                     <a href="/mypage" style="text-decoration: none">
                         <div class="menuButton" id="button3">
                         <img src="src/assets/mypage/img/menuImg3.png" class="menuImg">
@@ -61,7 +61,7 @@ import router from "../../router";
 const selectImg = ref('');
 const selectNicname = ref('');
 const selectEmail = ref('');
-
+const userId = sessionStorage.getItem("user");
   onMounted( () => {
     if(sessionStorage.getItem("user") === undefined || sessionStorage.getItem("user") === null){
         console.log("if문 걸림", sessionStorage.getItem("user"));
