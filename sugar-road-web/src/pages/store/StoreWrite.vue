@@ -175,6 +175,7 @@ function createStore() {
       })
       .then((response) => {
         console.log(response);
+        router.push("/store");
       })
       .catch((err) => console.log(err));
   }
