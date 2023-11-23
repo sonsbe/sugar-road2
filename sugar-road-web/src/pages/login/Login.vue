@@ -3,7 +3,7 @@
     <div class="app-body">
     <div class = "content center">
         <img id="loginTitle" src="src/assets/users/img/Sugar-Road Logo.png">
-        <div id="loginBox">
+        <div id="loginBox" @keyup.enter="login">
             <form name="loginForm">
                 <h4 id="please">Please Login</h4>
                 <input id="loginText1" type="text" name="userId" @keyup.enter="submit()" v-model="state.form.id" placeholder="Id" autocomplete='off' required><br>
@@ -87,7 +87,7 @@ export default {
 </script>
 
 <style scoped>
-@import "src/assets/users/login.css";
+@import "@/assets/users/login.css";
 .not-overflow-y {
   height: 100%;
   overflow-y: hidden;

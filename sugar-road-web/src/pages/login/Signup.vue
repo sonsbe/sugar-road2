@@ -61,12 +61,12 @@ const router = useRouter();
         .then((response) => {
             console.log("put response", response);
             window.alert(response.data);
+            router.push('/')
         })
         .catch(response => {
             console.log("put error", response.response.data);
             window.alert(response.response.data);
         })
-    router.push('/')
   }
 </script>
 

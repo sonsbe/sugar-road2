@@ -1,12 +1,11 @@
 <template>
+  <div class="not-overflow-y">
   <div class="app-body">
     <div class="content">
         <a href="javascript:history.back();" id="backBtn">◀</a>
-        <br><br><br>
+        <br><br>
         <h4 id="title">프로필 변경</h4>
-        <br>
-            <br>
-        <br>
+        <br><br><br>
            <img :src="InfoImg" id="userImage">
 
             <label class="imgChange" for="input-image">
@@ -35,6 +34,7 @@
         <a @click="userDelete" style="text-decoration: none">회원탈퇴</a>
       </div>
     </div>
+  </div>
   </div>
 </template>
 
@@ -112,11 +112,18 @@ function userDelete() {
     .delete(`http://localhost:1023/mypage/${InfoId.value}`)
     .then((response) => {
       console.log("delete response", response);
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("user");
       window.alert(response.data);
+      router.push("/");
     });
 }
 </script>
 
 <style scoped>
 @import "@/assets/mypage/edit.css";
+.not-overflow-y {
+  height: 100%;
+  overflow-y: hidden;
+}
 </style>
