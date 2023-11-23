@@ -38,8 +38,6 @@
 
 }
 
-
-
 .middle{
 
     display: flex;
@@ -104,11 +102,6 @@
 
 #menuText4{
     margin-left: 7%;
-}
-
-
-.bottom{
-
 }
 
 #logOut{

@@ -49,12 +49,12 @@ public class UsersService {
 
     public boolean duplicationNick(Users users){ //닉네임 중복 확인
         Optional<Users> optionalUsers = usersRepository.findByNickname(users.getNickname());
-        return optionalUsers.isPresent();
+        return optionalUsers.isPresent() && !(optionalUsers.get().getId().equals(users.getId()));
     }
 
     public boolean duplicationEmail(Users users){ //이메일 중복 확인
         Optional<Users> optionalUsers = usersRepository.findByUserEmail(users.getUserEmail());
-        return optionalUsers.isPresent();
+        return optionalUsers.isPresent() && !(optionalUsers.get().getId().equals(users.getId()));
     }
 
     public Users readById(String id){ //Read

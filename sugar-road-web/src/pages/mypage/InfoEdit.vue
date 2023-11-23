@@ -1,12 +1,11 @@
 <template>
+  <div class="not-overflow-y">
   <div class="app-body">
     <div class="content">
         <a href="javascript:history.back();" id="backBtn">◀</a>
-        <br><br><br>
+        <br><br>
         <h4 id="title">프로필 변경</h4>
-        <br>
-            <br>
-        <br>
+        <br><br><br>
            <img :src="InfoImg" id="userImage">
 
             <label class="imgChange" for="input-image">
@@ -35,6 +34,7 @@
         <a @click="userDelete" style="text-decoration: none">회원탈퇴</a>
       </div>
     </div>
+  </div>
   </div>
 </template>
 
@@ -81,7 +81,12 @@ const router = useRouter();
     })} 
 
   function userInfoEdit(){
-    console.log("put request")
+    console.log("put request");
+    console.log("Password.value : " + Password.value);
+    if(Password.value === ''){
+      console.log("password null");
+      window.alert("패스워드를 입력하세요");
+    } else{
     axios.put(`http://localhost:1023/mypage/${InfoId.value}`, {
         id: InfoId.value,
         userPassword: Password.value,
@@ -93,17 +98,17 @@ const router = useRouter();
         headers: {
           "Content-Type": "application/json",
         },
-      }
-    )
+      })
     .then((response) => {
-      console.log("put response", response);
+      console.log("put response", response.data);
       window.alert(response.data);
+      router.push("/mypage");
     })
     .catch((response) => {
-      console.log("put error");
-      window.alert(response.data);
+      console.log("put error", response.response.data);
+      window.alert(response.response.data);
     });
-    router.push("/mypage");
+  }
 }
 
 function userDelete() {
@@ -112,11 +117,18 @@ function userDelete() {
     .delete(`http://localhost:1023/mypage/${InfoId.value}`)
     .then((response) => {
       console.log("delete response", response);
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("user");
       window.alert(response.data);
+      router.push("/");
     });
 }
 </script>
 
 <style scoped>
 @import "@/assets/mypage/edit.css";
+.not-overflow-y {
+  height: 100%;
+  overflow-y: hidden;
+}
 </style>
