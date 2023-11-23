@@ -10,7 +10,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <img :src="`${p.store.storeImagePath}? ${p.store.storeImagePath} : '/images/icons/bread.png'`" alt="">
+                        <img :src="p.store.storeImagePath?'http://localhost:1023' + p.store.storeImagePath:'http://localhost:1023/images/icons/bread.png'" alt="">
                     </td>
                 </tr>
                 <tr>

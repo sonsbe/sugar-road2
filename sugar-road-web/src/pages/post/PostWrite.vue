@@ -66,7 +66,7 @@
                     :value="image"
                     v-model="postRequest.postImage"
                   />
-                  <img :src="image" alt="img" width="50px" />
+                  <img :src="`http://localhost:1023${image}`" alt="img" width="50px"/>
                 </label>
               </div>
             </div>

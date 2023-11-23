@@ -2,6 +2,7 @@ package com.example.sugarroad2.controller;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
+import com.example.sugarroad2.config.auth.NowUserDetails;
 import com.example.sugarroad2.model.dto.request.RecommendationRequestDTO;
 import com.example.sugarroad2.model.dto.response.RecommendationResultResponseVO;
 import com.example.sugarroad2.model.entity.Recommendation;
@@ -15,6 +16,7 @@ import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,10 +40,11 @@ public class RecommendationController {
 	@GetMapping("/reference-type/{referenceType}/reference-id/{referenceId}")
 	public ResponseEntity<EntityModel<RecommendationResultResponseVO>> checkRecommendation(
 		@PathVariable("referenceType") String referenceType,
-		@PathVariable("referenceId") int referenceId) {
+		@PathVariable("referenceId") int referenceId,
+		@AuthenticationPrincipal NowUserDetails nowUserDetails) {
 		try {
 
-			String userId = "vv980113";
+			String userId = nowUserDetails.getUser().getId();
 
 			long count = recommendationService.countByReference(referenceType, referenceId);
 			Users users = usersService.readById(userId);
@@ -66,10 +69,11 @@ public class RecommendationController {
 	@PostMapping("/reference-type/{referenceType}/reference-id/{referenceId}")
 	public ResponseEntity<EntityModel<RecommendationResultResponseVO>> createRecommendation(
 		@PathVariable("referenceType") String referenceType,
-		@PathVariable("referenceId") int referenceId) {
+		@PathVariable("referenceId") int referenceId,
+		@AuthenticationPrincipal NowUserDetails nowUserDetails) {
 		try {
 
-			String userId = "vv980113";
+			String userId = nowUserDetails.getUser().getId();
 
 			Users users = usersService.readById(userId);
 			RecommendationRequestDTO recommendationRequestDTO =
@@ -101,10 +105,11 @@ public class RecommendationController {
 	@DeleteMapping("/reference-type/{referenceType}/reference-id/{referenceId}")
 	public ResponseEntity<EntityModel<RecommendationResultResponseVO>> deleteRecommendation(
 		@PathVariable("referenceType") String referenceType,
-		@PathVariable("referenceId") int referenceId) {
+		@PathVariable("referenceId") int referenceId,
+		@AuthenticationPrincipal NowUserDetails nowUserDetails) {
 
 		try {
-			String userId = "vv980113";
+			String userId = nowUserDetails.getUser().getId();
 			Users users = usersService.readById(userId);
 			recommendationService.deleteByReference(referenceType, referenceId, users);
 

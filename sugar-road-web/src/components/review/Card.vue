@@ -1,7 +1,7 @@
 <template>
-    <div class = "v-item pink1 left">
+    <div class = "v-item pink1 left" style="width:100%">
         <router-link :to="'/review/' + data.id">
-            <table class = "v-table">
+            <table class = "v-table" style="width:90%">
                 <tr>
                     <td><h5>🍰 {{data.nickname}}</h5></td>
                     <td class = "v-table-quater right t6 bold">

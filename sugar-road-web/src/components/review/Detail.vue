@@ -1,7 +1,7 @@
 <template>
     <div class="store-like-back">
         <RouterLink :to="'/store/' + data.storeId">
-            <button id="backBtn">◀</button>
+            <button id="backBtn" style="background-color: transparent; border: none;">◀</button>
         </RouterLink>
     </div>
     <table class="v-table pink1 left">

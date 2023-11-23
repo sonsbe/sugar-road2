@@ -12,10 +12,14 @@
                                 <td class="v-table-third" rowspan="2">
                                   <img :src="`http://localhost:1023${post.postImage.length>0 ? post.postImage[0] : '/images/93c339e1-eb4d-4d39-b773-bd50913b7dc1thymeleaf-logo-6E4D42A713-seeklogo.com.png'}`" alt="img">
                                 </td>
-                                <td class="bold" v-text="post.title"></td>
-                            </tr>
-                            <tr>
-                                <td v-text="post.content"></td>
+                                <td style="vertical-align: top;">
+                                    <div class="bold t4">
+                                        {{ post.title }}
+                                    </div>
+                                    <div>
+                                        {{ post.content }}
+                                    </div>
+                                </td>
                             </tr>
                           </div>
                         <div v-else>
@@ -48,5 +52,10 @@ onMounted(() => {
 });
 </script>
 <style scoped>
-@import "../../../src/assets/post.css";
+@import "@/assets/post.css";
+td > img{
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+}
 </style>

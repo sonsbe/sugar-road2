@@ -57,17 +57,16 @@
       }"
     ></StoreMenuCard>
   </div>
-  <br />
   <!-- <div><b>Store Location</b></div> -->
-  <!-- <div id="map" style="width: 100%; height: 200px">
-    <KakaoMap
-      :address="storeInfo.address"
-      v-if="storeInfo.address != undefined"
-    ></KakaoMap>
-  </div> -->
-  <RouterLink :to="'/review/write/store/' + storeId">
-    <button class="buttons">리뷰 작성</button>
-  </RouterLink>
+  <KakaoMap
+    :address="storeInfo.address"
+    v-if="storeInfo.address != undefined"
+  ></KakaoMap>
+  <div class = "right">
+    <RouterLink :to="'/review/write/store/' + storeId">
+      <button class="buttons bold" style="width:30%; padding : 2% 5% 2% 5%; margin : 4% 0 4% 0; background-color: var(--pink2); border-radius: 10px; color : black">리뷰 작성</button>
+    </RouterLink>
+  </div>
   <Cards
     :reviewPageURL="'http://localhost:1023/review/of/store/' + storeId"
   ></Cards>

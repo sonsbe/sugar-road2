@@ -3,9 +3,11 @@ package com.example.sugarroad2.util;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import com.example.sugarroad2.config.auth.NowUserDetails;
 import com.example.sugarroad2.controller.*;
 import com.example.sugarroad2.model.dto.request.RecommendationRequestDTO;
 import com.example.sugarroad2.model.dto.response.*;
+import com.example.sugarroad2.model.entity.Users;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PagedResourcesAssembler;
@@ -29,13 +31,13 @@ public class HATEOASUtil {
             .add(
                 linkTo(
                     methodOn(RecommendationController.class)
-                        .checkRecommendation("R", reviewResponseVO.getId())
+                        .checkRecommendation("R", reviewResponseVO.getId(), new NowUserDetails(new Users()))
                 ).withRel("recommendation")
             )
             .add(
                 linkTo(
                     methodOn(RecommendationController.class)
-                        .createRecommendation("R", reviewResponseVO.getId())
+                        .createRecommendation("R", reviewResponseVO.getId(), new NowUserDetails(new Users()))
                 ).withRel("createRecommendation")
             )
             .add(
@@ -43,7 +45,8 @@ public class HATEOASUtil {
                     methodOn(RecommendationController.class)
                         .deleteRecommendation(
                             "R",
-                            reviewResponseVO.getId()
+                            reviewResponseVO.getId(),
+                            new NowUserDetails(new Users())
                         )
                 ).withRel("deleteRecommendation")
             )
@@ -88,7 +91,8 @@ public class HATEOASUtil {
                     methodOn(RecommendationController.class)
                         .checkRecommendation(
                             recommendationResultResponseVO.getReferenceType(),
-                            recommendationResultResponseVO.getReferenceId()
+                            recommendationResultResponseVO.getReferenceId(),
+                            new NowUserDetails(new Users())
                         )
                 ).withSelfRel()
             );
@@ -126,13 +130,13 @@ public class HATEOASUtil {
             .add(
                 linkTo(
                     methodOn(RecommendationController.class)
-                        .checkRecommendation("C", postCommentResponseVO.getId())
+                        .checkRecommendation("C", postCommentResponseVO.getId(), new NowUserDetails(new Users()))
                 ).withRel("recommendation")
             )
             .add(
                 linkTo(
                     methodOn(RecommendationController.class)
-                        .createRecommendation("C", postCommentResponseVO.getId())
+                        .createRecommendation("C", postCommentResponseVO.getId(), new NowUserDetails(new Users()))
                 ).withRel("createRecommendation")
             )
             .add(
@@ -140,7 +144,8 @@ public class HATEOASUtil {
                     methodOn(RecommendationController.class)
                         .deleteRecommendation(
                             "R",
-                            postCommentResponseVO.getId()
+                            postCommentResponseVO.getId(),
+                            new NowUserDetails(new Users())
                         )
                 ).withRel("deleteRecommendation")
             );
@@ -188,13 +193,13 @@ public class HATEOASUtil {
             .add(
                 linkTo(
                     methodOn(RecommendationController.class)
-                        .checkRecommendation("M", content.getId())
+                        .checkRecommendation("M", content.getId(), new NowUserDetails(new Users()))
                 ).withRel("recommendation")
             )
             .add(
                 linkTo(
                     methodOn(RecommendationController.class)
-                        .createRecommendation("M", content.getId())
+                        .createRecommendation("M", content.getId(), new NowUserDetails(new Users()))
                 ).withRel("createRecommendation")
             )
             .add(
@@ -202,7 +207,8 @@ public class HATEOASUtil {
                     methodOn(RecommendationController.class)
                         .deleteRecommendation(
                             "R",
-                            content.getId()
+                            content.getId(),
+                            new NowUserDetails(new Users())
                         )
                 ).withRel("deleteRecommendation")
             );
@@ -246,13 +252,13 @@ public class HATEOASUtil {
             .add(
                 linkTo(
                     methodOn(RecommendationController.class)
-                        .checkRecommendation("P", content.getId())
+                        .checkRecommendation("P", content.getId(), new NowUserDetails(new Users()))
                 ).withRel("recommendation")
             )
             .add(
                 linkTo(
                     methodOn(RecommendationController.class)
-                        .createRecommendation("P", content.getId())
+                        .createRecommendation("P", content.getId(), new NowUserDetails(new Users()))
                 ).withRel("createRecommendation")
             )
             .add(
@@ -260,7 +266,8 @@ public class HATEOASUtil {
                     methodOn(RecommendationController.class)
                         .deleteRecommendation(
                             "P",
-                            content.getId()
+                            content.getId(),
+                            new NowUserDetails(new Users())
                         )
                 ).withRel("deleteRecommendation")
             );
@@ -303,13 +310,13 @@ public class HATEOASUtil {
             .add(
                 linkTo(
                     methodOn(RecommendationController.class)
-                        .checkRecommendation("S", content.getStoreId())
+                        .checkRecommendation("S", content.getStoreId(), new NowUserDetails(new Users()))
                 ).withRel("recommendation")
             )
             .add(
                 linkTo(
                     methodOn(RecommendationController.class)
-                        .createRecommendation("S", content.getStoreId())
+                        .createRecommendation("S", content.getStoreId(), new NowUserDetails(new Users()))
                 ).withRel("createRecommendation")
             )
             .add(
@@ -317,7 +324,8 @@ public class HATEOASUtil {
                     methodOn(RecommendationController.class)
                         .deleteRecommendation(
                             "S",
-                            content.getStoreId()
+                            content.getStoreId(),
+                            new NowUserDetails(new Users())
                         )
                 ).withRel("deleteRecommendation")
             );
