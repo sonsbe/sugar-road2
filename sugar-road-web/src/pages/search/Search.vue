@@ -1,7 +1,7 @@
 <template>
 <div class="search-container">
 <div class="app-body">
-    <div class="header center"><img src="/images/icons/sugarroad.png"></div>
+    <div class="header center"><img src="src/assets/users/img/Sugar-Road Logo.png"></div>
     <div class="content">
         <div class="search-bar">
         <form @submit.prevent="search">

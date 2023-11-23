@@ -1,7 +1,7 @@
 <template>
     <div>
-        <input type="text" class = "v-item commentInput t5" style = "width : 88%" id = "commentInput" v-model="commentRequest.body.content" maxlength="100">
-        <button class = "t6 pink2 no-border" id = "commentBtn" @click = "createComment()">send</button>
+        <input type="text" class = "v-item commentInput t5" style = "width : 88%" id = "commentInput" v-model="commentRequest.body.content" maxlength="100" :disabled="userId===null">
+        <button class = "t6 pink2 no-border" id = "commentBtn" @click = "createComment()" :disabled="userId===null">send</button>
         <CommentCard 
             v-for="(comment, index) in commentPage" 
             :data = "comment" 
@@ -31,6 +31,7 @@
         },
         _index : null
     });
+    const userId = sessionStorage.getItem("user");
 
     async function nextPage(url){
         let response = await apiService.get(url).catch(error => console.log(error));

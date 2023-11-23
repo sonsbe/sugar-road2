@@ -24,13 +24,13 @@
                 </Suspense>
             </td>
             <td class = "t6">
-                <a v-if="data.parentComment==undefined" onclick = 'setParent("+ comment[this.referenceType + "CommentId"] +");' class = 't-lightgray'>답글</a>
+                <a v-if="data.parentComment==undefined&&userId!=null" onclick = 'setParent("+ comment[this.referenceType + "CommentId"] +");' class = 't-lightgray'>답글</a>
             </td>
             <td class = "t6">
-                <a @click="editComment(data._links.self.href)" class = 't-lightgray'>수정</a>
+                <a v-if="data.userId === userId" @click="editComment(data._links.self.href)" class = 't-lightgray'>수정</a>
             </td>
             <td class = "t6">
-                <a @click="deleteComment(data._links.self.href)" class = 't-lightgray'>삭제</a>
+                <a v-if="data.userId === userId" @click="deleteComment(data._links.self.href)" class = 't-lightgray'>삭제</a>
             </td>
         </tr>
     </table>
@@ -44,7 +44,7 @@
         data : Object
     });
     const emit = defineEmits(["edit-comment", "delete-comment"]);
-
+    const userId = sessionStorage.getItem("user");
     function editComment(url){
         emit("edit-comment", url);
     }

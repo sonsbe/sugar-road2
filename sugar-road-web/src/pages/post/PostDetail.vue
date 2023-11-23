@@ -5,10 +5,8 @@
             <div class="post-header">
                 <a href="/post">◀</a>
                 <h4>자유 게시판</h4>
-    
             </div>
             <hr class="hr-blue">
-            <th:block v-if="post">
                 <div class="post-detail" style="min-height: 400px">
                 <h3 v-text="post.title"></h3>
                     <p class="right" v-text="post.postedDate"></p>
@@ -22,18 +20,19 @@
     <!--                <p>댓글 영역</p>-->
     <!--            </div>-->
                 <button is = "custom-recommendation" class = "no-border" data-referenceType="P" th:data-referenceId=${dto.postId}></button>
-            </th:block>
-            <div class="post-button" th:if="${session.nowLogin}==${dto.userId}">
+            <div class="post-button" v-if="isLogin===post.userId">
                 <button @click="deletePost">삭제</button>
                 <button @click="router.push('/post/edit/'+postId)">수정</button>
             </div>
             <link rel="stylesheet" href="/css/comment.css">
             <div is = "custom-comment" data-referenceType="post" th:data-referenceId="${dto.postId}" th:data-loginId="${session.nowLogin}" id = "comment-area"></div>
-            <input type="text" class = "v-item commentInput t5" id = "commentInput" th:disabled="${session.nowLogin == null}?'disabled'" maxlength="100">
-            <button class = "t6 pink2 no-border" id = "commentBtn" onclick = "writeComment()" th:disabled="${session.nowLogin == null}?'disabled'">send</button>
+            <CommentCards
+              :commentPageURL = "'http://localhost:1023/post-comment/of/post/' + postId"
+              commentType = "post"
+              :referenceId = "postId"
+            />
         </div>
     
-    <footer th:insert="ui/footer :: footer"></footer>
     </div>
     </body>
   </template>
@@ -41,10 +40,14 @@
     import { useRoute, useRouter } from "vue-router";
     import { onMounted, ref  } from 'vue';
     import { api } from '@/common'
+    import CommentCards from '@/components/comment/CommentCards.vue';
+
     const currentRoute = useRoute();
     const router = useRouter();
     const postId = currentRoute.params.postId;
     const post = ref({});
+    const isLogin = ref("");
+    isLogin.value = sessionStorage.getItem("user");
     function deletePost(){
       api("http://localhost:1023/posts/"+postId, "DELETE", {})
       .then(response => {

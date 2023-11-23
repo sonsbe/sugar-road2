@@ -1,5 +1,6 @@
 package com.example.sugarroad2.controller;
 
+import com.example.sugarroad2.config.auth.NowUserDetails;
 import com.example.sugarroad2.model.dto.request.PostCommentRequestDTO;
 import com.example.sugarroad2.model.dto.response.PostCommentResponseVO;
 import com.example.sugarroad2.model.entity.Post;
@@ -20,6 +21,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,9 +53,10 @@ public class PostCommentController {
 
 	@PostMapping
 	public ResponseEntity<EntityModel<PostCommentResponseVO>> createPostComment(
-		@RequestBody PostCommentRequestDTO postCommentRequestDTO) {
+		@RequestBody PostCommentRequestDTO postCommentRequestDTO,
+		@AuthenticationPrincipal NowUserDetails nowUserDetails) {
 
-		Users users = usersService.readById(postCommentRequestDTO.getUserId());
+		Users users = usersService.readById(nowUserDetails.getUser().getId());
 		Post post = postService.readById(postCommentRequestDTO.getPostId());
 		PostComment postComment;
 
@@ -100,10 +103,11 @@ public class PostCommentController {
 	@PutMapping("/{id}")
 	public ResponseEntity<EntityModel<PostCommentResponseVO>> updatePostComment(
 		@PathVariable("id") int id,
-		@RequestBody PostCommentRequestDTO postCommentRequestDTO) {
+		@RequestBody PostCommentRequestDTO postCommentRequestDTO,
+		@AuthenticationPrincipal NowUserDetails nowUserDetails) {
 
 		postCommentRequestDTO.setId(id);
-		Users users = usersService.readById(postCommentRequestDTO.getUserId());
+		Users users = usersService.readById(nowUserDetails.getUser().getId());
 		Post post = postService.readById(postCommentRequestDTO.getPostId());
 		PostComment postComment;
 

@@ -5,9 +5,9 @@
         <div class="content">
           <h3>Open Forum</h3>
           <div class="category">
-            <button @click="filtCategory('01')">🍩빵리뷰</button>
-            <button @click="filtCategory('02')">🚲일상</button>
-            <button @click="filtCategory('03')">📝정보</button>
+            <button :class="{ clicked : isClicked[0] }" @click="[filtCategory('01'), clickButton(0)]">🍩빵리뷰</button>
+            <button :class="{ clicked : isClicked[1] }" @click="[filtCategory('02'), , clickButton(1)]">🚲일상</button>
+            <button :class="{ clicked : isClicked[2] }" @click="[filtCategory('03'), clickButton(2)]">📝정보</button>
           </div>
           <div class="search">
             <form @submit.prevent="search">
@@ -45,13 +45,17 @@
     
   </div> -->
 
-          <a href="/post/write">
+          <a 
+          v-if="isLogin"
+          href="/post/write">
             <div
+           
               class="post-button-index bold h5"
             >
               글 작성
             </div>
           </a>
+
         </div>
       </div>
     </div>
@@ -62,21 +66,30 @@
 import { onMounted, ref } from "vue";
 import { api } from "@/common";
 import PostCard from "../../components/post/PostCard.vue";
-
 const postList = ref([]);
 const query = ref("");
 const col = ref("");
 const category = ref("");
+const isLogin = ref();
+const isClicked = ref([false, false ,false]);
 
+isLogin.value = sessionStorage.getItem("user");
+
+console.log(sessionStorage.getItem("user"));
+console.log("session", isLogin.value!==null);
 function search() {
   console.log(query.value);
   api("http://localhost:1023/posts?query=" + query.value, "GET", {}).then(
     (response) => {
-      console.log("response", response);
       postList.value = response;
-      console.log(postList);
     }
   );
+}
+
+function clickButton(index){
+  isClicked.value = [false, false, false];
+  isClicked.value[index] = !isClicked.value[index];
+  console.log("isClicked", isClicked);
 }
 
 function filtCategory(id) {
@@ -100,21 +113,26 @@ function sort() {
   else uri = "http://localhost:1023/posts?col=" + col.value;
   console.log("col", col.value, "uri", uri);
   api(uri, "GET", {}).then((response) => {
-    console.log("response", response);
     postList.value = response;
-    console.log(postList);
   });
 }
 
 onMounted(() => {
   api("http://localhost:1023/posts", "GET", {}).then((response) => {
-    console.log(response);
     postList.value = response;
-    console.log(postList);
   });
 });
 </script>
 
 <style lang="scss">
-@import "../../../src/assets/post.css";
+@import "@/assets/post.css";
+.clicked{
+        border: 1px solid rgb(228, 228, 228);
+        border-radius: 5px;
+        padding: 1.5vh 4vh 1.5vh 3vh;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        margin: 5px;
+        background-color: skyblue;
+        cursor: pointer;
+}
 </style>
