@@ -1,4 +1,5 @@
 <template>
+    <div class="not-overflow-y">
     <div class="app-body">
         <div class = "content">
             <div class="top">
@@ -44,15 +45,12 @@
                     </a>
                 </div>
             </div>
-
-        </div>
-        <div class="bottom">
             <div id="logOut">
                 <a @click="logout()" style="text-decoration: none">로그아웃</a>
             </div>
         </div>
     </div>
-</div>
+    </div>
 </template>
 
 <script setup>
@@ -93,9 +91,14 @@ const selectEmail = ref('');
           sessionStorage.removeItem("token");
           sessionStorage.removeItem("user");
           window.alert("로그아웃 수행");
+          router.push("/login");
     }
   </script>
 
 <style scoped>
-@import "../../../src/assets/mypage/index.css";
+@import "@/assets/mypage/index.css";
+.not-overflow-y {
+  height: 100%;
+  overflow-y: hidden;
+}
 </style>
