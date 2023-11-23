@@ -2,7 +2,9 @@
   <div class="container">
     <div class="store-like-back">
       <a href="/store">◀</a>
-      <span>💖</span>
+      <Suspense>
+        <Recommendation v-if="data!=undefined" :data = "data"></Recommendation>
+      </Suspense>
     </div>
     <h3>
       <div>{{ storeInfo.storeName }}</div>
@@ -56,7 +58,7 @@
     ></StoreMenuCard>
   </div>
   <br />
-  <div><b>Store Location</b></div>
+  <!-- <div><b>Store Location</b></div> -->
   <!-- <div id="map" style="width: 100%; height: 200px">
     <KakaoMap
       :address="storeInfo.address"
@@ -78,13 +80,27 @@ import { onMounted, reactive, ref } from "vue";
 import StoreMenuCard from "@/components/store/StoreMEnuCard.vue";
 import Cards from "@/components/review/Cards.vue";
 import KakaoMap from "@/components/util/KakaoMap.vue";
+import Recommendation from '@/components/recommendation/Recommendation.vue';
 
 const currentRoute = useRoute();
 const router = useRouter();
+
 let storeId = currentRoute.params.storeId;
 let storeInfo = ref({});
 let menuList = ref();
 let userId = sessionStorage.getItem("user");
+const data = {
+  recommendation : {
+    href: `http://localhost:1023/recommendation/reference-type/S/reference-id/${storeId}`
+  },
+  createRecommendation : {
+    href: `http://localhost:1023/recommendation/reference-type/S/reference-id/${storeId}`
+  },
+  deleteRecommendation : {
+    href: `http://localhost:1023/recommendation/reference-type/S/reference-id/${storeId}`
+  }
+};
+
 console.log("user", userId);
 onMounted(async () => {
   await getStoreInfo();

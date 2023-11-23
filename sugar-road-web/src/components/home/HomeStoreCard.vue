@@ -10,8 +10,8 @@
       :src="`http://localhost:1023${p.object.storeImagePath}`"
       class="storeImg"
       alt="가게 대표 이미지"
+      style="object-fit:cover;"
     />
-    <div v-text="p.object.storeName" class="store-name"></div>
   </RouterLink>
 </template>
 <script setup>
