@@ -5,12 +5,12 @@
         <hr>
         <div class="post-list" th:if="${postList}">
             <div v-for="(post, index) in postList " class="thumbnail">
-              <router-link :to="'/post/'+p.post.id" :id="p.post.id">
+              <router-link :to="'/post/'+post.id" :id="post.id">
                     <table class="v-table">
                         <div v-if="post.postImage.length > 0">
                             <tr>
                                 <td class="v-table-third" rowspan="2">
-                                  <img :src="`http://localhost:1023${post.postImage.length>0 ? p.post.postImage[0] : '/images/93c339e1-eb4d-4d39-b773-bd50913b7dc1thymeleaf-logo-6E4D42A713-seeklogo.com.png'}`" alt="img">
+                                  <img :src="`http://localhost:1023${post.postImage.length>0 ? post.postImage[0] : '/images/93c339e1-eb4d-4d39-b773-bd50913b7dc1thymeleaf-logo-6E4D42A713-seeklogo.com.png'}`" alt="img">
                                 </td>
                                 <td class="bold" v-text="post.title"></td>
                             </tr>
@@ -41,7 +41,8 @@ import { api } from "@/common";
 const postList = ref([]);
 const userId = sessionStorage.getItem("user");
 onMounted(() => {
-  api("http://localhost:1023/posts"+userId, "GET", {}).then((response) => {
+  api("http://localhost:1023/posts/user/"+userId, "GET", {}).then((response) => {
+    console.log("MyPost", response);
     postList.value = response;
   });
 });
