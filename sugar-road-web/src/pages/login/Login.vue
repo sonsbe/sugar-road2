@@ -62,6 +62,9 @@ export default {
 
           //토큰 값 가져와야하면
           //sessionStorage.getItem('token')
+        }).catch( () => {
+          console.log("로그인 실패");
+          window.alert('로그인 실패했습니다');
         });
     }
 
