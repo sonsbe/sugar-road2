@@ -1,5 +1,6 @@
 <template>
-<div class="app-body">
+    <div class="not-overflow-y">
+    <div class="app-body">
     <div class = "content center">
         <div class="top">
             <img id="loginTitle" src="src/assets/users/img/Sugar-Road Logo.png">
@@ -27,6 +28,7 @@
                 </form>
             </div>
     </div>
+</div>
 </div>
 </template>
 
@@ -72,4 +74,8 @@ const router = useRouter();
 
 <style scoped>
 @import "@/assets/users/signup.css";
+.not-overflow-y {
+  height: 100%;
+  overflow-y: hidden;
+}
 </style>
