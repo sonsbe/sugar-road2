@@ -25,7 +25,7 @@ body {
 
 #loginBox{
            position: relative;
-           top: 30%;
+           top: 25%;
            left: 10%;
            width: 80%;
            height: 50%;
@@ -68,6 +68,10 @@ position: relative;
         font-size: smaller;
 }
 
+#loginText1::placeholder {
+    color: #3c3c3c;
+  }
+
 #loginText2{
     position: relative;
         left: 3%;
@@ -81,6 +85,10 @@ position: relative;
         background: rgba(255, 255, 255, 0.0);
         font-size: smaller;
 }
+
+#loginText2::placeholder {
+    color: #3c3c3c;
+  }
 
 #signIn{
     position: relative;
