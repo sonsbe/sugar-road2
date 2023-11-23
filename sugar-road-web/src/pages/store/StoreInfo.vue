@@ -57,12 +57,12 @@
   </div>
   <br />
   <div><b>Store Location</b></div>
-  <div id="map" style="width: 100%; height: 200px">
+  <!-- <div id="map" style="width: 100%; height: 200px">
     <KakaoMap
       :address="storeInfo.address"
       v-if="storeInfo.address != undefined"
     ></KakaoMap>
-  </div>
+  </div> -->
   <RouterLink :to="'/review/write/store/' + storeId">
     <button class="buttons">리뷰 작성</button>
   </RouterLink>

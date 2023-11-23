@@ -1,6 +1,6 @@
 <template>
   <div class="title">
-    <img src="http://localhost:1023/images/logonoback.png" class="main-title" />
+    <img src="src/assets/users/img/Sugar-Road Logo.png" class="main-title" />
   </div>
 
   <span><b>최근 등록한 가게🥐</b></span
@@ -8,15 +8,15 @@
   <Swiper
     v-if="resultList.storeList"
     :modules="modules"
-    :slides-per-view=2.3
+    :slides-per-view="1.9"
     :space-between="10"
-    :centered-slides=true
+    :centered-slides="true"
     :autoplay="{
       delay: 2500,
       disableOnInteraction: false,
     }"
-    :loop=true
-    :loop-additional-slides=1
+    :loop="true"
+    :loop-additional-slides="1"
     @swiper="onSwiper"
     @slideChange="onSlideChange"
   >
@@ -24,7 +24,7 @@
       <HomeStoreCard :object="store" :key="index"></HomeStoreCard>
     </SwiperSlide>
   </Swiper>
-  
+
   <br />
 
   <div class="text-box">
@@ -39,15 +39,15 @@
   <Swiper
     v-if="resultList.postList"
     :modules="modules"
-    :slides-per-view=2.3
+    :slides-per-view="1.9"
     :space-between="10"
-    :centered-slides=true
+    :centered-slides="true"
     :autoplay="{
       delay: 2500,
       disableOnInteraction: false,
     }"
-    :loop=true
-    :loop-additional-slides=1
+    :loop="true"
+    :loop-additional-slides="1"
     @swiper="onSwiper"
     @slideChange="onSlideChange"
   >
@@ -75,7 +75,7 @@ const onSwiper = (swiper) => {
   console.log("onSwiper", swiper);
 };
 const onSlideChange = () => {
-  console.log("slide change");
+  // console.log("slide change");
 };
 onMounted(() => {
   api("http://localhost:1023/home", "GET", {}).then((response) => {
@@ -84,9 +84,9 @@ onMounted(() => {
   });
   const swiperInstance = onSwiper.value;
   console.log("온", swiperInstance);
-    if (swiperInstance) {
-      swiperInstance.autoplay.start();
-    }
+  if (swiperInstance) {
+    swiperInstance.autoplay.start();
+  }
 });
 </script>
 
@@ -112,7 +112,7 @@ span > b {
   text-align: center;
 }
 .text-box > h4 {
-  padding: 3vh 10px 5px;
+  padding: 2vh 10px 5px;
   color: #ffffff;
 }
 .swiper {
@@ -135,7 +135,7 @@ span > b {
 }
 .store-like {
   font-size: 12px;
-  text-align: right;
+  text-align: left;
 }
 #text-second-box {
   background-color: #c3dcf1;

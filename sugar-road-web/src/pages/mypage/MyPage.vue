@@ -44,41 +44,58 @@
                     </a>
                 </div>
             </div>
-            <div class="bottom">
-                <div id="logOut">
-                    <a href="/logout" style="text-decoration: none">로그아웃</a>
-                </div>
+
+        </div>
+        <div class="bottom">
+            <div id="logOut">
+                <a @click="logout()" style="text-decoration: none">로그아웃</a>
             </div>
         </div>
     </div>
-    </template>
-    
-    <script setup>
-    import { onMounted, ref } from "vue";
-    import axios from "axios";
-    
-    const selectImg = ref('');
-    const selectNicname = ref('');
-    const selectEmail = ref('');
-    
-      onMounted( () => {
-        axios.get("http://localhost:1023/mypage/id")
-              .then(response => {
-                  console.log(response);
-                  return response.data;
-              })
-              .then(user => {
-                  console.log(user);
-                  selectImg.value = `${user.userImagePath}`;
-                  //selectImg.value = "src/assets/mypage/img/profileEx.png";
-                  selectNicname.value = `${user.nickname}`;
-                  selectEmail.value = `${user.userEmail}`;
-                })
-                .catch(err => console.error(err));
-      })
-          
-      </script>
-    
-    <style scoped>
-    @import "../../../src/assets/mypage/index.css";
-    </style>
+</div>
+</template>
+
+<script setup>
+import { onMounted, ref } from "vue";
+import axios from "axios";
+import router from "../../router";
+
+const selectImg = ref('');
+const selectNicname = ref('');
+const selectEmail = ref('');
+
+  onMounted( () => {
+    if(sessionStorage.getItem("user") === undefined || sessionStorage.getItem("user") === null){
+        console.log("if문 걸림", sessionStorage.getItem("user"));
+        router.push("/login")
+    } else {
+        console.log("로그인 아이디", sessionStorage.getItem("user"));
+    }
+    const headerId = sessionStorage.getItem('user');
+    axios.get(`http://localhost:1023/mypage/${headerId}`)
+          .then(response => {
+              console.log(response);
+              return response.data;
+          })
+          .then(user => {
+              console.log(user);
+              selectImg.value = `${user.userImagePath ? user.userImagePath : 
+                "src/assets/mypage/img/male_user.png"}`;
+            //   selectImg.value = "src/assets/mypage/img/profileEx.png";
+              selectNicname.value = `${user.nickname}`;
+              selectEmail.value = `${user.userEmail}`;
+      
+            })
+            .catch(err => console.error(err));
+  })
+      
+  const logout = () => {  
+          sessionStorage.removeItem("token");
+          sessionStorage.removeItem("user");
+          window.alert("로그아웃 수행");
+    }
+  </script>
+
+<style scoped>
+@import "../../../src/assets/mypage/index.css";
+</style>

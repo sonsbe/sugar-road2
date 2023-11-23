@@ -1,5 +1,6 @@
 package com.example.sugarroad2.controller;
 
+import com.example.sugarroad2.config.auth.NowUserDetails;
 import com.example.sugarroad2.model.dto.request.ReviewRequestDTO;
 import com.example.sugarroad2.model.dto.response.ReviewResponseVO;
 import com.example.sugarroad2.model.entity.Review;
@@ -22,6 +23,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -90,9 +92,10 @@ public class ReviewController {
 
 	@PostMapping
 	public ResponseEntity<EntityModel<ReviewResponseVO>> createReview(
-		@RequestBody ReviewRequestDTO reviewRequestDTO) {
+		@RequestBody ReviewRequestDTO reviewRequestDTO,
+		@AuthenticationPrincipal NowUserDetails nowUserDetails) {
 		try {
-			Users users = usersService.readById("vv980113");
+			Users users = usersService.readById(nowUserDetails.getUser().getId());
 			Store store = storeService.readBy(reviewRequestDTO.getStoreId());
 //			String reviewImagePath = imageUtil.writeImage(reviewRequestDTO.getUploadImage());
 			String reviewImagePath = "";
@@ -115,9 +118,10 @@ public class ReviewController {
 	@PutMapping("/{id}")
 	public ResponseEntity<EntityModel<ReviewResponseVO>> updateReview(
 		@RequestBody ReviewRequestDTO reviewRequestDTO,
-		@PathVariable("id") int id) {
+		@PathVariable("id") int id,
+		@AuthenticationPrincipal NowUserDetails nowUserDetails) {
 		try {
-			Users users = usersService.readById("vv980113");
+			Users users = usersService.readById(nowUserDetails.getUser().getId());
 			Store store = storeService.readBy(reviewRequestDTO.getStoreId());
 //			String reviewImagePath = imageUtil.writeImage(reviewRequestDTO.getUploadImage());
 			String reviewImagePath = "";

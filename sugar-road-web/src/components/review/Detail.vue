@@ -27,10 +27,10 @@
                 </Suspense>
             </td>
             <td class = "t5 t-lightgray right">
-                <router-link :to="'/review/edit/' + data.id">수정</router-link>
+                <router-link :to="'/review/edit/' + data.id" v-if="data.userId === userId">수정</router-link>
             </td>
             <td class = "t5 center t-lightgray">
-                <router-link @click = "deleteReview(data._links.self.href)" :to="'/store/' + data.storeId">삭제</router-link>
+                <router-link @click = "deleteReview(data._links.self.href)" :to="'/store/' + data.storeId" v-if="data.userId === userId">삭제</router-link>
             </td>
         </tr>
         <tr>
@@ -48,7 +48,7 @@
     const props = defineProps( {
         data : Object
     });
-
+    const userId = sessionStorage.getItem("user");
     function deleteReview(url){
         apiService.delete(url);
     }

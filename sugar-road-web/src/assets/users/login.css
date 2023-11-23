@@ -19,7 +19,7 @@ body {
 
 .app-body{
     background-repeat: no-repeat;
-    background-image: url(../mypage/img/backGround.jpg);
+    background-image: url(src/assets/users/img/backGround.jpg);
     background-size: cover;
 }
 
@@ -80,16 +80,6 @@ position: relative;
         border-bottom: 1px solid #ADDFFB;
         background: rgba(255, 255, 255, 0.0);
         font-size: smaller;
-}
-
-#iframed{
-        position: relative;
-        top: 40px;
-        left: 12%;
-        width: 100%;
-        height: 50px;
-        border: none;
-        color: crimson;
 }
 
 #signIn{

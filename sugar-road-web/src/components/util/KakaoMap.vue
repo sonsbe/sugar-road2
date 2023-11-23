@@ -11,11 +11,13 @@
     function loadScript(){
         const script = document.createElement("script");
         script.setAttribute("autoload", false);
+        script.setAttribute("type", 'text/javascript');
         script.src="http://dapi.kakao.com/v2/maps/sdk.js?appkey=e9f0b153df219037e9402a0154f2ca62&libraries=services";
         script.onload = () => window.kakao.maps.load(loadMap());
         document.head.appendChild(script);
     }
     function loadMap(){
+        console.log("loadMap 호출");
         var container = document.getElementById('map');
         var options = {
             center: new window.kakao.maps.LatLng(33.450701, 126.570667),
@@ -45,7 +47,7 @@
     }
     onMounted(
         () => {
-            if (window.kakao && window.kakao.maps) {
+            if (window.kakao && window.kakao.maps && window.kakao.maps.LatLng) {
                 loadMap();
             }  
             else {

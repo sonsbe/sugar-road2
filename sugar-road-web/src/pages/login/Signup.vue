@@ -1,6 +1,6 @@
 <template>
 <div class="app-body">
-    <div class = "content">
+    <div class = "content center">
         <div class="top">
             <img id="loginTitle" src="src/assets/users/img/Sugar-Road Logo.png">
         </div>
@@ -22,9 +22,9 @@
                     v-model="InNickname" placeholder="User NickName" required><br>
                     <input class="inputText" type="text" name="userEmail" v-model="InEmail" placeholder="User Email" required><br>
                     <input type="file" name="image" style="display:none" id="input-image" onchange="changeProfile(this)"><br>
+                    <button id="submitForm" @click="userSignup">Sign Up</button>
                     </div>
                 </form>
-                <button id="submitForm" @click="userSignup">Sign Up</button>
             </div>
     </div>
 </div>
@@ -33,6 +33,7 @@
 <script setup>
 import { ref } from "vue";
 import axios from "axios";
+import { useRoute, useRouter } from "vue-router";
 
 const InId = ref('');
 const InImg = ref('');
@@ -40,9 +41,11 @@ const Password = ref('');
 const InName = ref('');
 const InNickname = ref('');
 const InEmail = ref('');
+const router = useRouter();
 
-  function userSignup(){
+  function userSignup(event){
     console.log("post request")
+    event.preventDefault();
     axios.post(`http://localhost:1023/signup`, {
         id: InId.value,
         userPassword: Password.value,
@@ -63,9 +66,10 @@ const InEmail = ref('');
             console.log("put error", response.response.data);
             window.alert(response.response.data);
         })
+    router.push('/')
   }
 </script>
 
 <style scoped>
-@import "../../../src/assets/users/signup.css";
+@import "@/assets/users/signup.css";
 </style>

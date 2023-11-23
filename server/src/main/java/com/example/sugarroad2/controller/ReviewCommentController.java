@@ -1,5 +1,6 @@
 package com.example.sugarroad2.controller;
 
+import com.example.sugarroad2.config.auth.NowUserDetails;
 import com.example.sugarroad2.model.dto.request.ReviewCommentRequestDTO;
 import com.example.sugarroad2.model.dto.response.ReviewCommentResponseVO;
 import com.example.sugarroad2.model.entity.Review;
@@ -20,6 +21,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,9 +53,10 @@ public class ReviewCommentController {
 
 	@PostMapping
 	public ResponseEntity<EntityModel<ReviewCommentResponseVO>> createReviewComment(
-		@RequestBody ReviewCommentRequestDTO reviewCommentRequestDTO) {
+		@RequestBody ReviewCommentRequestDTO reviewCommentRequestDTO,
+		@AuthenticationPrincipal NowUserDetails nowUserDetails) {
 
-		Users users = usersService.readById("vv980113");
+		Users users = usersService.readById(nowUserDetails.getUser().getId());
 		Review review = reviewService.readById(reviewCommentRequestDTO.getReviewId());
 		ReviewComment reviewComment;
 
@@ -100,10 +103,11 @@ public class ReviewCommentController {
 	@PutMapping("/{id}")
 	public ResponseEntity<EntityModel<ReviewCommentResponseVO>> updateReviewComment(
 		@PathVariable("id") int id,
-		@RequestBody ReviewCommentRequestDTO reviewCommentRequestDTO) {
+		@RequestBody ReviewCommentRequestDTO reviewCommentRequestDTO,
+		@AuthenticationPrincipal NowUserDetails nowUserDetails) {
 
 		reviewCommentRequestDTO.setId(id);
-		Users users = usersService.readById("vv980113");
+		Users users = usersService.readById(nowUserDetails.getUser().getId());
 		Review review = reviewService.readById(reviewCommentRequestDTO.getReviewId());
 		ReviewComment reviewComment;
 
