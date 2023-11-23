@@ -8,9 +8,12 @@ import com.example.sugarroad2.model.dto.response.MenuResponseDTO;
 import com.example.sugarroad2.model.dto.response.StoreResponseDTO;
 import com.example.sugarroad2.model.entity.Menu;
 import com.example.sugarroad2.model.entity.Store;
+import com.example.sugarroad2.model.entity.Users;
 import com.example.sugarroad2.model.entity.Views;
+import com.example.sugarroad2.repository.UsersRepository;
 import com.example.sugarroad2.service.MenuService;
 import com.example.sugarroad2.service.StoreService;
+import com.example.sugarroad2.service.UsersService;
 import com.example.sugarroad2.service.ViewsService;
 import com.example.sugarroad2.util.ImageUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -37,15 +40,20 @@ public class StoreController {
     @Autowired
     private ViewsService viewsService;
     @Autowired
+    UsersService usersService;
+    @Autowired
+    UsersRepository usersRepository;
+    @Autowired
     ImageUtil imageUtil;
 
     public Store storeRequestToEntity(StoreRequestDTO storeRequestDTO) {
         Store store = null;
+        Users users = usersRepository.findById(storeRequestDTO.getUserId()).get();
         if (storeRequestDTO.getStoreImagePath() != null) {
             String storeImgPath = imageUtil.writeImage(storeRequestDTO.getStoreImagePath());
-            store = storeRequestDTO.toEntity(storeImgPath);
+            store = storeRequestDTO.toEntity(storeImgPath, users);
         } else {
-            store = storeRequestDTO.toEntity("");
+            store = storeRequestDTO.toEntity("", users);
         }
         return store;
     }
@@ -61,7 +69,7 @@ public class StoreController {
         for (Store store : storeList) {
             List<MenuResponseDTO> storeMenus = menuResponseDTOList.stream().filter(MenuResponseDTO -> MenuResponseDTO.getStoreId() == store.getId()).collect(Collectors.toList());
             long viewsCount = viewsService.count("s", store.getId());
-            storeResponseDTOList.add(new StoreResponseDTO(store, storeMenus,viewsCount));
+            storeResponseDTOList.add(new StoreResponseDTO(store, storeMenus, viewsCount));
         }
         return ResponseEntity.status(HttpStatus.OK).body(storeResponseDTOList);
     }
@@ -76,85 +84,53 @@ public class StoreController {
         return ResponseEntity.status(HttpStatus.OK).body(new StoreResponseDTO(store, menuResponseDTOList, viewsCount));
     }
 
-// // 가게 생성
-// @PostMapping
-// public ResponseEntity<?> create(@RequestBody StoreCreateRequestDTO storeCreateRequestDTO) {
-//     try {
-//         String menuImagePath = "";
-//         List<MenuResponseDTO> menuResponseDTOList = new ArrayList<>();
-//         Store store = storeRequestToEntity(storeCreateRequestDTO.getStoreRequestDTO());
-
-//         Store createStore = storeService.create(store);
-//         List<MenuRequestDTO> menuRequestDTOList = storeCreateRequestDTO.getMenuRequestListDTO();
-//         log.info("등록하는 메뉴 " + menuRequestDTOList.size());
-//         if (menuRequestDTOList.isEmpty()) {
-//             log.info("등록하는 메뉴가 없습니다");
-//         } else {
-//             Menu menu = null;
-//             for (MenuRequestDTO menuRequestDTO : menuRequestDTOList) {
-//                 log.info("메뉴 등록중");
-//                 if (menuRequestDTO.getMenuImagePath() != null) {
-//                     menuImagePath = imageUtil.writeImage(menuRequestDTO.getMenuImagePath());
-//                     menu = menuRequestDTO.toEntity(store, menuImagePath);
-//                 } else {
-//                     log.info("이미지 없는 메뉴");
-//                     menu = menuRequestDTO.toEntity(store, "");
-//                 }
-//                 menuResponseDTOList.add(new MenuResponseDTO(menuService.create(menu)));
-//             }
-//         }
-//         StoreResponseDTO storeResponse = new StoreResponseDTO(createStore, menuResponseDTOList);
-//         return ResponseEntity.status(HttpStatus.CREATED).body(storeResponse);
-//     } catch (Exception exception) {
-//         exception.printStackTrace();
-//         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
-//     }
-// }
-
     @PostMapping
     // 필요한게 user_id
-   // @AuthenticationPrincipal NowUserDetails nowUserDetails
-//     public ResponseEntity<?> create(@RequestBody StoreCreateRequestDTO storeCreateRequestDTO) {
+    // @AuthenticationPrincipal NowUserDetails nowUserDetails
     public ResponseEntity<?> createStore(
+            @AuthenticationPrincipal NowUserDetails nowUserDetails,
             @RequestParam String storeName,
+            @RequestParam String userId,
             @RequestParam("phoneNumber") String phoneNumber,
             @RequestParam("address") String address,
             @RequestParam("storeDesc") String storeDesc,
             @RequestPart(value = "storeImagePath", required = false) MultipartFile storeImagePath,
-        @RequestParam("menuNameList") List<String> menuNameList,
+            @RequestParam("menuNameList") List<String> menuNameList,
             @RequestPart(value = "menuImgList", required = false) List<MultipartFile> menuImgList
             // @RequestPart("menuRequestListDTO") List<MenuRequestDTO> menuRequestListDTO
-            ) {
+    ) {
         try {
+//            String userId = nowUserDetails.getUser().getId();
+            System.out.println("id:" + userId);
             // 가게 정보 저장
-            System.out.println("menuNameList:"+menuNameList.get(0));            
-            System.out.println("menuImgList:"+menuImgList);
+            System.out.println("menuNameList:" + menuNameList.get(0));
+            System.out.println("menuImgList:" + menuImgList);
             StoreRequestDTO storeRequestDTO = StoreRequestDTO.builder()
                     .storeName(storeName)
                     .phoneNumber(phoneNumber)
                     .address(address)
                     .storeDesc(storeDesc)
                     .storeImagePath(storeImagePath)
+                    .userId(userId)
                     .build();
-     Store store = storeService.create(storeRequestToEntity(storeRequestDTO));
+            Store store = storeService.create(storeRequestToEntity(storeRequestDTO));
             // 메뉴 정보 저장
             List<MenuRequestDTO> menuRequestListDTO = new ArrayList<>();
-            for(int i =0; i<menuNameList.size(); i++){
-                menuRequestListDTO.add(new MenuRequestDTO(menuNameList.get(i), 0,"",store.getId(), menuImgList.get(i) ));
-                System.out.println(menuRequestListDTO.get(0));
+            for (int i = 0; i < menuNameList.size(); i++) {
+                menuRequestListDTO.add(new MenuRequestDTO(menuNameList.get(i), 0, "", store.getId(), menuImgList.get(i)));
             }
-             List<MenuResponseDTO> menuResponseDTOList = new ArrayList<>();
-             for (MenuRequestDTO menuRequestDTO : menuRequestListDTO) {
-                 String menuImagePath = "";
-                 if (menuRequestDTO.getMenuImagePath() != null) {
-                     menuImagePath = imageUtil.writeImage(menuRequestDTO.getMenuImagePath());
-                 }
-                 Menu menu = menuRequestDTO.toEntity(store, menuImagePath);
-                 menuResponseDTOList.add(new MenuResponseDTO(menuService.create(menu)));
-             }
+            List<MenuResponseDTO> menuResponseDTOList = new ArrayList<>();
+            for (MenuRequestDTO menuRequestDTO : menuRequestListDTO) {
+                String menuImagePath = "";
+                if (menuRequestDTO.getMenuImagePath() != null) {
+                    menuImagePath = imageUtil.writeImage(menuRequestDTO.getMenuImagePath());
+                }
+                Menu menu = menuRequestDTO.toEntity(store, menuImagePath);
+                menuResponseDTOList.add(new MenuResponseDTO(menuService.create(menu)));
+            }
             // 가게 저장
             long viewsCount = viewsService.count("s", store.getId());
-             StoreResponseDTO storeResponse = new StoreResponseDTO(store, menuResponseDTOList, viewsCount);
+            StoreResponseDTO storeResponse = new StoreResponseDTO(store, menuResponseDTOList, viewsCount);
             return ResponseEntity.status(HttpStatus.CREATED).body(storeResponse);
         } catch (Exception exception) {
             exception.getStackTrace();
@@ -164,77 +140,46 @@ public class StoreController {
 
     // 가게 수정
     @PutMapping("/{storeId}")
-    public ResponseEntity<?> update(@PathVariable int storeId,   @RequestParam String storeName,
+    public ResponseEntity<?> update(@PathVariable int storeId, @RequestParam String storeName,
                                     @RequestParam("phoneNumber") String phoneNumber,
                                     @RequestParam("address") String address,
                                     @RequestParam("storeDesc") String storeDesc,
                                     @RequestPart(value = "storeImagePath", required = false) MultipartFile storeImagePath,
                                     @RequestParam("menuNameList") List<String> menuNameList,
-                                    @RequestPart(value = "menuImgList", required = false) List<MultipartFile> menuImgList) {
+                                    @RequestPart(value = "menuImgList", required = false) List<MultipartFile> menuImgList,
+                                    @RequestParam("menuIdList") List<Integer> menuIdList
+    ) {
         try {
             String menuImagePath = "";
             List<MenuResponseDTO> menuResponseDTOList = new ArrayList<>();
-            StoreRequestDTO storeRequestDTO = StoreRequestDTO.builder()
-                    .storeName(storeName)
-                    .phoneNumber(phoneNumber)
-                    .address(address)
-                    .storeDesc(storeDesc)
-                    .storeImagePath(storeImagePath)
-                    .build();
-            Store store = storeRequestToEntity(storeRequestDTO);
-            store.setId(storeService.readBy(storeId).getId());
-            store.setStoreName(storeRequestDTO.getStoreName());
-            store.setAddress(storeRequestDTO.getAddress());
-            store.setPhoneNumber(storeRequestDTO.getPhoneNumber());
-            store.setStoreDesc(storeRequestDTO.getStoreDesc());
-            Store updateStore = storeService.update(store);
-
-            List<MenuRequestDTO> menuRequestDTOList = new ArrayList<>();
-            for(int i =0; i<menuNameList.size(); i++){
-                menuRequestDTOList.add(new MenuRequestDTO(menuNameList.get(i), 0,"",store.getId(), menuImgList.get(i) ));
-                System.out.println(menuRequestDTOList.get(0));
+            Store store = storeService.readBy(storeId);
+            store.setStoreName(storeName);
+            store.setAddress(address);
+            store.setPhoneNumber(phoneNumber);
+            store.setStoreDesc(storeDesc);
+            if (storeImagePath != null) {
+                store.setStoreImagePath(imageUtil.writeImage(storeImagePath));
             }
-
-            if (menuRequestDTOList.isEmpty()) {
-                log.info("수정하는 메뉴가 없습니다");
-            } else {
-                for (MenuRequestDTO menuRequestDTO : menuRequestDTOList) {
-                    menuImagePath = imageUtil.writeImage(menuRequestDTO.getMenuImagePath());
-                    Menu menu = menuRequestDTO.toEntity(store, menuImagePath);
-                    menuResponseDTOList.add(new MenuResponseDTO(menuService.update(menu)));
-                }
+            Store updateStore = storeService.update(store);
+            System.out.println(menuIdList);
+            Menu menu = new Menu();
+            MenuRequestDTO menuRequestDTO = new MenuRequestDTO();
+            List<MenuRequestDTO> menuRequestDTOList = new ArrayList<>();
+            for (int i = 0; i < menuNameList.size(); i++) {
+                menu = menuService.readBy(menuIdList.get(i));
+                menu.setMenuName(menuNameList.get(i));
+                menuImagePath = imageUtil.writeImage(menuImgList.get(i));
+                menu.setMenuImagePath(menuImagePath);
+                System.out.println("수정하는 메뉴 이미지가 있습니다.");
+//                   menu = menuRequestDTO.toEntity(store, menuImagePath);
+                menuResponseDTOList.add(new MenuResponseDTO(menuService.update(menu)));
             }
             long viewsCount = viewsService.count("s", store.getId());
             return ResponseEntity.status(HttpStatus.CREATED).body(new StoreResponseDTO(updateStore, menuResponseDTOList, viewsCount));
         } catch (Exception exception) {
+            exception.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-//        try {
-//            String menuImagePath = "";
-//            List<MenuResponseDTO> menuResponseDTOList = new ArrayList<>();
-////          Store store = Store.builder() build();
-//            StoreRequestDTO storeRequestDTO = storeCreateRequestDTO.getStoreRequestDTO();
-//            Store store = storeRequestToEntity(storeRequestDTO);
-//            store.setId(storeService.readBy(storeId).getId());
-//            store.setStoreName(storeRequestDTO.getStoreName());
-//            store.setAddress(storeRequestDTO.getAddress());
-//            store.setPhoneNumber(storeRequestDTO.getPhoneNumber());
-//            store.setStoreDesc(storeRequestDTO.getStoreDesc());
-//            Store updateStore = storeService.update(store);
-//            List<MenuRequestDTO> menuRequestDTOList = storeCreateRequestDTO.getMenuRequestListDTO();
-//            if (menuRequestDTOList.isEmpty()) {
-//                log.info("수정하는 메뉴가 없습니다");
-//            } else {
-//                for (MenuRequestDTO menuRequestDTO : menuRequestDTOList) {
-//                    menuImagePath = imageUtil.writeImage(menuRequestDTO.getMenuImagePath());
-//                    Menu menu = menuRequestDTO.toEntity(store, menuImagePath);
-//                    menuResponseDTOList.add(new MenuResponseDTO(menuService.update(menu)));
-//                }
-//            }
-//            return ResponseEntity.status(HttpStatus.CREATED).body(new StoreResponseDTO(updateStore, menuResponseDTOList));
-//        } catch (Exception exception) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-//        }
     }
 
     // 가게 삭제

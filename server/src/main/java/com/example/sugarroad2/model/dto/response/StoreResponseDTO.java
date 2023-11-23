@@ -24,7 +24,7 @@ public class StoreResponseDTO {
     private float longitude;
     private String storeImagePath;
     private List<MenuResponseDTO> menuDTOList;
-    //    private String userId;
+        private String userId;
 //    private int recommendCount;
     private long viewsCount;
 
@@ -37,5 +37,6 @@ public class StoreResponseDTO {
         this.viewsCount = viewsCount;
         storeImagePath = store.getStoreImagePath();
         menuDTOList = menuResponseDTOList;
+        userId=store.getUser().getId();
     }
 }
