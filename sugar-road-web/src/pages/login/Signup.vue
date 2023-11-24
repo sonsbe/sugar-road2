@@ -6,7 +6,7 @@
             <img id="loginTitle" src="src/assets/users/img/Sugar-Road Logo.png">
         </div>
             <div class="middle">
-                <form id="signForm">
+                <form id="signForm" @keyup.enter="userSignup">
                     <div class="formTop">
                         <h3 id="please">Please Sign Up</h3>
                         <label class="photo" for="input-image">
