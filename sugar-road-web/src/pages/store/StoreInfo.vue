@@ -2,7 +2,6 @@
   <div class="container">
     <div class="store-like-back">
       <a href="/store">◀</a>
-      <span>💖</span>
     </div>
     <h3>
       <div>{{ storeInfo.storeName }}</div>
@@ -57,12 +56,15 @@
   </div>
   <br />
   <div><b>Store Location</b></div>
-  <!-- <div id="map" style="width: 100%; height: 200px">
-    <KakaoMap
+  <div id="map" style="width: 100%; height: 200px">
+    <!-- <KakaoMap
       :address="storeInfo.address"
       v-if="storeInfo.address != undefined"
+    ></KakaoMap> -->
+    <KakaoMap
+      :address="storeInfo.address"
     ></KakaoMap>
-  </div> -->
+  </div>
   <RouterLink :to="'/review/write/store/' + storeId">
     <button class="buttons">리뷰 작성</button>
   </RouterLink>
