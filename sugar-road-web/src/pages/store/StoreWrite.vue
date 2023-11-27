@@ -89,8 +89,10 @@ let storeRequestDTO = ref({
   phoneNumber: "",
   address: "",
   storeDesc: "",
-  storeImagePath: null,
+  // storeImagePath: null,
 });
+let storeImagePath = ref("");
+
 let originImagePath = ref("");
 let originMenuImages = ref([]);
 
@@ -102,8 +104,7 @@ let userId = sessionStorage.getItem("user");
 
 // 가게 대표이미지 변경
 function handleStoreImageChange(e) {
-  storeRequestDTO.value.storeImagePath = e.target.files[0];
-  console.log(storeRequestDTO.value.storeImagePath);
+  storeImagePath.value = e.target.files[0];
 }
 // 메뉴 이미지 변경
 function handleMenuImageChange(e, index) {
@@ -115,14 +116,20 @@ function handleMenuImageChange(e, index) {
 // 가게 등록 및 수정
 function createStore() {
   const formData = new FormData();
-  formData.append("storeName", storeRequestDTO.value.storeName);
-  formData.append("phoneNumber", storeRequestDTO.value.phoneNumber);
-  formData.append("address", storeRequestDTO.value.address);
-  formData.append("storeDesc", storeRequestDTO.value.storeDesc);
-  formData.append("userId", userId);
+  const jsonData = {
+    storeName: storeRequestDTO.value.storeName,
+    phoneNumber: storeRequestDTO.value.phoneNumber,
+    address: storeRequestDTO.value.address,
+    storeDesc: storeRequestDTO.value.storeDesc,
+    userId: userId,
+  };
+  const json = JSON.stringify(jsonData);
+  const blob = new Blob([json], { type: "application/json" });
+  formData.append("storeRequestDTO", blob);
+
   // << update >>
   if (uri.includes("edit")) {
-    formData.append("storeImagePath", storeRequestDTO.value.storeImagePath);
+    formData.append("storeImagePath", storeImagePath.value);
 
     // 각 메뉴 정보를 formData에 추가
     menuNameList.value.forEach((menuName, index) => {
@@ -146,13 +153,12 @@ function createStore() {
         },
       })
       .then((response) => {
-        console.log(response);
         router.push("/store");
       })
       .catch((err) => console.log(err));
   } else {
     // << create >>
-    formData.append("storeImagePath", storeRequestDTO.value.storeImagePath);
+    formData.append("storeImagePath", storeImagePath.value);
 
     // 각 메뉴 정보를 formData에 추가
     menuNameList.value.forEach((menuName, index) => {
@@ -174,7 +180,6 @@ function createStore() {
         },
       })
       .then((response) => {
-        console.log(response);
         router.push("/store");
       })
       .catch((err) => console.log(err));
@@ -185,14 +190,13 @@ onMounted(() => {
     axios
       .get("http://localhost:1023/store/" + storeId)
       .then((response) => {
-        console.log(response);
         store.value = response;
 
         storeRequestDTO.value.storeName = response.data.storeName;
         storeRequestDTO.value.phoneNumber = response.data.phoneNumber;
         storeRequestDTO.value.address = response.data.address;
         storeRequestDTO.value.storeDesc = response.data.storeDesc;
-        originImagePath.value = response.data.storeImagePath;
+        originImagePath.value = storeImagePath.value;
         for (let i = 0; i < response.data.menuDTOList.length; i++) {
           menuNameList.value[i] = response.data.menuDTOList[i].menuName;
           originMenuImages.value[i] =
@@ -212,9 +216,6 @@ function deleteMenu() {
   if (menuCount > 1) {
     menuNameList.value.pop();
   }
-}
-function goBack() {
-  router.go(-1);
 }
 </script>
 

@@ -83,34 +83,15 @@ public class StoreController {
     }
 
     @PostMapping
-    // 필요한게 user_id
-    // @AuthenticationPrincipal NowUserDetails nowUserDetails
-    public ResponseEntity<?> createStore(
-            @AuthenticationPrincipal NowUserDetails nowUserDetails,
-            @RequestParam String storeName,
-            @RequestParam String userId,
-            @RequestParam("phoneNumber") String phoneNumber,
-            @RequestParam("address") String address,
-            @RequestParam("storeDesc") String storeDesc,
-            @RequestPart(value = "storeImagePath", required = false) MultipartFile storeImagePath,
-            @RequestParam("menuNameList") List<String> menuNameList,
+    public ResponseEntity<?> createStore(@RequestPart StoreRequestDTO storeRequestDTO, @RequestPart(required = false) MultipartFile storeImagePath,             @RequestParam("menuNameList") List<String> menuNameList,
             @RequestPart(value = "menuImgList", required = false) List<MultipartFile> menuImgList
-            // @RequestPart("menuRequestListDTO") List<MenuRequestDTO> menuRequestListDTO
-    ) {
+    ){
         try {
-//            String userId = nowUserDetails.getUser().getId();
-            System.out.println("id:" + userId);
             // 가게 정보 저장
             System.out.println("menuNameList:" + menuNameList.get(0));
-            System.out.println("menuImgList:" + menuImgList);
-            StoreRequestDTO storeRequestDTO = StoreRequestDTO.builder()
-                    .storeName(storeName)
-                    .phoneNumber(phoneNumber)
-                    .address(address)
-                    .storeDesc(storeDesc)
-                    .storeImagePath(storeImagePath)
-                    .userId(userId)
-                    .build();
+            storeRequestDTO.setUserId(storeRequestDTO.getUserId());
+            storeRequestDTO.setStoreImagePath(storeImagePath);
+
             Store store = storeService.create(storeRequestToEntity(storeRequestDTO));
             // 메뉴 정보 저장
             List<MenuRequestDTO> menuRequestListDTO = new ArrayList<>();
