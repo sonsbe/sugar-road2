@@ -2,7 +2,6 @@ package com.example.sugarroad2.controller;
 
 import com.example.sugarroad2.config.auth.NowUserDetails;
 import com.example.sugarroad2.model.dto.request.MenuRequestDTO;
-import com.example.sugarroad2.model.dto.request.StoreCreateRequestDTO;
 import com.example.sugarroad2.model.dto.request.StoreRequestDTO;
 import com.example.sugarroad2.model.dto.response.MenuResponseDTO;
 import com.example.sugarroad2.model.dto.response.StoreResponseDTO;
@@ -21,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
