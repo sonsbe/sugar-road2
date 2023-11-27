@@ -303,7 +303,3 @@ h6 {
 .bottom_menu > div:hover {
   background-color: rgb(240, 240, 240);
 }
-
-div, table, tr, td, img{
-  border: 1px dotted gray;
-}

@@ -1,11 +1,12 @@
 <template>
-<div class="app-body">
+    <div class="not-overflow-y">
+    <div class="app-body">
     <div class = "content center">
         <div class="top">
             <img id="loginTitle" src="src/assets/users/img/Sugar-Road Logo.png">
         </div>
             <div class="middle">
-                <form id="signForm">
+                <form id="signForm" @keyup.enter="userSignup">
                     <div class="formTop">
                         <h3 id="please">Please Sign Up</h3>
                         <label class="photo" for="input-image">
@@ -27,6 +28,7 @@
                 </form>
             </div>
     </div>
+</div>
 </div>
 </template>
 
@@ -61,15 +63,19 @@ const router = useRouter();
         .then((response) => {
             console.log("put response", response);
             window.alert(response.data);
+            router.push('/')
         })
         .catch(response => {
             console.log("put error", response.response.data);
             window.alert(response.response.data);
         })
-    router.push('/')
   }
 </script>
 
 <style scoped>
 @import "@/assets/users/signup.css";
+.not-overflow-y {
+  height: 100%;
+  overflow-y: hidden;
+}
 </style>

@@ -17,7 +17,8 @@ public class CorsConfig {
       CorsConfiguration config = new CorsConfiguration();
 
       config.setAllowCredentials(true);
-      config.setAllowedOrigins(List.of("http://localhost:5173")); //외부 접근이 허용된 URL
+      config.setAllowedOrigins(List.of(
+		  new String[]{"http://localhost:5173", "http://192.168.3.113:5173"})); //외부 접근이 허용된 URL
       config.setAllowedHeaders(List.of("*"));
       config.setAllowedMethods(List.of("*")); //CRUD 전부 허용
       config.setExposedHeaders(List.of("Authorization", "User"));

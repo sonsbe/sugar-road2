@@ -2,7 +2,9 @@
   <RouterLink :to="'/post/' + p.object.id">
     <div class="storeBoxTop">
       <div class="store-like">
-        👍<span v-text="p.object.recommendCount"></span>
+        👍 <span v-text="p.object.recommendCount"></span>
+        <div v-text="p.object.title.length>15?p.object.title.substring(0,15)+'...':p.object.title" class="store-name">
+        </div>
       </div>
     </div>
     <img
@@ -13,9 +15,9 @@
       }`"
       class="storeImg"
       alt="게시글 이미지"
+      style="object-fit:cover;"
     />
-    <div v-text="p.object.title" class="store-name">
-    </div>
+    
   </RouterLink>
 </template>
 <script setup>

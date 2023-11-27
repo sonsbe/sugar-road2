@@ -1,45 +1,37 @@
 /*mypost*/
 /*mylike*/
 .thumbnail > a {
-  text-decoration: none;
+    text-decoration: none;
 }
-.form-select {
-  margin: 10px;
+.form-select{
+margin: 10px;
 }
 /* post/index */
 select option[value=""][disabled] {
-  display: none;
+	display: none;
 }
 a {
-  text-decoration: none;
+    text-decoration: none;
 }
 h3 {
-  margin: 30px 0 30px 20px;
+    margin:30px 0 30px 20px;
 }
 
-.category {
-  margin-bottom: 13px;
-  display: flex;
-  justify-content: center;
+.category{
+     margin-bottom: 13px;
+     display: flex;
+     justify-content: center;
 }
 
 .category > button {
-  border: 1px solid rgb(228, 228, 228);
-  border-radius: 5px;
-  padding: 1.5vh 3vh 1.5vh 3vh;
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-  margin: 5px;
-  cursor: pointer;
+        border: 1px solid rgb(228, 228, 228);
+        border-radius: 5px;
+        padding: 1.5vh 4vh 1.5vh 3vh;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        margin: 5px;
+        cursor: pointer;
 }
-.category > clicked {
-  border: 1px solid rgb(228, 228, 228);
-  border-radius: 5px;
-  padding: 1.5vh 4vh 1.5vh 3vh;
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-  margin: 5px;
-  background-color: red;
-  cursor: pointer;
-}
+
 
 /*
 .category > .image-button{
@@ -55,31 +47,32 @@ h3 {
 }
 */
 
-.search {
-  padding: 5px 0 0 5px;
-  height: 38px;
-  width: 90%;
-  border-radius: 10px;
-  border: 2px solid #d3d3d3;
-  margin: 0 auto;
-  background-color: white;
+
+.search{
+    padding: 5px 0 0 5px;
+    height: 38px;
+    width: 90%;
+    border-radius: 10px;
+    border: 2px solid #d3d3d3;
+    margin: 0 auto;
+    background-color: white;
 }
-.search i {
-  font-size: 30px;
+.search i{
+    font-size: 30px;
 }
-.search input {
-  top: 6px;
-  left: 40px;
-  width: 80%;
-  border-radius: 10px;
-  border: 0.5px;
-  padding: 4px;
+.search input{
+    top: 6px;
+    left: 40px;
+    width: 80%;
+    border-radius: 10px;
+    border: 0.5px;
+    padding: 4px;
 }
-.search input:focus {
-  outline: none;
+.search input:focus{
+    outline: none;
 }
-.index-header {
-  margin: 10px;
+.index-header{
+    margin: 10px;
 }
 /*
 .post-button-index{
@@ -98,92 +91,95 @@ h3 {
         background-color: skyblue;
 }
 */
-.post-thumbnail {
-  margin: 10px;
-  border: 2px solid #c3dcf1;
-  border-radius: 5px;
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+.post-thumbnail{
+    margin: 10px;
+    border: 2px solid #C3DCF1;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
-.post-thumbnail > a {
-  text-decoration: none;
-  color: black;
+.post-thumbnail > a{
+    text-decoration: none;
+    color: black;
 }
-.post-thumbnail > a:hover {
-  text-decoration: none;
-  color: black;
+.post-thumbnail > a:hover{
+    text-decoration: none;
+    color: black;
 }
 /* 공용 */
-.post-button {
-  display: flex;
-  margin-top: 5%;
-  margin: 10px;
-  flex-direction: row;
-  justify-content: space-between;
+.post-button{
+    display: flex;
+    margin-top: 5%;
+    margin: 10px;
+    flex-direction: row;
+    justify-content: space-between;
 }
-.post-button > button {
-  padding: 5px;
-  width: 15%;
-  border: none;
-  border-radius: 10px;
-  text-align: center;
-  background-color: skyblue;
+.post-button > button{
+    padding: 5px;
+    width: 15%;
+    border: none;
+    border-radius: 10px;
+    text-align: center;
+    background-color: skyblue;
 }
 
 /* post/detail */
-.post-header {
-  display: flex;
-  justify-content: space-between; /* a 요소를 왼쪽 끝에 붙이기 위해 사용 */
-  align-items: center; /* h4 요소를 가운데 정렬하기 위해 사용 */
-  margin-top: 10px;
+.post-header{
+    display: flex;
+    justify-content: space-between; /* a 요소를 왼쪽 끝에 붙이기 위해 사용 */
+    align-items: center; /* h4 요소를 가운데 정렬하기 위해 사용 */
+    margin-top: 10px;
 }
 .post-header > a {
   align-self: center;
   text-decoration: none;
+
 }
 
 .post-header > h4 {
   margin: 0 auto;
 }
-.hr-blue {
-  background: skyblue;
-  width: 100%;
-  height: 2px;
-  border: 0;
+.hr-blue{
+    background: skyblue;
+    width: 100%;
+    height: 2px;
+    border: 0;
 }
 
-.post-image {
-  text-align: center;
+.post-image{
+    text-align: center;
 }
-.post-image > img {
-  width: 70%;
+.post-image > img{
+    width: 70%;
 }
 
-td > img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
+td > img{
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
 }
 /* post/write */
-.header {
-  margin-top: 5%;
+.header{
+    margin-top: 5%;
+
 }
-.post-button-index {
-  text-decoration: none;
-  padding: 10px;
-  width: 100%;
-  display: inline-block;
-  position: sticky;
-  background-color: #c3dcf1;
-  text-align: center;
-  border-radius: 5px;
-  bottom: 5;
-  z-index: 99999;
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-  border: 1px solid gray;
+      .post-button-index{
+       text-decoration: none;
+       padding: 10px;
+       width: 94%;
+       display: inline-block;
+       position: sticky;
+       background-color: #C3DCF1;
+       text-align: center;
+       border-radius: 5px;
+       bottom : 0;
+       z-index: 99999;
+       box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+       border: 1px solid gray;
+      }
+      .post-button-index:hover{
+         background-color: #a2bfd7;
+      }
+.v-table{
+padding: 5px 0 5px 0;
 }
-.post-button-index:hover {
-  background-color: #a2bfd7;
-}
-.v-table {
-  padding: 5px 0 5px 0;
-}
+

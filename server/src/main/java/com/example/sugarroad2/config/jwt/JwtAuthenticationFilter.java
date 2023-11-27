@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import java.io.IOException;
 import java.util.Date;
 
-@CrossOrigin(origins="http://localhost:5173", allowedHeaders = "*",
+@CrossOrigin(origins={"http://localhost:5173", "http://192.168.3.113:5173"}, allowedHeaders = "*",
 		exposedHeaders="Authorization", allowCredentials = "true")
 public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFilter {//UsernamePasswordAuthenticationFilter{
 

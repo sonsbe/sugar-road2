@@ -7,6 +7,7 @@
             :data = "comment" 
             @edit-comment="editComment(url, index)"
             @delete-comment="deleteComment(index)"
+            @emit-parent="setParent"
         />
     </div>
 </template>
@@ -68,6 +69,17 @@
 
     function deleteComment(index){
         commentPage.value.splice(index, 1);
+    }
+
+    function setParent(parentId){
+        if(commentRequest.value.body.parentComment === null){
+            commentRequest.value.body.parentComment = parentId;
+            document.getElementById("commentInput").focus();
+        }
+        else {
+            commentRequest.value.body.parentComment = null;
+        }
+
     }
 
     async function createComment(){

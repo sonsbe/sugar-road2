@@ -41,20 +41,26 @@ public class MypageController {
     public ResponseEntity<String> userInfoUpdate(@PathVariable("id") String userId, @RequestBody Users users) {
         Users updateUser = usersService.readById(userId);
 
-        updateUser.setId(users.getId());
-        updateUser.setUserPassword(users.getUserPassword());
-        updateUser.setUserName(users.getUserName());
-        updateUser.setNickname(users.getNickname());
-        updateUser.setUserEmail(users.getUserEmail());
-        //updateUser.setBirth(users.getBirth());
-        //updateUser.setGender(users.getGender());
-        //updateUser.setRole(users.getRole());
-        //updateUser.setStatus(users.getStatus());
-        updateUser.setUserImagePath(users.getUserImagePath());
+        if (usersService.duplicationNick(users)) {
+            return new ResponseEntity<>("중복된 닉네임입니다", HttpStatus.FORBIDDEN);
+        } else if (usersService.duplicationEmail(users)) {
+            return new ResponseEntity<>("중복된 이메일입니다", HttpStatus.FORBIDDEN);
+        } else {
+            updateUser.setId(users.getId());
+            updateUser.setUserPassword(users.getUserPassword());
+            updateUser.setUserName(users.getUserName());
+            updateUser.setNickname(users.getNickname());
+            updateUser.setUserEmail(users.getUserEmail());
+            //updateUser.setBirth(users.getBirth());
+            //updateUser.setGender(users.getGender());
+            //updateUser.setRole(users.getRole());
+            //updateUser.setStatus(users.getStatus());
+            updateUser.setUserImagePath(users.getUserImagePath());
 
-        usersService.update(updateUser);
+            usersService.update(updateUser);
 
-        return new ResponseEntity<>("성공적으로 업데이트", HttpStatus.OK);
+            return new ResponseEntity<>("성공적으로 업데이트", HttpStatus.OK);
+        }
     }
 
     @DeleteMapping("/{id}") //받은 유저 정보 삭제

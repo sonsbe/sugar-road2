@@ -24,7 +24,7 @@
                 </Suspense>
             </td>
             <td class = "t6">
-                <a v-if="data.parentComment==undefined&&userId!=null" onclick = 'setParent("+ comment[this.referenceType + "CommentId"] +");' class = 't-lightgray'>답글</a>
+                <a v-if="data.parentComment==undefined&&userId!=null" @click = "emitParent()" class = 't-lightgray'>답글</a>
             </td>
             <td class = "t6">
                 <a v-if="data.userId === userId" @click="editComment(data._links.self.href)" class = 't-lightgray'>수정</a>
@@ -43,7 +43,7 @@
     const props = defineProps( {
         data : Object
     });
-    const emit = defineEmits(["edit-comment", "delete-comment"]);
+    const emit = defineEmits(["edit-comment", "delete-comment", "emit-parent"]);
     const userId = sessionStorage.getItem("user");
     function editComment(url){
         emit("edit-comment", url);
@@ -55,6 +55,9 @@
                     emit("delete-comment");
                 }
             });
+    }
+    function emitParent(){
+        emit("emit-parent", props.data.id);
     }
 </script>
 <style scoped>

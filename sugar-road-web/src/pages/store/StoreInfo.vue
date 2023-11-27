@@ -2,6 +2,9 @@
   <div class="container">
     <div class="store-like-back">
       <a href="/store">◀</a>
+      <Suspense>
+        <Recommendation v-if="data!=undefined" :data = "data"></Recommendation>
+      </Suspense>
     </div>
     <h3>
       <div>{{ storeInfo.storeName }}</div>
@@ -54,20 +57,16 @@
       }"
     ></StoreMenuCard>
   </div>
-  <br />
-  <div><b>Store Location</b></div>
-  <div id="map" style="width: 100%; height: 200px">
-    <!-- <KakaoMap
-      :address="storeInfo.address"
-      v-if="storeInfo.address != undefined"
-    ></KakaoMap> -->
-    <KakaoMap
-      :address="storeInfo.address"
-    ></KakaoMap>
+  <!-- <div><b>Store Location</b></div> -->
+  <KakaoMap
+    :address="storeInfo.address"
+    v-if="storeInfo.address != undefined"
+  ></KakaoMap>
+  <div class = "right">
+    <RouterLink :to="'/review/write/store/' + storeId">
+      <button class="buttons bold" style="width:30%; padding : 2% 5% 2% 5%; margin : 4% 0 4% 0; background-color: var(--pink2); border-radius: 10px; color : black">리뷰 작성</button>
+    </RouterLink>
   </div>
-  <RouterLink :to="'/review/write/store/' + storeId">
-    <button class="buttons">리뷰 작성</button>
-  </RouterLink>
   <Cards
     :reviewPageURL="'http://localhost:1023/review/of/store/' + storeId"
   ></Cards>
@@ -80,13 +79,27 @@ import { onMounted, reactive, ref } from "vue";
 import StoreMenuCard from "@/components/store/StoreMEnuCard.vue";
 import Cards from "@/components/review/Cards.vue";
 import KakaoMap from "@/components/util/KakaoMap.vue";
+import Recommendation from '@/components/recommendation/Recommendation.vue';
 
 const currentRoute = useRoute();
 const router = useRouter();
+
 let storeId = currentRoute.params.storeId;
 let storeInfo = ref({});
 let menuList = ref();
 let userId = sessionStorage.getItem("user");
+const data = {
+  recommendation : {
+    href: `http://localhost:1023/recommendation/reference-type/S/reference-id/${storeId}`
+  },
+  createRecommendation : {
+    href: `http://localhost:1023/recommendation/reference-type/S/reference-id/${storeId}`
+  },
+  deleteRecommendation : {
+    href: `http://localhost:1023/recommendation/reference-type/S/reference-id/${storeId}`
+  }
+};
+
 console.log("user", userId);
 onMounted(async () => {
   await getStoreInfo();

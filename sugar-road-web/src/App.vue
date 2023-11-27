@@ -18,7 +18,7 @@
   }
 </style>
 <style>
-  @import "@/assets/ui.css";
   @import "@/assets/base.css";
+  @import "@/assets/ui.css";
 </style>
 

@@ -1,6 +1,5 @@
-<!-- MapKakao -->
 <template>
-  <div id="map"></div>
+    <div id="map"></div>
 </template>
 
 <script>
@@ -67,7 +66,7 @@ export default {
 
 <style>
 #map {
-  width: 500px;
-  height: 500px;
+  width: 100%;
+  height: 20vh;
 }
 </style>

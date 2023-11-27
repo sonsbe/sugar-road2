@@ -32,8 +32,6 @@ body {
 #please{
     display: flex;
     align-items: center;
-    margin-right: 5%;
-    margin-top: 11%;
     font-weight: normal;
     color: rgba(0, 0, 0, 0.60);
 }
@@ -44,7 +42,6 @@ body {
 }
 
 #signImg{
-    position: ;
     left: 30%;
     bottom: 8.5%;
 }
@@ -56,7 +53,6 @@ body {
 
 #signForm{
     width: 80%;
-    height: 46vh;
     padding-bottom: 5vh;
     border-radius: 10px;
     background: rgba(255, 255, 255, 80%);
@@ -79,6 +75,10 @@ body {
         background: rgba(255, 255, 255, 0.0);
         font-size: medium;
 }
+
+.inputText::placeholder {
+    color: #3c3c3c;
+  }
 
 #iframed{
         

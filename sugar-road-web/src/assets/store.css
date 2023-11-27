@@ -69,7 +69,7 @@ h4 {
 .storeBoxTop {
   display: flex;
   justify-content: space-between;
-  height: 4vh;
+  height: 3vh;
 }
 .storeBoxTop div > span {
   font-size: 13px;
